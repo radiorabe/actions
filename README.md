@@ -13,12 +13,13 @@ If you need multiple actions to happen then it's up to you to combine them as ne
 
 ### Ansible Collections
 
-For repos that want to publish Ansible collections to [Galaxy](https://galaxy.ansible.com).
+We have workflows for testing Ansible collectionis on GitHub Actions and for releasing your Ansible collections to [Galaxy](https://galaxy.ansible.com).
+
+#### Ansible Collections: Release
 
 Create the main `.github/workflows/release.yaml` file for an ansible collection repo:
 
 ```yaml
-# .github/workflows/release.yaml
 name: Release
 
 on:
@@ -35,12 +36,34 @@ jobs:
 
 The collections we publish with this can be found on [our Galaxy page](https://galaxy.ansible.com/radiorabe).
 
+#### Ansible Collections: Test
+
+Create the main `.github/workflows/test.yaml` file for an ansible collection repo:
+
+```yaml
+name: Lint and Test
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  call-workflow:
+    uses: radiorabe/actions/.github/workflows/test-ansible-collection.yaml@main
+    with:
+      targets: |
+        roles/example
+        roles/second_example
+```
+
 ### Semantic Release
 
 For repos that want to use [go-semantic-release](https://go-semantic-release.xyz):
 
+Create this `.github/workflows/semantic-release.yaml`:
+
 ```yaml
-# .github/workflows/semantic-release.yaml
 name: Semantic Release
 
 on:
