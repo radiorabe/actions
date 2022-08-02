@@ -56,7 +56,7 @@ jobs:
 ```
 ## License
 
-This template collection is free software: you can redistribute it and/or modify it under
+These reuseable workflows are free software: you can redistribute them and/or modify them under
 the terms of the GNU Affero General Public License as published by the Free
 Software Foundation, version 3 of the License.
 
