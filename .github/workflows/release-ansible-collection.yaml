@@ -25,7 +25,7 @@ jobs:
       - name: Update version
         run: |
           VERSION=${GITHUB_REF#refs/tags/v}
-          sed -i -e "s/version: 0.0.0/${VERSION}" galaxy.yaml
+          sed -i -e "s/version: 0.0.0/version: ${VERSION}/" galaxy.yml
       - name: Build collection
         run: |
           ansible-galaxy collection build
