@@ -3,10 +3,11 @@ name: Lint and Test
 on:
   workflow_call:
     inputs:
-      targets:
-        description: Roles to check
-        required: true
+      path:
+        description: Specific path to lint instead of the default `.`.
+        required: false
         type: string
+        default: "/github/workspace"
 
 jobs:
   lint:
@@ -29,4 +30,4 @@ jobs:
     - name: Lint with ansible-lint
       uses: ansible-community/ansible-lint-action@v6
       with:
-        targets: ${{ inputs.targets }}
+        path: ${{ inputs.targets }}
