@@ -57,6 +57,33 @@ jobs:
         roles/second_example
 ```
 
+### Pre Commit
+
+Create the main `.github/workflows/test.yaml` file for a project that supports [pre-commit](https://pre-commit.com/):
+
+```yaml
+name: Lint and Test
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  call-workflow:
+    uses: radiorabe/actions/.github/workflows/test-pre-commit.yaml@main
+```
+
+This runs pre-commit with black and isort installed. If you need more tools you can install them with `pip`:
+
+```yaml
+jobs:
+  call-workflow:
+    uses: radiorabe/actions/.github/workflows/test-pre-commit.yaml@main
+    with:
+      requirements: black isort
+```
+
 ### Semantic Release
 
 For repos that want to use [go-semantic-release](https://go-semantic-release.xyz):
