@@ -7,7 +7,7 @@ on:
         description: Specific python packages to install with pip
         required: false
         type: string
-        default: "black isort"
+        default: "black isort flake8"
 
 jobs:
   pre-commit:
