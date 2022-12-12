@@ -104,6 +104,26 @@ jobs:
     secrets:
       RABE_ITREAKTION_GITHUB_TOKEN: ${{ secrets.RABE_ITREAKTION_GITHUB_TOKEN }}
 ```
+
+### Trivy
+
+Create this `.github/workflows/schedule.yaml`:
+
+```yaml
+name: Scheduled tasks
+
+on:
+  schedule:
+    - cron:  '13 12 * * *'
+  workflow_dispatch:
+
+jobs:
+  call-workflow:
+    uses: radiorabe/actions/.github/workflows/schedule-trivy.yaml@main
+    with:
+      image-ref: 'ghcr.io/radiorabe/<name>:latest'
+```
+
 ## License
 
 These reuseable workflows are free software: you can redistribute them and/or modify them under
