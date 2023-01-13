@@ -18,6 +18,7 @@ jobs:
           image-ref: ${{ inputs.image-ref }}
           format: 'sarif'
           ignore-unfixed: true
+          security-checks: 'vuln'
           output: 'trivy-results.sarif'
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v2
