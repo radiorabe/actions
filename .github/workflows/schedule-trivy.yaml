@@ -8,7 +8,7 @@ on:
         required: true
         type: string
       timeout:
-        descripton: 'Scan timeout duration'
+        description: 'Scan timeout duration'
         required: false
         default: '5m0s'
         type: string
