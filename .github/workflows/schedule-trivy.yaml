@@ -21,7 +21,7 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: ${{ inputs.image-ref }}
-          timeout: ${{ input.timeout }}
+          timeout: ${{ inputs.timeout }}
           format: 'sarif'
           ignore-unfixed: true
           security-checks: 'vuln'
