@@ -7,6 +7,11 @@ on:
         description: 'image-ref to scan'
         required: true
         type: string
+      timeout:
+        descripton: 'Scan timeout duration'
+        required: false
+        default: '5m0s'
+        type: string
 
 jobs:
   trivy:
@@ -16,6 +21,7 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: ${{ inputs.image-ref }}
+          timeout: ${{ input.timeout }}
           format: 'sarif'
           ignore-unfixed: true
           security-checks: 'vuln'
