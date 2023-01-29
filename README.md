@@ -28,7 +28,7 @@ on:
       - published
 
 jobs:
-  call-workflow:
+  release-ansible-collection:
     uses: radiorabe/actions/.github/workflows/release-ansible-collection.yaml@main
     secrets:
       GALAXY_API_KEY: ${{ secrets.GALAXY_API_KEY }}
@@ -49,7 +49,7 @@ on:
       - main
 
 jobs:
-  call-workflow:
+  test-ansible-collection:
     uses: radiorabe/actions/.github/workflows/test-ansible-collection.yaml@main
     with:
       targets: |
@@ -78,7 +78,7 @@ This runs pre-commit with black and isort installed. If you need more tools you 
 
 ```yaml
 jobs:
-  call-workflow:
+  pre-commit:
     uses: radiorabe/actions/.github/workflows/test-pre-commit.yaml@main
     with:
       requirements: black isort
@@ -97,7 +97,7 @@ on:
       - main
 
 jobs:
-  call-workflow:
+  test-python-poetry:
     uses: radiorabe/actions/.github/workflows/test-python-poetry.yaml@main
 ```
 
@@ -116,9 +116,10 @@ on:
   push:
     branches:
       - main
+      - release/*
 
 jobs:
-  call-workflow:
+  semantic-release:
     uses: radiorabe/actions/.github/workflows/semantic-release.yaml@main
     secrets:
       RABE_ITREAKTION_GITHUB_TOKEN: ${{ secrets.RABE_ITREAKTION_GITHUB_TOKEN }}
@@ -137,7 +138,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  call-workflow:
+  schedule-trivy:
     uses: radiorabe/actions/.github/workflows/schedule-trivy.yaml@main
     with:
       image-ref: 'ghcr.io/radiorabe/<name>:latest'
