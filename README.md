@@ -84,6 +84,25 @@ jobs:
       requirements: black isort
 ```
 
+#### Python: Poetry Pytest
+
+Create the main `.github/workflows/test.yaml` file for an ansible collection repo:
+
+```yaml
+name: Lint and Test
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  call-workflow:
+    uses: radiorabe/actions/.github/workflows/test-python-poetry.yaml@main
+```
+
+Configure your `pyproject.toml` to run pytest and you are good to go.
+
 ### Semantic Release
 
 For repos that want to use [go-semantic-release](https://go-semantic-release.xyz):
