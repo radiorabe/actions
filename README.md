@@ -77,7 +77,7 @@ on:
       - main
 
 jobs:
-  call-workflow:
+  pre-commit:
     uses: radiorabe/actions/.github/workflows/test-pre-commit.yaml@main
 ```
 
