@@ -62,10 +62,6 @@ on:
 jobs:
   test-ansible-collection:
     uses: radiorabe/actions/.github/workflows/test-ansible-collection.yaml@main
-    with:
-      targets: |
-        roles/example
-        roles/second_example
 ```
 
 ### Pre Commit
