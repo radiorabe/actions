@@ -110,6 +110,30 @@ jobs:
 
 Configure your `pyproject.toml` to run pytest and you are good to go.
 
+### Python: Poetry Release
+
+Create this `.github/workflows/release.yaml
+
+```yaml
+name: Release
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  release:
+    types: [created]
+
+jobs:
+  python-poetry:
+    uses: radiorabe/actions/.github/workflows/release-python-poetry.yaml@main
+    secrets:
+      RABE_PYPI_TOKEN: ${{ secrets.RABE_PYPI_TOKEN }}
+```
+
+Configure your `pyproject.toml` for releasing and your `mkdocs.yml` to generate proper documentation and you are good to go.
+
+
 ### Semantic Release
 
 For repos that want to use [go-semantic-release](https://go-semantic-release.xyz):
