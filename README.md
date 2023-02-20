@@ -9,7 +9,7 @@ See below for copy-pasteable examples of the provided actions.
 
 The examples use `@main` as the target version of the action. You should replace that with the current tag of this repository and also create the following `.github/dependabot.yaml`.
 
-```yaml
+```yaml title=".github/dependabot.yaml"
 version: 2
 updates:
   - package-ecosystem: "github-actions"
@@ -30,7 +30,7 @@ We have workflows for testing Ansible collectionis on GitHub Actions and for rel
 
 Create the main `.github/workflows/release.yaml` file for an ansible collection repo:
 
-```yaml
+```yaml title=".github/workflows/release.yaml"
 name: Release
 
 on:
@@ -42,8 +42,11 @@ jobs:
   release-ansible-collection:
     uses: radiorabe/actions/.github/workflows/release-ansible-collection.yaml@main
     secrets:
-      GALAXY_API_KEY: ${{ secrets.GALAXY_API_KEY }}
+      GALAXY_API_KEY: ${{ secrets.GALAXY_API_KEY }} # (1)
 ```
+
+1. The `GALAXY_API_KEY` is shared across our repos and can be enabled for your
+   repo by a GitHub organisation admin.
 
 The collections we publish with this can be found on [our Galaxy page](https://galaxy.ansible.com/radiorabe).
 
@@ -51,7 +54,7 @@ The collections we publish with this can be found on [our Galaxy page](https://g
 
 Create the main `.github/workflows/test.yaml` file for an ansible collection repo:
 
-```yaml
+```yaml title=".github/workflows/test.yaml"
 name: Lint and Test
 
 on:
@@ -68,7 +71,7 @@ jobs:
 
 Create the main `.github/workflows/test.yaml` file for a project that supports [pre-commit](https://pre-commit.com/):
 
-```yaml
+```yaml title=".github/workflows/test.yaml"
 name: Lint and Test
 
 on:
@@ -81,9 +84,9 @@ jobs:
     uses: radiorabe/actions/.github/workflows/test-pre-commit.yaml@main
 ```
 
-This runs pre-commit with black and isort installed. If you need more tools you can install them with `pip`:
+This runs pre-commit with black and isort installed. If you need more tools you can install them with `pip`.
 
-```yaml
+```yaml title=".github/workflows/test.yaml"
 jobs:
   pre-commit:
     uses: radiorabe/actions/.github/workflows/test-pre-commit.yaml@main
@@ -95,7 +98,7 @@ jobs:
 
 Create the main `.github/workflows/test.yaml` file for an ansible collection repo:
 
-```yaml
+```yaml title=".github/workflows/test.yaml"
 name: Lint and Test
 
 on:
@@ -114,7 +117,7 @@ Configure your `pyproject.toml` to run pytest and you are good to go.
 
 Create this `.github/workflows/release.yaml
 
-```yaml
+```yaml title=".github/workflows/release.yaml"
 name: Release
 
 on:
@@ -128,8 +131,11 @@ jobs:
   python-poetry:
     uses: radiorabe/actions/.github/workflows/release-python-poetry.yaml@main
     secrets:
-      RABE_PYPI_TOKEN: ${{ secrets.RABE_PYPI_TOKEN }}
+      RABE_PYPI_TOKEN: ${{ secrets.RABE_PYPI_TOKEN }} # (1)
 ```
+
+1. The `RABE_PYPI_TOKEN` is shared across our repos and can be enabled for your
+   repo by a GitHub organisation admin.
 
 Configure your `pyproject.toml` for releasing and your `mkdocs.yml` to generate proper documentation and you are good to go.
 
@@ -140,7 +146,7 @@ For repos that want to use [go-semantic-release](https://go-semantic-release.xyz
 
 Create this `.github/workflows/semantic-release.yaml`:
 
-```yaml
+```yaml title=".github/workflows/semantic-release.yaml"
 name: Semantic Release
 
 on:
@@ -153,14 +159,17 @@ jobs:
   semantic-release:
     uses: radiorabe/actions/.github/workflows/semantic-release.yaml@main
     secrets:
-      RABE_ITREAKTION_GITHUB_TOKEN: ${{ secrets.RABE_ITREAKTION_GITHUB_TOKEN }}
+      RABE_ITREAKTION_GITHUB_TOKEN: ${{ secrets.RABE_ITREAKTION_GITHUB_TOKEN }} # (1)
 ```
+
+1. The `RABE_ITREAKTION_GITHUB_TOKEN` is shared across our repos and can be enabled for your
+   repo by a GitHub organisation admin.
 
 ### Trivy
 
 Create this `.github/workflows/schedule.yaml`:
 
-```yaml
+```yaml title=".github/workflows/schedule.yaml"
 name: Scheduled tasks
 
 on:
@@ -172,8 +181,11 @@ jobs:
   schedule-trivy:
     uses: radiorabe/actions/.github/workflows/schedule-trivy.yaml@main
     with:
-      image-ref: 'ghcr.io/radiorabe/<name>:latest'
+      image-ref: 'ghcr.io/radiorabe/<name>:latest' # (1)
 ```
+
+1. Replace this with the actual name of the image, usually something like the
+   name of your repo with maybe a `container-image-` prefix removed.
 
 ## License
 
