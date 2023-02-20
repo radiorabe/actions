@@ -1,0 +1,13 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: rabe-github-actions
+  description: RaBe GitHub Actions
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+    github.com/project-slug: radiorabe/actions
+spec:
+  type: library
+  lifecycle: experimental
+  owner: it-reaktion

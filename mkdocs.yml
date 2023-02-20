@@ -1,0 +1,46 @@
+site_name: RaBe GitHub Actions
+repo_url: https://github.com/radiorabe/actions
+repo_name: radiorabe/actions
+
+theme:
+  name: "material"
+  palette:
+    # Palette toggle for dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+    # Palette toggle for light mode
+    - scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+  icon:
+    repo: fontawesome/brands/git-alt
+  features:
+    - content.code.copy
+    - toc.integrate
+
+markdown_extensions:
+- pymdownx.highlight:
+    anchor_linenums: true
+- pymdownx.inlinehilite
+- pymdownx.snippets
+- pymdownx.superfences
+
+extra_css:
+- css/style.css
+
+plugins:
+- search
+- gen-files:
+    scripts:
+    - docs/gen_ref_pages.py
+- literate-nav
+- section-index
+
+nav:
+  - README: index.md
+
+watch:
+  - README.md
