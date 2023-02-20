@@ -1,0 +1,27 @@
+name: Release Mkdocs
+
+on:
+  workflow_call:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - run: pip install mkdocs mkdocs-material mkdocs-gen-files mkdocs-literate-nav mkdocs-section-index
+
+      - run: mkdocs build
+
+      - run: mkdocs gh-deploy
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
