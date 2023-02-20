@@ -24,7 +24,7 @@ If you need multiple actions to happen then it's up to you to combine them as ne
 
 ### Ansible Collections
 
-We have workflows for testing Ansible collectionis on GitHub Actions and for releasing your Ansible collections to [Galaxy](https://galaxy.ansible.com).
+We have workflows for testing Ansible collections on GitHub Actions and for releasing your Ansible collections to [Galaxy](https://galaxy.ansible.com).
 
 #### Ansible Collections: Release
 
@@ -94,6 +94,10 @@ jobs:
       requirements: black isort
 ```
 
+### Python
+
+Our Python workflows use [Poetry](https://python-poetry.org/) for installing dependencies, [pytest](https://pytest.org/) for testing, and Poetry for publishing to [pypi](https://pypi.org/).
+
 #### Python: Poetry Pytest
 
 Create the main `.github/workflows/test.yaml` file for an ansible collection repo:
@@ -113,7 +117,7 @@ jobs:
 
 Configure your `pyproject.toml` to run pytest and you are good to go.
 
-### Python: Poetry Release
+#### Python: Poetry Release
 
 Create this `.github/workflows/release.yaml
 
