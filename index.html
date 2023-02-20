@@ -307,7 +307,14 @@
     Pre Commit
   </a>
   
-    <nav class="md-nav" aria-label="Pre Commit">
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python" class="md-nav__link">
+    Python
+  </a>
+  
+    <nav class="md-nav" aria-label="Python">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -317,15 +324,15 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-        
           <li class="md-nav__item">
   <a href="#python-poetry-release" class="md-nav__link">
     Python: Poetry Release
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -402,7 +409,7 @@ that RaBe uses for CI/CD ♻️</p>
 </code></pre></div>
 <p>If you need multiple actions to happen then it's up to you to combine them as needed. Please add an example if you use the same combo more than once.</p>
 <h3 id="ansible-collections">Ansible Collections</h3>
-<p>We have workflows for testing Ansible collectionis on GitHub Actions and for releasing your Ansible collections to <a href="https://galaxy.ansible.com">Galaxy</a>.</p>
+<p>We have workflows for testing Ansible collections on GitHub Actions and for releasing your Ansible collections to <a href="https://galaxy.ansible.com">Galaxy</a>.</p>
 <h4 id="ansible-collections-release">Ansible Collections: Release</h4>
 <p>Create the main <code>.github/workflows/release.yaml</code> file for an ansible collection repo:</p>
 <div class="highlight"><span class="filename">.github/workflows/release.yaml</span><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Release</span>
@@ -456,6 +463,8 @@ that RaBe uses for CI/CD ♻️</p>
 <a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="nt">with</span><span class="p">:</span>
 <a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">      </span><span class="nt">requirements</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">black isort</span>
 </code></pre></div>
+<h3 id="python">Python</h3>
+<p>Our Python workflows use <a href="https://python-poetry.org/">Poetry</a> for installing dependencies, <a href="https://pytest.org/">pytest</a> for testing, and Poetry for publishing to <a href="https://pypi.org/">pypi</a>.</p>
 <h4 id="python-poetry-pytest">Python: Poetry Pytest</h4>
 <p>Create the main <code>.github/workflows/test.yaml</code> file for an ansible collection repo:</p>
 <div class="highlight"><span class="filename">.github/workflows/test.yaml</span><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Lint and Test</span>
@@ -470,7 +479,7 @@ that RaBe uses for CI/CD ♻️</p>
 <a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">radiorabe/actions/.github/workflows/test-python-poetry.yaml@main</span>
 </code></pre></div>
 <p>Configure your <code>pyproject.toml</code> to run pytest and you are good to go.</p>
-<h3 id="python-poetry-release">Python: Poetry Release</h3>
+<h4 id="python-poetry-release">Python: Poetry Release</h4>
 <p>Create this `.github/workflows/release.yaml</p>
 <div class="highlight"><span class="filename">.github/workflows/release.yaml</span><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Release</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
