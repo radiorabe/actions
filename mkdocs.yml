@@ -19,6 +19,7 @@ theme:
     repo: fontawesome/brands/git-alt
   features:
     - content.code.copy
+    - content.code.annotate
     - toc.integrate
 
 markdown_extensions:
