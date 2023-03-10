@@ -24,7 +24,7 @@ jobs:
           timeout: ${{ inputs.timeout }}
           format: 'sarif'
           ignore-unfixed: true
-          security-checks: 'vuln'
+          scanners: 'vuln'
           output: 'trivy-results.sarif'
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v2
