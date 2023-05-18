@@ -16,6 +16,20 @@ on:
 jobs:
   trivy:
     runs-on: ubuntu-latest
+
+    permissions:
+      actions: none
+      checks: none
+      contents: none
+      deployments: none
+      issues: none
+      packages: none
+      pull-requests: none
+      repository-projects: none
+      security-events: write
+      statuses: none
+      id-token: write # needed for signing the images with GitHub OIDC using cosign
+
     steps:
       - name: Install Cosign
         uses: sigstore/cosign-installer@v3.0.5
