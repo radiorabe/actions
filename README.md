@@ -90,7 +90,7 @@ jobs:
   release-container:
     uses: radiorabe/actions/.github/workflows/release-container.yaml@main
     with:
-      image: 'ghcr.io/radiorabe/<name>:latest' # (1)
+      image: 'ghcr.io/radiorabe/<name>' # (1)
       name: <name> # (2)
       display-name: <display-name> # (3)
       tags: <tags> # (4)
