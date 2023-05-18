@@ -28,10 +28,12 @@ on:
         description: 'issuer used for keyless signature verification'
         required: false
         default: 'https://token.actions.githubusercontent.com'
+        type: string
       cosign-certificate-identity-regexp:
         description: 'regex to verify the subject against'
         required: false
         default: 'https://github.com/radiorabe/.*'
+        type: string
 
 jobs:
   docker:
