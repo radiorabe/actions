@@ -67,6 +67,72 @@ jobs:
     uses: radiorabe/actions/.github/workflows/test-ansible-collection.yaml@main
 ```
 
+### Container Images
+
+There are actions to cover the full lifecycle of a typical container image.
+
+#### Container Images: Release
+
+To build, scan, and sign a container image , create this `.github/workflows/release.yaml`:
+
+```yaml title=".github/workflows/release.yaml"
+name: Release
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+    tags:
+      - '*'
+
+jobs:
+  release-container:
+    uses: radiorabe/actions/.github/workflows/release-container.yaml@main
+    with:
+      image: 'ghcr.io/radiorabe/<name>:latest' # (1)
+      name: <name> # (2)
+      display-name: <display-name> # (3)
+      tags: <tags> # (4)
+      cosign-verify: true # (5)
+      cosign-certificate-oidc-issuer: <issues> # (6)
+      cosign-certificate-identity-regexp: <regexp> # (7)
+```
+
+1. Replace this with the actual name of the image, usually something like the
+   name of your repo with maybe a `container-image-` prefix removed.
+2. Replace the name with the stem of the image
+3. Put a human friendly string into display-name.
+4. Tags are usually `minimal rhel9 rabe` plus additional tags for the image
+   at hand.
+5. Enable image scanning. This only needs to be disabled for base image that
+   we don't sign ourself.
+6. Defaults to GitHub as an issuer and only needs tuning in special cases.
+7. The default `https://github.com/radiorabe/.*` allows signatures from all
+   of our orga, add a more specific regexp if you feel the need.
+
+#### Container Images: Schedule
+
+To scan the latest container image with trivy at regular intervals, create this `.github/workflows/schedule.yaml`:
+
+```yaml title=".github/workflows/schedule.yaml"
+name: Scheduled tasks
+
+on:
+  schedule:
+    - cron:  '13 12 * * *'
+  workflow_dispatch:
+
+jobs:
+  schedule-trivy:
+    uses: radiorabe/actions/.github/workflows/schedule-trivy.yaml@main
+    with:
+      image-ref: 'ghcr.io/radiorabe/<name>:latest' # (1)
+```
+
+1. Replace this with the actual name of the image, usually something like the
+   name of your repo with maybe a `container-image-` prefix removed.
+
 ### Pre Commit
 
 Create the main `.github/workflows/test.yaml` file for a project that supports [pre-commit](https://pre-commit.com/):
@@ -168,28 +234,6 @@ jobs:
 
 1. The `RABE_ITREAKTION_GITHUB_TOKEN` is shared across our repos and can be enabled for your
    repo by a GitHub organisation admin.
-
-### Trivy
-
-Create this `.github/workflows/schedule.yaml`:
-
-```yaml title=".github/workflows/schedule.yaml"
-name: Scheduled tasks
-
-on:
-  schedule:
-    - cron:  '13 12 * * *'
-  workflow_dispatch:
-
-jobs:
-  schedule-trivy:
-    uses: radiorabe/actions/.github/workflows/schedule-trivy.yaml@main
-    with:
-      image-ref: 'ghcr.io/radiorabe/<name>:latest' # (1)
-```
-
-1. Replace this with the actual name of the image, usually something like the
-   name of your repo with maybe a `container-image-` prefix removed.
 
 ## License
 
