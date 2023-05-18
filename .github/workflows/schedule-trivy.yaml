@@ -61,4 +61,4 @@ jobs:
           output: 'vuln.json'
 
       - name: Attach a security attestation to the signed image
-        run: cosign attest --type vuln --predicate vuln.json ${{ inputs.image-ref }}
+        run: cosign attest --yes --force --type vuln --predicate vuln.json ${{ inputs.image-ref }}
