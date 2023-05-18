@@ -40,7 +40,6 @@ jobs:
       # we create a vuln.jsn if we also plan on uploading it as attestation
       - name: Run Trivy vulnerability scanner (cosign-vuln)
         uses: aquasecurity/trivy-action@0.10.0
-        if: github.event_name != 'pull_request' && startsWith(github.event.ref, 'refs/tags/v')
         with:
           image-ref: 'ghcr.io/radiorabe/ubi9-minimal:${{ steps.meta.outputs.version }}'
           format: 'cosign-vuln'
@@ -49,4 +48,3 @@ jobs:
 
       - name: Attach a security attestation to the signed image
         run: cosign attest --type vuln --predicate vuln.json ${{ inputs.image-ref }}
-        if: github.event_name != 'pull_request' && startsWith(github.event.ref, 'refs/tags/v')
