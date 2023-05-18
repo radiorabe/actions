@@ -23,7 +23,7 @@ jobs:
       contents: none
       deployments: none
       issues: none
-      packages: none
+      packages: write # allow pushing attestation to registry
       pull-requests: none
       repository-projects: none
       security-events: write
