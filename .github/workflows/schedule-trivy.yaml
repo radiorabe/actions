@@ -60,5 +60,12 @@ jobs:
           ignore-unfixed: true
           output: 'vuln.json'
 
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Attach a security attestation to the signed image
         run: cosign attest --yes --type vuln --predicate vuln.json ${{ inputs.image-ref }}
