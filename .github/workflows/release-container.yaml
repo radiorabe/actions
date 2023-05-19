@@ -156,7 +156,7 @@ jobs:
           DOCKER_CONTENT_TRUST: 1
 
       - name: Sign the images with GitHub OIDC Token using cosign
-        run: cosign sign ${{ inputs.image }}@${{ steps.docker_push.outputs.digest }}
+        run: cosign sign --yes ${{ inputs.image }}@${{ steps.docker_push.outputs.digest }}
         if: github.event_name != 'pull_request' && startsWith(github.event.ref, 'refs/tags/v')
         env:
           TAGS: ${{ steps.meta.outputs.tags }}
@@ -173,5 +173,5 @@ jobs:
           output: 'vuln.json'
 
       - name: Attach a security attestation to the signed image
-        run: cosign attest --type vuln --predicate vuln.json ${{ inputs.image }}@${{ steps.docker_push.outputs.digest }}
+        run: cosign attest --yes --type vuln --predicate vuln.json ${{ inputs.image }}@${{ steps.docker_push.outputs.digest }}
         if: github.event_name != 'pull_request' && startsWith(github.event.ref, 'refs/tags/v')
