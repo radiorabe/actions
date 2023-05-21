@@ -95,8 +95,9 @@ jobs:
       display-name: <display-name> # (3)
       tags: <tags> # (4)
       cosign-verify: true # (5)
-      cosign-certificate-oidc-issuer: <issues> # (6)
-      cosign-certificate-identity-regexp: <regexp> # (7)
+      cosign-certificate-oidc-issuer: [issues] # (6)
+      cosign-certificate-identity-regexp: [regexp] # (7)
+      cosign-base-image-only: [true] # (8)
 ```
 
 1. Replace this with the actual name of the image, usually something like the
@@ -110,6 +111,8 @@ jobs:
 6. Defaults to GitHub as an issuer and only needs tuning in special cases.
 7. The default `https://github.com/radiorabe/.*` allows signatures from all
    of our orga, add a more specific regexp if you feel the need.
+8. Pass `--base-image-only` to cosign if you are copying binaries from a
+   source image that isn't signed with cosign.
 
 #### Container Images: Schedule
 
