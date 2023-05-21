@@ -11,7 +11,7 @@
       
       
       <link rel="icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.13">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.14">
     
     
       
@@ -494,8 +494,9 @@ that RaBe uses for CI/CD ♻️</p>
 <a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w">      </span><span class="nt">display-name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;display-name&gt;</span><span class="w"> </span><span class="c1"># (3)</span>
 <a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w">      </span><span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;tags&gt;</span><span class="w"> </span><span class="c1"># (4)</span>
 <a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="w">      </span><span class="nt">cosign-verify</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"> </span><span class="c1"># (5)</span>
-<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w">      </span><span class="nt">cosign-certificate-oidc-issuer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;issues&gt;</span><span class="w"> </span><span class="c1"># (6)</span>
-<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="w">      </span><span class="nt">cosign-certificate-identity-regexp</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;regexp&gt;</span><span class="w"> </span><span class="c1"># (7)</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w">      </span><span class="nt">cosign-certificate-oidc-issuer</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">issues</span><span class="p p-Indicator">]</span><span class="w"> </span><span class="c1"># (6)</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="w">      </span><span class="nt">cosign-certificate-identity-regexp</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">regexp</span><span class="p p-Indicator">]</span><span class="w"> </span><span class="c1"># (7)</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="w">      </span><span class="nt">cosign-base-image-only</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">true</span><span class="p p-Indicator">]</span><span class="w"> </span><span class="c1"># (8)</span>
 </code></pre></div>
 <ol>
 <li>Replace this with the actual name of the image, usually something like the
@@ -509,6 +510,8 @@ that RaBe uses for CI/CD ♻️</p>
 <li>Defaults to GitHub as an issuer and only needs tuning in special cases.</li>
 <li>The default <code>https://github.com/radiorabe/.*</code> allows signatures from all
    of our orga, add a more specific regexp if you feel the need.</li>
+<li>Pass <code>--base-image-only</code> to cosign if you are copying binaries from a
+   source image that isn't signed with cosign.</li>
 </ol>
 <h4 id="container-images-schedule">Container Images: Schedule</h4>
 <p>To scan the latest container image with trivy at regular intervals, create this <code>.github/workflows/schedule.yaml</code>:</p>
