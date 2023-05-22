@@ -26,7 +26,7 @@ If you need multiple actions to happen then it's up to you to combine them as ne
 
 We have workflows for testing Ansible collections on GitHub Actions and for releasing your Ansible collections to [Galaxy](https://galaxy.ansible.com).
 
-#### Ansible Collections: Release
+#### Ansible: Release
 
 Create the main `.github/workflows/release.yaml` file for an ansible collection repo:
 
@@ -50,7 +50,7 @@ jobs:
 
 The collections we publish with this can be found on [our Galaxy page](https://galaxy.ansible.com/radiorabe).
 
-#### Ansible Collections: Test
+#### Ansible: Test
 
 Create the main `.github/workflows/test.yaml` file for an ansible collection repo:
 
@@ -71,7 +71,7 @@ jobs:
 
 There are actions to cover the full lifecycle of a typical container image.
 
-#### Container Images: Release
+#### Container: Release
 
 To build, scan, and sign a container image , create this `.github/workflows/release.yaml`:
 
@@ -114,7 +114,7 @@ jobs:
 8. Pass `--base-image-only` to cosign if you are copying binaries from a
    source image that isn't signed with cosign.
 
-#### Container Images: Schedule
+#### Container: Schedule
 
 To scan the latest container image with trivy at regular intervals, create this `.github/workflows/schedule.yaml`:
 
