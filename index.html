@@ -292,15 +292,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#ansible-collections-release" class="md-nav__link">
-    Ansible Collections: Release
+  <a href="#ansible-release" class="md-nav__link">
+    Ansible: Release
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#ansible-collections-test" class="md-nav__link">
-    Ansible Collections: Test
+  <a href="#ansible-test" class="md-nav__link">
+    Ansible: Test
   </a>
   
 </li>
@@ -319,15 +319,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#container-images-release" class="md-nav__link">
-    Container Images: Release
+  <a href="#container-release" class="md-nav__link">
+    Container: Release
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#container-images-schedule" class="md-nav__link">
-    Container Images: Schedule
+  <a href="#container-schedule" class="md-nav__link">
+    Container: Schedule
   </a>
   
 </li>
@@ -438,7 +438,7 @@ that RaBe uses for CI/CD ♻️</p>
 <p>If you need multiple actions to happen then it's up to you to combine them as needed. Please add an example if you use the same combo more than once.</p>
 <h3 id="ansible-collections">Ansible Collections</h3>
 <p>We have workflows for testing Ansible collections on GitHub Actions and for releasing your Ansible collections to <a href="https://galaxy.ansible.com">Galaxy</a>.</p>
-<h4 id="ansible-collections-release">Ansible Collections: Release</h4>
+<h4 id="ansible-release">Ansible: Release</h4>
 <p>Create the main <code>.github/workflows/release.yaml</code> file for an ansible collection repo:</p>
 <div class="highlight"><span class="filename">.github/workflows/release.yaml</span><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Release</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
@@ -458,7 +458,7 @@ that RaBe uses for CI/CD ♻️</p>
    repo by a GitHub organisation admin.</li>
 </ol>
 <p>The collections we publish with this can be found on <a href="https://galaxy.ansible.com/radiorabe">our Galaxy page</a>.</p>
-<h4 id="ansible-collections-test">Ansible Collections: Test</h4>
+<h4 id="ansible-test">Ansible: Test</h4>
 <p>Create the main <code>.github/workflows/test.yaml</code> file for an ansible collection repo:</p>
 <div class="highlight"><span class="filename">.github/workflows/test.yaml</span><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Lint and Test</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
@@ -473,7 +473,7 @@ that RaBe uses for CI/CD ♻️</p>
 </code></pre></div>
 <h3 id="container-images">Container Images</h3>
 <p>There are actions to cover the full lifecycle of a typical container image.</p>
-<h4 id="container-images-release">Container Images: Release</h4>
+<h4 id="container-release">Container: Release</h4>
 <p>To build, scan, and sign a container image , create this <code>.github/workflows/release.yaml</code>:</p>
 <div class="highlight"><span class="filename">.github/workflows/release.yaml</span><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Release</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
@@ -513,7 +513,7 @@ that RaBe uses for CI/CD ♻️</p>
 <li>Pass <code>--base-image-only</code> to cosign if you are copying binaries from a
    source image that isn't signed with cosign.</li>
 </ol>
-<h4 id="container-images-schedule">Container Images: Schedule</h4>
+<h4 id="container-schedule">Container: Schedule</h4>
 <p>To scan the latest container image with trivy at regular intervals, create this <code>.github/workflows/schedule.yaml</code>:</p>
 <div class="highlight"><span class="filename">.github/workflows/schedule.yaml</span><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Scheduled tasks</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
