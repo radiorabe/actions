@@ -17,7 +17,7 @@ updates:
     schedule:
       interval: "daily"
     commit-message:
-      prefix: "chore(ci): "
+      prefix: "ci: "
 ```
 
 If you need multiple actions to happen then it's up to you to combine them as needed. Please add an example if you use the same combo more than once.
