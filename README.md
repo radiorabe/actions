@@ -7,7 +7,7 @@ that RaBe uses for CI/CD ♻️
 
 See below for copy-pasteable examples of the provided actions.
 
-The examples use `@main` as the target version of the action. You should replace that with the current tag of this repository and also create the following `.github/dependabot.yaml`.
+The examples use `@v0.0.0` as the target version of the action. You NEED to replace that with the current tag of this repository and also create the following `.github/dependabot.yaml`.
 
 ```yaml title=".github/dependabot.yaml"
 version: 2
@@ -40,7 +40,7 @@ on:
 
 jobs:
   release-ansible-collection:
-    uses: radiorabe/actions/.github/workflows/release-ansible-collection.yaml@main
+    uses: radiorabe/actions/.github/workflows/release-ansible-collection.yaml@v0.0.0
     secrets:
       GALAXY_API_KEY: ${{ secrets.GALAXY_API_KEY }} # (1)
 ```
@@ -64,7 +64,7 @@ on:
 
 jobs:
   test-ansible-collection:
-    uses: radiorabe/actions/.github/workflows/test-ansible-collection.yaml@main
+    uses: radiorabe/actions/.github/workflows/test-ansible-collection.yaml@v0.0.0
 ```
 
 ### Container Images
@@ -88,7 +88,7 @@ on:
 
 jobs:
   release-container:
-    uses: radiorabe/actions/.github/workflows/release-container.yaml@main
+    uses: radiorabe/actions/.github/workflows/release-container.yaml@v0.0.0
     with:
       image: 'ghcr.io/radiorabe/<name>' # (1)
       name: <name> # (2)
@@ -128,7 +128,7 @@ on:
 
 jobs:
   schedule-trivy:
-    uses: radiorabe/actions/.github/workflows/schedule-trivy.yaml@main
+    uses: radiorabe/actions/.github/workflows/schedule-trivy.yaml@v0.0.0
     with:
       image-ref: 'ghcr.io/radiorabe/<name>:latest' # (1)
 ```
@@ -150,7 +150,7 @@ on:
 
 jobs:
   pre-commit:
-    uses: radiorabe/actions/.github/workflows/test-pre-commit.yaml@main
+    uses: radiorabe/actions/.github/workflows/test-pre-commit.yaml@v0.0.0
 ```
 
 This runs pre-commit with black and isort installed. If you need more tools you can install them with `pip`.
@@ -158,7 +158,7 @@ This runs pre-commit with black and isort installed. If you need more tools you 
 ```yaml title=".github/workflows/test.yaml"
 jobs:
   pre-commit:
-    uses: radiorabe/actions/.github/workflows/test-pre-commit.yaml@main
+    uses: radiorabe/actions/.github/workflows/test-pre-commit.yaml@v0.0.0
     with:
       requirements: black isort
 ```
@@ -181,7 +181,7 @@ on:
 
 jobs:
   test-python-poetry:
-    uses: radiorabe/actions/.github/workflows/test-python-poetry.yaml@main
+    uses: radiorabe/actions/.github/workflows/test-python-poetry.yaml@v0.0.0
 ```
 
 Configure your `pyproject.toml` to run pytest and you are good to go.
@@ -202,7 +202,7 @@ on:
 
 jobs:
   python-poetry:
-    uses: radiorabe/actions/.github/workflows/release-python-poetry.yaml@main
+    uses: radiorabe/actions/.github/workflows/release-python-poetry.yaml@v0.0.0
     secrets:
       RABE_PYPI_TOKEN: ${{ secrets.RABE_PYPI_TOKEN }} # (1)
 ```
@@ -230,7 +230,7 @@ on:
 
 jobs:
   semantic-release:
-    uses: radiorabe/actions/.github/workflows/semantic-release.yaml@main
+    uses: radiorabe/actions/.github/workflows/semantic-release.yaml@v0.0.0
     secrets:
       RABE_ITREAKTION_GITHUB_TOKEN: ${{ secrets.RABE_ITREAKTION_GITHUB_TOKEN }} # (1)
 ```
