@@ -102,7 +102,7 @@ jobs:
         uses: docker/setup-buildx-action@v2
 
       - name: Verify Dockerfile using cosign
-        run: cosign dockerfile verify --certificate-oidc-issuer ${{ inputs.cosign-certificate-oidc-issuer }} --certificate-identity-regexp ${{ inputs.cosign-certificate-identity-regexp }} ${{ inputs.cosign-base-image-only && '--base-image-only' }} Dockerfile > /dev/null
+        run: cosign dockerfile verify --certificate-oidc-issuer ${{ inputs.cosign-certificate-oidc-issuer }} --certificate-identity-regexp ${{ inputs.cosign-certificate-identity-regexp }} ${{ inputs.cosign-base-image-only && '--base-image-only' || '' }} Dockerfile > /dev/null
         if: inputs.cosign-verify
 
       - name: Build Container Image
