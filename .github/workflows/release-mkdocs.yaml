@@ -9,6 +9,18 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      actions: none
+      checks: none
+      contents: write # for pushing gh-pages branch
+      deployments: none
+      issues: none
+      packages: none
+      pull-requests: none
+      repository-projects: none
+      security-events: none
+      statuses: none
+      id-token: none
     steps:
       - uses: actions/checkout@v3
         with:
