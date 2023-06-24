@@ -30,4 +30,6 @@ jobs:
 
       - run: poetry install
 
+      - run: poetry run pip install pytest-github-actions-annotate-failures
+
       - run: poetry run pytest
