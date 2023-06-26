@@ -32,7 +32,7 @@ jobs:
 
     steps:
       - name: Install Cosign
-        uses: sigstore/cosign-installer@v3.0.5
+        uses: sigstore/cosign-installer@v3.1.0
 
       - name: Run Trivy vulnerability scanner (sarif)
         uses: aquasecurity/trivy-action@0.11.2
