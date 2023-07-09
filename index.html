@@ -11,7 +11,7 @@
       
       
       <link rel="icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.17">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.18">
     
     
       
@@ -513,6 +513,8 @@ that RaBe uses for CI/CD ♻️</p>
 <li>Pass <code>--base-image-only</code> to cosign if you are copying binaries from a
    source image that isn't signed with cosign.</li>
 </ol>
+<p>As a last step, it is recommended to add <code>trivy.*</code> to both your <code>.gitignore</code>
+and <code>.dockerignore</code> files so trivy can't interfere with multi-stage builds.</p>
 <h4 id="container-schedule">Container: Schedule</h4>
 <p>To scan the latest container image with trivy at regular intervals, create this <code>.github/workflows/schedule.yaml</code>:</p>
 <div class="highlight"><span class="filename">.github/workflows/schedule.yaml</span><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Scheduled tasks</span>
@@ -654,10 +656,10 @@ Software Foundation, version 3 of the License.</p>
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": ".", "features": ["content.code.copy", "content.code.annotate", "toc.integrate"], "search": "assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": ".", "features": ["content.code.copy", "content.code.annotate", "toc.integrate"], "search": "assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="assets/javascripts/bundle.b425cdc4.min.js"></script>
+      <script src="assets/javascripts/bundle.220ee61c.min.js"></script>
       
     
   </body>
