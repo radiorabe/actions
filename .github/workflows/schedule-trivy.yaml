@@ -34,31 +34,46 @@ jobs:
       - name: Install Cosign
         uses: sigstore/cosign-installer@v3.1.1
 
-      - name: Run Trivy vulnerability scanner (sarif)
+      - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.11.2
         with:
           image-ref: ${{ inputs.image-ref }}
           timeout: ${{ inputs.timeout }}
-          format: 'sarif'
+          format: 'json'
           ignore-unfixed: true
+          list-all-pkgs: true
           scanners: 'vuln'
-          output: 'trivy-results.sarif'
+          output: 'trivy.json'
+
+      - name: Convert trivy results to sarif
+        uses: aquasecurity/trivy-action@0.11.2
+        with:
+          image-ref: trivy.json
+          scan-type: 'convert'
+          format: 'sarif'
+          # we don't actually limit them, but this gates the convert action
+          limit-severities-for-sarif: true
+          # empty makes it skip the --vuln-type arg
+          vuln-type: ''
+          output: 'trivy.sarif'
 
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v2
         if: always()
         with:
-          sarif_file: 'trivy-results.sarif'
+          sarif_file: 'trivy.sarif'
 
-      # see https://github.com/aquasecurity/trivy/issues/3243 for why we run it twice
-      # we create a vuln.jsn if we also plan on uploading it as attestation
-      - name: Run Trivy vulnerability scanner (cosign-vuln)
+      - name: Convert trivy results to cosign-vuln
         uses: aquasecurity/trivy-action@0.11.2
         with:
-          image-ref: 'ghcr.io/radiorabe/ubi9-minimal:${{ steps.meta.outputs.version }}'
+          image-ref: trivy.json
+          scan-type: 'convert'
           format: 'cosign-vuln'
-          ignore-unfixed: true
-          output: 'vuln.json'
+          # we don't actually limit them, but this gates the convert action
+          limit-severities-for-sarif: true
+          # empty makes it skip the --vuln-type arg
+          vuln-type: ''
+          output: 'trivy.cosign.json'
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
@@ -68,4 +83,4 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Attach a security attestation to the signed image
-        run: cosign attest --yes --type vuln --predicate vuln.json ${{ inputs.image-ref }}
+        run: cosign attest --yes --type vuln --predicate trivy.cosign.json ${{ inputs.image-ref }}
