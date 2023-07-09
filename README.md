@@ -114,6 +114,9 @@ jobs:
 8. Pass `--base-image-only` to cosign if you are copying binaries from a
    source image that isn't signed with cosign.
 
+As a last step, it is recommended to add `trivy.*` to both your `.gitignore`
+and `.dockerignore` files so trivy can't interfere with multi-stage builds.
+
 #### Container: Schedule
 
 To scan the latest container image with trivy at regular intervals, create this `.github/workflows/schedule.yaml`:
