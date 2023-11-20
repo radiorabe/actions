@@ -64,7 +64,7 @@ jobs:
           fetch-depth: 0
 
       - name: Install Cosign
-        uses: sigstore/cosign-installer@v3.1.2
+        uses: sigstore/cosign-installer@v3.2.0
 
       - name: Prepare additional Metadata
         id: additional_meta
