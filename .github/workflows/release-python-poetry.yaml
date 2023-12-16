@@ -36,7 +36,7 @@ jobs:
       - run: poetry build --no-interaction
 
       - name: Publish to PyPi
-        uses: pypa/gh-action-pypi-publish@release/v1.8.11
+        uses: pypa/gh-action-pypi-publish@v1.8.11
         with:
           verbose: true
           print-hash: true
