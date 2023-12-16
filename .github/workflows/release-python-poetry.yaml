@@ -2,20 +2,13 @@ name: Release
 
 on:
   workflow_call:
+    secrets:
+      RABE_PYPI_TOKEN:
+        required: true
 
 jobs:
   publish:
     runs-on: ubuntu-latest
-
-    permissions:
-      # Used to authenticate to PyPI via OIDC.
-      # Used to sign the release's artifacts with sigstore-python.
-      id-token: write
-      # Used to attach signing artifacts to the published release.
-      contents: write
-      # For Pages (in addition to contents write)
-      pages: write
-
     steps:
       - uses: actions/checkout@v4
         with:
@@ -31,23 +24,23 @@ jobs:
 
       - run: poetry install
 
+      - name: Configure poetry
+        run: poetry config pypi-token.pypi ${{ secrets.RABE_PYPI_TOKEN }}
+        if: ${{ github.event_name == 'release' }}
+
+      - name: Set dry-run flag
+        id: dry-run
+        run: |
+          flag="--dry-run"
+          if ${{ github.event_name == 'release' }}
+          then
+            flag=""
+          fi
+          echo "flag=$flag" >> $GITHUB_OUTPUT
+
       - run: poetry version $(git describe --tags --abbrev=0 --exact-match || (git describe --tags --abbrev=0 --dirty=+dev|tr -d '\n'; echo "+dev"))
 
-      - run: poetry build --no-interaction
-
-      - name: Publish to PyPi
-        uses: pypa/gh-action-pypi-publish@v1.8.11
-        with:
-          verbose: true
-          print-hash: true
-        if: ${{ github.event_name == 'release' }}
-
-      - name: Sign published artifacts
-        uses: sigstore/gh-action-sigstore-python@v2.1.1
-        with:
-          inputs: ./dist/*.tar.gz ./dist/*.whl
-          release-signing-artifacts: true
-        if: ${{ github.event_name == 'release' }}
+      - run: poetry publish --build --no-interaction ${{ steps.dry-run.outputs.flag }}
 
       - run: poetry run mkdocs gh-deploy
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
