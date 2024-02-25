@@ -26,7 +26,7 @@ jobs:
     - name: Lint with flake8
       run: flake8 . --count --show-source --statistics
     - name: Lint with black
-      run: black .
+      run: black --check --diff .
     - name: Lint with ansible-lint
       uses: ansible-community/ansible-lint-action@v6
       with:
