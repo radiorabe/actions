@@ -215,6 +215,26 @@ jobs:
 
 Configure your `pyproject.toml` for releasing and your `mkdocs.yml` to generate proper documentation and you are good to go.
 
+### Mkdocs
+
+For repos that contain documentation built with mkdocs that do not use the poetry action.
+
+Create a `.github/workflows/release.yaml` file with the following content:
+
+```
+name: Release
+
+on:
+  push:
+    main
+  pull_request:
+
+jobs:
+  release-mkdocs:
+    uses: radiorabe/actions/.github/workflows/release-mkdocs.yaml@v0.0.0
+```
+
+Add a `mkdocs.yaml` config and `docs/` directory and you are good to go.
 
 ### Semantic Release
 
