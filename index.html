@@ -557,6 +557,7 @@ that RaBe uses for CI/CD ♻️</p>
 <a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="w">      </span><span class="nt">cosign-base-image-only</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">true</span><span class="p p-Indicator">]</span><span class="w"> </span><span class="c1"># (8)</span>
 <a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="w">      </span><span class="nt">dockerfile</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">Dockerfile</span><span class="p p-Indicator">]</span><span class="w"> </span><span class="c1"># (9)</span>
 <a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="w">      </span><span class="nt">context</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">.</span><span class="p p-Indicator">]</span><span class="w"> </span><span class="c1"># (10)</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="w">      </span><span class="nt">build-args</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="c1"># (11)</span>
 </code></pre></div>
 <ol>
 <li>Replace this with the actual name of the image, usually something like the
@@ -574,6 +575,8 @@ that RaBe uses for CI/CD ♻️</p>
    source image that isn't signed with cosign.</li>
 <li>Specify the path to the Dockerfile if it isn't in the root of the repository.</li>
 <li>Specify the context directory for Docker build.</li>
+<li>Build ARGs for the conatimer image build, formatted as <code>KEY=value</code> and
+   separated by newlines if more than one arg is needed.</li>
 </ol>
 <p>As a last step, it is recommended to add <code>trivy.*</code> to both your <code>.gitignore</code>
 and <code>.dockerignore</code> files so trivy can't interfere with multi-stage builds.</p>
