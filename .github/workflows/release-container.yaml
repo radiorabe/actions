@@ -39,6 +39,16 @@ on:
         required: false
         default: false
         type: boolean
+      dockerfile-path:
+        description: 'Path to the Dockerfile used in the build'
+        required: false
+        default: 'Dockerfile'
+        type: string
+      context:
+        description: 'Context directory for build'
+        required: false
+        default: '.'
+        type: string
 
 jobs:
   docker:
@@ -101,16 +111,16 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Verify Dockerfile using cosign
-        run: cosign dockerfile verify --certificate-oidc-issuer ${{ inputs.cosign-certificate-oidc-issuer }} --certificate-identity-regexp ${{ inputs.cosign-certificate-identity-regexp }} ${{ inputs.cosign-base-image-only && '--base-image-only' || '' }} Dockerfile > /dev/null
+      - name: Verify ${{ inputs.dockerfile }} using cosign
+        run: cosign dockerfile verify --certificate-oidc-issuer ${{ inputs.cosign-certificate-oidc-issuer }} --certificate-identity-regexp ${{ inputs.cosign-certificate-identity-regexp }} ${{ inputs.cosign-base-image-only && '--base-image-only' || '' }} ${{ inputs.dockerfile }} > /dev/null
         if: inputs.cosign-verify
 
       - name: Build Container Image
         id: docker_build
         uses: docker/build-push-action@v6
         with:
-          context: .
-          file: ./Dockerfile
+          context: ${{ inputs.context }}
+          file: ${{ inputs.dockerfile }}
           platforms: linux/amd64
           load: true
           push: false
@@ -162,8 +172,8 @@ jobs:
         id: docker_push
         uses: docker/build-push-action@v6
         with:
-          context: .
-          file: ./Dockerfile
+          context: ${{ inputs.context }}
+          file: ${{ inputs.dockerfile }}
           platforms: linux/amd64
           push: ${{ github.event_name != 'pull_request' && startsWith(github.event.ref, 'refs/tags/v') }}
           tags: ${{ steps.meta.outputs.tags }}

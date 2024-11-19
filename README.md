@@ -98,6 +98,8 @@ jobs:
       cosign-certificate-oidc-issuer: [issues] # (6)
       cosign-certificate-identity-regexp: [regexp] # (7)
       cosign-base-image-only: [true] # (8)
+      dockerfile: [Dockerfile] # (9)
+      context: [.] # (10)
 ```
 
 1. Replace this with the actual name of the image, usually something like the
@@ -113,6 +115,8 @@ jobs:
    of our orga, add a more specific regexp if you feel the need.
 8. Pass `--base-image-only` to cosign if you are copying binaries from a
    source image that isn't signed with cosign.
+9. Specify the path to the Dockerfile if it isn't in the root of the repository.
+10. Specify the context directory for Docker build.
 
 As a last step, it is recommended to add `trivy.*` to both your `.gitignore`
 and `.dockerignore` files so trivy can't interfere with multi-stage builds.
