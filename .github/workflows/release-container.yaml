@@ -39,7 +39,7 @@ on:
         required: false
         default: false
         type: boolean
-      dockerfile-path:
+      dockerfile:
         description: 'Path to the Dockerfile used in the build'
         required: false
         default: 'Dockerfile'
