@@ -100,6 +100,7 @@ jobs:
       cosign-base-image-only: [true] # (8)
       dockerfile: [Dockerfile] # (9)
       context: [.] # (10)
+      build-args: "" # (11)
 ```
 
 1. Replace this with the actual name of the image, usually something like the
@@ -117,6 +118,8 @@ jobs:
    source image that isn't signed with cosign.
 9. Specify the path to the Dockerfile if it isn't in the root of the repository.
 10. Specify the context directory for Docker build.
+11. Build ARGs for the conatimer image build, formatted as `KEY=value` and
+   separated by newlines if more than one arg is needed.
 
 As a last step, it is recommended to add `trivy.*` to both your `.gitignore`
 and `.dockerignore` files so trivy can't interfere with multi-stage builds.

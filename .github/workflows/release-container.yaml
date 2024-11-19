@@ -49,6 +49,11 @@ on:
         required: false
         default: '.'
         type: string
+      build-args:
+        description: 'Pass ARGs to the build'
+        required: false
+        default: ''
+        type: string
 
 jobs:
   docker:
@@ -127,6 +132,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: ${{ inputs.build-args }}
           labels: |
             ${{ steps.meta.outputs.labels }}
             version=${{ steps.meta.outputs.version }}
@@ -181,6 +187,7 @@ jobs:
           push: ${{ github.event_name != 'pull_request' && startsWith(github.event.ref, 'refs/tags/v') }}
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=gha
+          build-args: ${{ inputs.build-args }}
           labels: |
             ${{ steps.meta.outputs.labels }}
             version=${{ steps.meta.outputs.version }}
