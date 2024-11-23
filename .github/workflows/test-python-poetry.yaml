@@ -6,7 +6,7 @@ on:
       version:
         description: 'version to test against (in addition to latest 3.x)'
         required: false
-        default: '3.11'
+        default: '3.12'
         type: string
 
 jobs:
