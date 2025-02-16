@@ -54,6 +54,11 @@ on:
         required: false
         default: ''
         type: string
+      push-default-branch:
+        description: 'Push the default branch (typically `main`) to the rgistry.'
+        required: false
+        default: false
+        type: boolean
 
 jobs:
   docker:
@@ -184,7 +189,7 @@ jobs:
           context: ${{ inputs.context }}
           file: ${{ inputs.dockerfile }}
           platforms: linux/amd64
-          push: ${{ github.event_name != 'pull_request' && startsWith(github.event.ref, 'refs/tags/v') }}
+          push: ${{ github.event_name != 'pull_request' && (startsWith(github.event.ref, 'refs/tags/v') || $inputs.push-default-branch &&  github.event.ref_name == github.event.repository.default_branch) }}
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=gha
           build-args: ${{ inputs.build-args }}
