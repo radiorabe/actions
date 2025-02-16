@@ -59,6 +59,11 @@ on:
         required: false
         default: false
         type: boolean
+      pre-script:
+        description: 'Run a script before interacting with the Dockerfile.'
+        required: false
+        default: ''
+        type: string
 
 jobs:
   docker:
@@ -120,6 +125,10 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+
+      - name: Run pre script
+        run: ${{ inputs.pre-script }}
+        if: inputs.pre-script != ''
 
       - name: Verify ${{ inputs.dockerfile }} using cosign
         run: cosign dockerfile verify --certificate-oidc-issuer ${{ inputs.cosign-certificate-oidc-issuer }} --certificate-identity-regexp ${{ inputs.cosign-certificate-identity-regexp }} ${{ inputs.cosign-base-image-only && '--base-image-only' || '' }} ${{ inputs.dockerfile }} > /dev/null
