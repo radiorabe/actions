@@ -101,6 +101,14 @@ jobs:
       dockerfile: [Dockerfile] # (9)
       context: [.] # (10)
       build-args: "" # (11)
+      platforms: "linux/amd64,linux/arm64" # (12)
+      docker-build-context: | # (13)
+        {
+          "debug": true,
+          "features": {
+            "containerd-snapshotter": true
+          }
+        }
 ```
 
 1. Replace this with the actual name of the image, usually something like the
@@ -120,6 +128,10 @@ jobs:
 10. Specify the context directory for Docker build.
 11. Build ARGs for the conatimer image build, formatted as `KEY=value` and
    separated by newlines if more than one arg is needed.
+12. Pass a comma separated list of platforms to build multi-platform images.
+    Used with `linux/amd64,linux/arm64` to build arm compatible images.
+13. Required if building multi-platform images with `platforms` so the docker
+    daemon can export the built images for further processing.
 
 As a last step, it is recommended to add `trivy.*` to both your `.gitignore`
 and `.dockerignore` files so trivy can't interfere with multi-stage builds.
