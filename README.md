@@ -102,9 +102,8 @@ jobs:
       context: [.] # (10)
       build-args: "" # (11)
       platforms: "linux/amd64,linux/arm64" # (12)
-      docker-build-context: | # (13)
+      docker-daemon-config: | # (13)
         {
-          "debug": true,
           "features": {
             "containerd-snapshotter": true
           }
