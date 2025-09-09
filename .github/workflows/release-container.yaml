@@ -212,7 +212,7 @@ jobs:
         with:
           context: ${{ inputs.context }}
           file: ${{ inputs.dockerfile }}
-          platforms: linux/amd64
+          platforms: ${{ inputs.platforms }}
           push: ${{ github.event_name != 'pull_request' && (startsWith(github.event.ref, 'refs/tags/v') || inputs.push-default-branch &&  github.event.ref_name == github.event.repository.default_branch) }}
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=gha
