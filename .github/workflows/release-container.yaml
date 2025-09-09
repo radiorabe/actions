@@ -64,6 +64,15 @@ on:
         required: false
         default: ''
         type: string
+      platforms:
+        description: 'what platforms to build for (comma separated for multi-platform builds, e.g. linux/amd64,linux/arm64)'
+        required: false
+        default: 'linux/amd64'
+        type: string
+      docker-daemon-config:
+        description: "Config for setup-docker-action"
+        required: false
+        type: string
 
 jobs:
   docker:
@@ -119,7 +128,13 @@ jobs:
             io.k8s.display-name=${{ inputs.display-name }}
             io.k8s.description=${{ github.event.repository.description }}
             io.openshift.tags=${{ inputs.tags }}
-        
+      
+      - name: Set up Docker
+        uses: docker/setup-docker-action@v4
+        if: inputs.docker-daemon-config
+        with:
+          daemon-config: ${{ inputs.docker-daemon-config }}
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
@@ -140,7 +155,7 @@ jobs:
         with:
           context: ${{ inputs.context }}
           file: ${{ inputs.dockerfile }}
-          platforms: linux/amd64
+          platforms: ${{ inputs.platforms }}
           load: true
           push: false
           tags: ${{ steps.meta.outputs.tags }}
