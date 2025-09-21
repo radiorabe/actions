@@ -55,6 +55,15 @@ jobs:
       upload-sarif: false
       attest: false
 
+  smoke-release-java-mvn:
+    permissions:
+      contents: read
+      packages: write # declared by release-java-mvn.yaml for publishing packages
+    uses: ./.github/workflows/release-java-mvn.yaml
+    with:
+      path: tests/java
+      deploy: false
+
   smoke-release-zensical:
     permissions:
       contents: read
