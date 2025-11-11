@@ -11,3 +11,4 @@ spec:
   type: library
   lifecycle: experimental
   owner: it-reaktion
+  system: rabe-github
