@@ -157,6 +157,51 @@ jobs:
 1. Replace this with the actual name of the image, usually something like the
    name of your repo with maybe a `container-image-` prefix removed.
 
+### Java
+
+Java support is EXPERIMENTAL and being gradually improved. The initial target is Maven based projects.
+
+#### Java Maven Release
+
+You need to add a `distributionManagement` tag to configure this action:
+
+```xml title="pom.xml"
+<project ...>
+  ...
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub Packages</name>
+      <url>https://maven.pkg.github.com/radiorabe/repo</url>
+    </repository>
+  </distributionManagement>
+</project>
+```
+
+Then you can call `mvn deploy`
+
+```yaml title=".github/workflows/release.yaml"
+name: Release
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  release:
+    types: [created]
+
+
+jobs:
+  java-maven:
+    uses: radiorabe/actions/.github/workflows/release-java-mvn.yaml@v0.0.0
+    with:
+      java-version: '21' # (1)
+      java-distribution: 'temurin' # (2)
+```
+
+1. We use LTS versions of Java that are available on RHEL style distros.
+2. The Temurin Java distribution is fine for deployment purposes.
+
 ### Pre Commit
 
 Create the main `.github/workflows/test.yaml` file for a project that supports [pre-commit](https://pre-commit.com/):
