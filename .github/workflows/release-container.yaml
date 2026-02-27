@@ -169,7 +169,7 @@ jobs:
           DOCKER_CONTENT_TRUST: 1
             
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.34.0
+        uses: aquasecurity/trivy-action@0.34.1
         env:
           TRIVY_DB_REPOSITORY: ghcr.io/aquasecurity/trivy-db,public.ecr.aws/aquasecurity/trivy-db
           TRIVY_JAVA_DB_REPOSITORY: ghcr.io/aquasecurity/trivy-java-db,public.ecr.aws/aquasecurity/trivy-java-db
@@ -181,7 +181,7 @@ jobs:
           output: 'trivy.json'
 
       - name: Convert trivy results to sarif
-        uses: aquasecurity/trivy-action@0.34.0
+        uses: aquasecurity/trivy-action@0.34.1
         with:
           image-ref: trivy.json
           scan-type: 'convert'
@@ -230,7 +230,7 @@ jobs:
           TAGS: ${{ steps.meta.outputs.tags }}
 
       - name: Convert trivy results to CycloneDX
-        uses: aquasecurity/trivy-action@0.34.0
+        uses: aquasecurity/trivy-action@0.34.1
         with:
           image-ref: trivy.json
           scan-type: 'convert'
@@ -246,7 +246,7 @@ jobs:
         if: github.event_name != 'pull_request' && startsWith(github.event.ref, 'refs/tags/v')
 
       - name: Convert trivy results to cosign-vuln
-        uses: aquasecurity/trivy-action@0.34.0
+        uses: aquasecurity/trivy-action@0.34.1
         with:
           image-ref: trivy.json
           scan-type: 'convert'
