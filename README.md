@@ -41,11 +41,14 @@ on:
 jobs:
   release-ansible-collection:
     uses: radiorabe/actions/.github/workflows/release-ansible-collection.yaml@v0.0.0
+    with:
+      publish: true # (1)
     secrets:
-      GALAXY_API_KEY: ${{ secrets.GALAXY_API_KEY }} # (1)
+      GALAXY_API_KEY: ${{ secrets.GALAXY_API_KEY }} # (2)
 ```
 
-1. The `GALAXY_API_KEY` is shared across our repos and can be enabled for your
+1. Set `publish` to `false` to skip publishing the collection to Galaxy (defaults to `true`).
+2. The `GALAXY_API_KEY` is shared across our repos and can be enabled for your
    repo by a GitHub organisation admin.
 
 The collections we publish with this can be found on [our Galaxy page](https://galaxy.ansible.com/radiorabe).
@@ -65,7 +68,11 @@ on:
 jobs:
   test-ansible-collection:
     uses: radiorabe/actions/.github/workflows/test-ansible-collection.yaml@v0.0.0
+    with:
+      path: '.' # (1)
 ```
+
+1. Optionally set `path` to run ansible-lint in a specific subdirectory (defaults to `/github/workspace`).
 
 ### Container Images
 
@@ -73,7 +80,7 @@ There are actions to cover the full lifecycle of a typical container image.
 
 #### Container: Release
 
-To build, scan, and sign a container image , create this `.github/workflows/release.yaml`:
+To build, scan, and sign a container image, create this `.github/workflows/release.yaml`:
 
 ```yaml title=".github/workflows/release.yaml"
 name: Release
@@ -108,6 +115,8 @@ jobs:
             "containerd-snapshotter": true
           }
         }
+      push-default-branch: false # (14)
+      pre-script: "" # (15)
 ```
 
 1. Replace this with the actual name of the image, usually something like the
@@ -125,12 +134,14 @@ jobs:
    source image that isn't signed with cosign.
 9. Specify the path to the Dockerfile if it isn't in the root of the repository.
 10. Specify the context directory for Docker build.
-11. Build ARGs for the conatimer image build, formatted as `KEY=value` and
+11. Build ARGs for the container image build, formatted as `KEY=value` and
    separated by newlines if more than one arg is needed.
 12. Pass a comma separated list of platforms to build multi-platform images.
     Used with `linux/amd64,linux/arm64` to build arm compatible images.
 13. Required if building multi-platform images with `platforms` so the docker
     daemon can export the built images for further processing.
+14. Push the image when the default branch (typically `main`) is pushed to the registry.
+15. Run a script before interacting with the Dockerfile.
 
 As a last step, it is recommended to add `trivy.*` to both your `.gitignore`
 and `.dockerignore` files so trivy can't interfere with multi-stage builds.
@@ -152,10 +163,12 @@ jobs:
     uses: radiorabe/actions/.github/workflows/schedule-trivy.yaml@v0.0.0
     with:
       image-ref: 'ghcr.io/radiorabe/<name>:latest' # (1)
+      timeout: '5m0s' # (2)
 ```
 
 1. Replace this with the actual name of the image, usually something like the
    name of your repo with maybe a `container-image-` prefix removed.
+2. Optionally set `timeout` to change the scan timeout duration (defaults to `5m0s`).
 
 ### Pre Commit
 
@@ -174,7 +187,7 @@ jobs:
     uses: radiorabe/actions/.github/workflows/test-pre-commit.yaml@v0.0.0
 ```
 
-This runs pre-commit with black and isort installed. If you need more tools you can install them with `pip`.
+This runs pre-commit with black, isort and flake8 installed. If you need more tools you can install them with `pip`.
 
 ```yaml title=".github/workflows/test.yaml"
 jobs:
@@ -190,7 +203,7 @@ Our Python workflows use [Poetry](https://python-poetry.org/) for installing dep
 
 #### Python: Poetry Pytest
 
-Create the main `.github/workflows/test.yaml` file for an ansible collection repo:
+Create the main `.github/workflows/test.yaml` file for a Python poetry repo:
 
 ```yaml title=".github/workflows/test.yaml"
 name: Lint and Test
@@ -203,13 +216,17 @@ on:
 jobs:
   test-python-poetry:
     uses: radiorabe/actions/.github/workflows/test-python-poetry.yaml@v0.0.0
+    with:
+      version: '3.12' # (1)
 ```
+
+1. The `version` input specifies the Python version to test against (defaults to `3.12`). The latest `3.x` is always tested additionally as an allowed failure.
 
 Configure your `pyproject.toml` to run pytest and you are good to go.
 
 #### Python: Poetry Release
 
-Create this `.github/workflows/release.yaml
+Create this `.github/workflows/release.yaml`:
 
 ```yaml title=".github/workflows/release.yaml"
 name: Release
@@ -239,12 +256,13 @@ For repos that contain documentation built with mkdocs that do not use the poetr
 
 Create a `.github/workflows/release.yaml` file with the following content:
 
-```
+```yaml title=".github/workflows/release.yaml"
 name: Release
 
 on:
   push:
-    main
+    branches:
+      - main
   pull_request:
 
 jobs:
@@ -252,7 +270,7 @@ jobs:
     uses: radiorabe/actions/.github/workflows/release-mkdocs.yaml@v0.0.0
 ```
 
-Add a `mkdocs.yaml` config and `docs/` directory and you are good to go.
+Add a `mkdocs.yml` config and `docs/` directory and you are good to go.
 
 ### Semantic Release
 
@@ -281,7 +299,7 @@ jobs:
 
 ## License
 
-These reuseable workflows are free software: you can redistribute them and/or modify them under
+These reusable workflows are free software: you can redistribute them and/or modify them under
 the terms of the GNU Affero General Public License as published by the Free
 Software Foundation, version 3 of the License.
 
