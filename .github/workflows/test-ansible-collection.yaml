@@ -4,7 +4,7 @@ on:
   workflow_call:
     inputs:
       path:
-        description: Specific path to lint instead of the default of github.workspace.
+        description: Specific path to lint instead of the default `.`.
         required: false
         type: string
         default: "."
