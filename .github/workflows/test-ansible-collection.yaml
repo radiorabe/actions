@@ -28,7 +28,7 @@ jobs:
     - name: Lint with black
       run: black --check --diff .
     - name: Lint with ansible-lint
-      uses: ansible/ansible-lint@v26.1.1
+      uses: ansible/ansible-lint@v26.2.0
       with:
         setup_python: false
         working_directory: ${{ inputs.targets }}
