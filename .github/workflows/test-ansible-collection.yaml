@@ -7,7 +7,7 @@ on:
         description: Specific path to lint instead of the default of github.workspace.
         required: false
         type: string
-        default: "${{ github.workspace }}"
+        default: "."
 
 jobs:
   lint:
