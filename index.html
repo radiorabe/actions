@@ -559,10 +559,13 @@ that RaBe uses for CI/CD ♻️</p>
 <a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="nt">jobs</span><span class="p">:</span>
 <a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">  </span><span class="nt">release-ansible-collection</span><span class="p">:</span>
 <a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">radiorabe/actions/.github/workflows/release-ansible-collection.yaml@v0.0.0</span>
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">    </span><span class="nt">secrets</span><span class="p">:</span>
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">      </span><span class="nt">GALAXY_API_KEY</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ secrets.GALAXY_API_KEY }}</span><span class="w"> </span><span class="c1"># (1)</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">    </span><span class="nt">with</span><span class="p">:</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">      </span><span class="nt">publish</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"> </span><span class="c1"># (1)</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">    </span><span class="nt">secrets</span><span class="p">:</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">      </span><span class="nt">GALAXY_API_KEY</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ secrets.GALAXY_API_KEY }}</span><span class="w"> </span><span class="c1"># (2)</span>
 </code></pre></div>
 <ol>
+<li>Set <code>publish</code> to <code>false</code> to skip publishing the collection to Galaxy (defaults to <code>true</code>).</li>
 <li>The <code>GALAXY_API_KEY</code> is shared across our repos and can be enabled for your
    repo by a GitHub organisation admin.</li>
 </ol>
@@ -579,11 +582,16 @@ that RaBe uses for CI/CD ♻️</p>
 <a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="nt">jobs</span><span class="p">:</span>
 <a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">  </span><span class="nt">test-ansible-collection</span><span class="p">:</span>
 <a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">radiorabe/actions/.github/workflows/test-ansible-collection.yaml@v0.0.0</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">    </span><span class="nt">with</span><span class="p">:</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;.&#39;</span><span class="w"> </span><span class="c1"># (1)</span>
 </code></pre></div>
+<ol>
+<li>Optionally set <code>path</code> to run ansible-lint in a specific subdirectory (defaults to <code>/github/workspace</code>).</li>
+</ol>
 <h3 id="container-images">Container Images</h3>
 <p>There are actions to cover the full lifecycle of a typical container image.</p>
 <h4 id="container-release">Container: Release</h4>
-<p>To build, scan, and sign a container image , create this <code>.github/workflows/release.yaml</code>:</p>
+<p>To build, scan, and sign a container image, create this <code>.github/workflows/release.yaml</code>:</p>
 <div class="highlight"><span class="filename">.github/workflows/release.yaml</span><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Release</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nt">on</span><span class="p">:</span>
@@ -616,6 +624,8 @@ that RaBe uses for CI/CD ♻️</p>
 <a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a><span class="w">            </span><span class="no">&quot;containerd-snapshotter&quot;: true</span>
 <a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a><span class="w">          </span><span class="no">}</span>
 <a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a><span class="w">        </span><span class="no">}</span>
+<a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a><span class="w">      </span><span class="nt">push-default-branch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"> </span><span class="c1"># (14)</span>
+<a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a><span class="w">      </span><span class="nt">pre-script</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="c1"># (15)</span>
 </code></pre></div>
 <ol>
 <li>Replace this with the actual name of the image, usually something like the
@@ -633,12 +643,14 @@ that RaBe uses for CI/CD ♻️</p>
    source image that isn't signed with cosign.</li>
 <li>Specify the path to the Dockerfile if it isn't in the root of the repository.</li>
 <li>Specify the context directory for Docker build.</li>
-<li>Build ARGs for the conatimer image build, formatted as <code>KEY=value</code> and
+<li>Build ARGs for the container image build, formatted as <code>KEY=value</code> and
    separated by newlines if more than one arg is needed.</li>
 <li>Pass a comma separated list of platforms to build multi-platform images.
     Used with <code>linux/amd64,linux/arm64</code> to build arm compatible images.</li>
 <li>Required if building multi-platform images with <code>platforms</code> so the docker
     daemon can export the built images for further processing.</li>
+<li>Push the image when the default branch (typically <code>main</code>) is pushed to the registry.</li>
+<li>Run a script before interacting with the Dockerfile.</li>
 </ol>
 <p>As a last step, it is recommended to add <code>trivy.*</code> to both your <code>.gitignore</code>
 and <code>.dockerignore</code> files so trivy can't interfere with multi-stage builds.</p>
@@ -656,10 +668,12 @@ and <code>.dockerignore</code> files so trivy can't interfere with multi-stage b
 <a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">radiorabe/actions/.github/workflows/schedule-trivy.yaml@v0.0.0</span>
 <a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">    </span><span class="nt">with</span><span class="p">:</span>
 <a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">      </span><span class="nt">image-ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;ghcr.io/radiorabe/&lt;name&gt;:latest&#39;</span><span class="w"> </span><span class="c1"># (1)</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">      </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;5m0s&#39;</span><span class="w"> </span><span class="c1"># (2)</span>
 </code></pre></div>
 <ol>
 <li>Replace this with the actual name of the image, usually something like the
    name of your repo with maybe a <code>container-image-</code> prefix removed.</li>
+<li>Optionally set <code>timeout</code> to change the scan timeout duration (defaults to <code>5m0s</code>).</li>
 </ol>
 <h3 id="pre-commit">Pre Commit</h3>
 <p>Create the main <code>.github/workflows/test.yaml</code> file for a project that supports <a href="https://pre-commit.com/">pre-commit</a>:</p>
@@ -674,7 +688,7 @@ and <code>.dockerignore</code> files so trivy can't interfere with multi-stage b
 <a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">  </span><span class="nt">pre-commit</span><span class="p">:</span>
 <a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">radiorabe/actions/.github/workflows/test-pre-commit.yaml@v0.0.0</span>
 </code></pre></div>
-<p>This runs pre-commit with black and isort installed. If you need more tools you can install them with <code>pip</code>.</p>
+<p>This runs pre-commit with black, isort and flake8 installed. If you need more tools you can install them with <code>pip</code>.</p>
 <div class="highlight"><span class="filename">.github/workflows/test.yaml</span><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">jobs</span><span class="p">:</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">pre-commit</span><span class="p">:</span>
 <a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">radiorabe/actions/.github/workflows/test-pre-commit.yaml@v0.0.0</span>
@@ -684,7 +698,7 @@ and <code>.dockerignore</code> files so trivy can't interfere with multi-stage b
 <h3 id="python">Python</h3>
 <p>Our Python workflows use <a href="https://python-poetry.org/">Poetry</a> for installing dependencies, <a href="https://pytest.org/">pytest</a> for testing, and Poetry for publishing to <a href="https://pypi.org/">pypi</a>.</p>
 <h4 id="python-poetry-pytest">Python: Poetry Pytest</h4>
-<p>Create the main <code>.github/workflows/test.yaml</code> file for an ansible collection repo:</p>
+<p>Create the main <code>.github/workflows/test.yaml</code> file for a Python poetry repo:</p>
 <div class="highlight"><span class="filename">.github/workflows/test.yaml</span><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Lint and Test</span>
 <a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
 <a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="nt">on</span><span class="p">:</span>
@@ -695,10 +709,15 @@ and <code>.dockerignore</code> files so trivy can't interfere with multi-stage b
 <a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="nt">jobs</span><span class="p">:</span>
 <a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">  </span><span class="nt">test-python-poetry</span><span class="p">:</span>
 <a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">radiorabe/actions/.github/workflows/test-python-poetry.yaml@v0.0.0</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">    </span><span class="nt">with</span><span class="p">:</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">      </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3.12&#39;</span><span class="w"> </span><span class="c1"># (1)</span>
 </code></pre></div>
+<ol>
+<li>The <code>version</code> input specifies the Python version to test against (defaults to <code>3.12</code>). The latest <code>3.x</code> is always tested additionally as an allowed failure.</li>
+</ol>
 <p>Configure your <code>pyproject.toml</code> to run pytest and you are good to go.</p>
 <h4 id="python-poetry-release">Python: Poetry Release</h4>
-<p>Create this `.github/workflows/release.yaml</p>
+<p>Create this <code>.github/workflows/release.yaml</code>:</p>
 <div class="highlight"><span class="filename">.github/workflows/release.yaml</span><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Release</span>
 <a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
 <a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="nt">on</span><span class="p">:</span>
@@ -722,18 +741,19 @@ and <code>.dockerignore</code> files so trivy can't interfere with multi-stage b
 <h3 id="mkdocs">Mkdocs</h3>
 <p>For repos that contain documentation built with mkdocs that do not use the poetry action.</p>
 <p>Create a <code>.github/workflows/release.yaml</code> file with the following content:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>name: Release
+<div class="highlight"><span class="filename">.github/workflows/release.yaml</span><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Release</span>
 <a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>on:
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>  push:
-<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>    main
-<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>  pull_request:
-<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>
-<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>jobs:
-<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>  release-mkdocs:
-<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>    uses: radiorabe/actions/.github/workflows/release-mkdocs.yaml@v0.0.0
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="nt">on</span><span class="p">:</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span><span class="nt">push</span><span class="p">:</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span><span class="nt">branches</span><span class="p">:</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">  </span><span class="nt">pull_request</span><span class="p">:</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="nt">jobs</span><span class="p">:</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">  </span><span class="nt">release-mkdocs</span><span class="p">:</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">radiorabe/actions/.github/workflows/release-mkdocs.yaml@v0.0.0</span>
 </code></pre></div>
-<p>Add a <code>mkdocs.yaml</code> config and <code>docs/</code> directory and you are good to go.</p>
+<p>Add a <code>mkdocs.yml</code> config and <code>docs/</code> directory and you are good to go.</p>
 <h3 id="semantic-release">Semantic Release</h3>
 <p>For repos that want to use <a href="https://go-semantic-release.xyz">go-semantic-release</a>:</p>
 <p>Create this <code>.github/workflows/semantic-release.yaml</code>:</p>
@@ -756,7 +776,7 @@ and <code>.dockerignore</code> files so trivy can't interfere with multi-stage b
    repo by a GitHub organisation admin.</li>
 </ol>
 <h2 id="license">License</h2>
-<p>These reuseable workflows are free software: you can redistribute them and/or modify them under
+<p>These reusable workflows are free software: you can redistribute them and/or modify them under
 the terms of the GNU Affero General Public License as published by the Free
 Software Foundation, version 3 of the License.</p>
 <h2 id="copyright">Copyright</h2>
