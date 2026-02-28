@@ -4,10 +4,10 @@ on:
   workflow_call:
     inputs:
       path:
-        description: Specific path to lint instead of the default `.`.
+        description: Specific path to lint instead of the default of github.workspace.
         required: false
         type: string
-        default: "/github/workspace"
+        default: "${{ github.workspace }}"
 
 jobs:
   lint:
