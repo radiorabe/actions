@@ -13,22 +13,22 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v6
-    - name: Set up Python
-      uses: actions/setup-python@v6
-      with:
-        python-version: '3.x'
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install flake8
-        pip install --pre black
-    - name: Lint with flake8
-      run: flake8 . --count --show-source --statistics
-    - name: Lint with black
-      run: black --check --diff .
-    - name: Lint with ansible-lint
-      uses: ansible/ansible-lint@v26.2.0
-      with:
-        setup_python: false
-        working_directory: ${{ inputs.targets }}
+      - uses: actions/checkout@v6
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8
+          pip install --pre black
+      - name: Lint with flake8
+        run: flake8 . --count --show-source --statistics
+      - name: Lint with black
+        run: black --check --diff .
+      - name: Lint with ansible-lint
+        uses: ansible/ansible-lint@v26.2.0
+        with:
+          setup_python: false
+          working_directory: ${{ inputs.path }}
