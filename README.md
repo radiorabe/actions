@@ -72,7 +72,7 @@ jobs:
       path: '.' # (1)
 ```
 
-1. Optionally set `path` to run ansible-lint in a specific subdirectory (defaults to `/github/workspace`).
+1. Optionally set `path` to run ansible-lint in a specific subdirectory (defaults to `${{ github.workspace }}`).
 
 ### Container Images
 
