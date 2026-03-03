@@ -1,0 +1,45 @@
+# Container Image: Schedule
+
+Scans the latest container image with Trivy at regular intervals and attaches a security attestation to the image.
+
+## Usage
+
+Create a `.github/workflows/schedule.yaml` file:
+
+.github/workflows/schedule.yaml
+
+```
+name: Scheduled tasks
+
+on:
+  schedule:
+    - cron:  '13 12 * * *'
+  workflow_dispatch:
+
+permissions: {} # (1)
+
+jobs:
+  schedule-trivy:
+    permissions:
+      packages: write # (2)
+      security-events: write # (3)
+      id-token: write # (4)
+    uses: radiorabe/actions/.github/workflows/schedule-trivy.yaml@v0.0.0
+    with:
+      image-ref: 'ghcr.io/radiorabe/<name>:latest' # (5)
+      timeout: '5m0s' # (6)
+```
+
+1. Deny all permissions at the workflow level as a secure baseline.
+1. Required to push attestations to the registry.
+1. Required to upload Trivy scan results to the GitHub Security tab.
+1. Required for keyless attestation signing with cosign via GitHub OIDC.
+1. Replace this with the actual name of the image.
+1. Optionally set `timeout` to change the scan timeout duration (defaults to `5m0s`).
+
+## Inputs
+
+| Input       | Description                                                       | Required | Default |
+| ----------- | ----------------------------------------------------------------- | -------- | ------- |
+| `image-ref` | Image reference to scan (e.g. `ghcr.io/radiorabe/myimage:latest`) | **Yes**  | —       |
+| `timeout`   | Scan timeout duration                                             | No       | `5m0s`  |
