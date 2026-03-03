@@ -1,0 +1,124 @@
+{% extends "main.html" %}
+
+{% block tabs %}
+  {{ super() }}
+
+  <section class="tx-hero">
+    <div class="md-grid md-typeset">
+      <div class="tx-hero__content">
+        <h1>♻️ RaBe GitHub Actions</h1>
+        <p>
+          Reusable workflows for Radio Bern RaBe CI/CD pipelines.<br>
+          Battle-tested, least-privilege, and ready to drop into any repo.
+        </p>
+        <a
+          href="{{ 'getting-started/' | url }}"
+          title="Getting Started"
+          class="md-button md-button--primary"
+        >
+          Get started
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="vertical-align:middle;margin-left:.4em"><path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/></svg>
+        </a>
+        <a
+          href="{{ 'workflows/' | url }}"
+          title="Browse Workflows"
+          class="md-button"
+        >
+          Browse Workflows
+        </a>
+      </div>
+      <div class="tx-hero__image">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" aria-hidden="true">
+          <circle cx="256" cy="256" r="240" fill="var(--md-primary-fg-color)" opacity=".08"/>
+          <circle cx="256" cy="256" r="170" fill="var(--md-primary-fg-color)" opacity=".06"/>
+          <circle cx="256" cy="256" r="100" fill="var(--md-primary-fg-color)" opacity=".10"/>
+          <!-- Antenna mast -->
+          <rect x="250" y="130" width="12" height="210" rx="4" fill="var(--md-primary-fg-color)"/>
+          <polygon points="256,90 240,150 272,150" fill="var(--md-primary-fg-color)"/>
+          <!-- Signal arcs -->
+          <path d="M185 195 Q256 140 327 195" stroke="var(--md-primary-fg-color)" stroke-width="7" fill="none" stroke-linecap="round" opacity=".85"/>
+          <path d="M155 230 Q256 160 357 230" stroke="var(--md-primary-fg-color)" stroke-width="5" fill="none" stroke-linecap="round" opacity=".60"/>
+          <path d="M125 265 Q256 175 387 265" stroke="var(--md-primary-fg-color)" stroke-width="4" fill="none" stroke-linecap="round" opacity=".40"/>
+          <!-- Base -->
+          <rect x="210" y="340" width="92" height="12" rx="4" fill="var(--md-primary-fg-color)" opacity=".7"/>
+          <rect x="232" y="352" width="48" height="36" rx="6" fill="var(--md-primary-fg-color)" opacity=".5"/>
+          <!-- Workflow icon hint -->
+          <rect x="305" y="310" width="72" height="88" rx="8" fill="var(--md-primary-fg-color)" opacity=".22"/>
+          <line x1="318" y1="336" x2="363" y2="336" stroke="var(--md-primary-fg-color)" stroke-width="4" stroke-linecap="round" opacity=".65"/>
+          <line x1="318" y1="352" x2="363" y2="352" stroke="var(--md-primary-fg-color)" stroke-width="4" stroke-linecap="round" opacity=".65"/>
+          <line x1="318" y1="368" x2="348" y2="368" stroke="var(--md-primary-fg-color)" stroke-width="4" stroke-linecap="round" opacity=".65"/>
+          <circle cx="336" cy="384" r="8" fill="var(--md-primary-fg-color)" opacity=".5"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+{% block content %}
+  <section class="tx-features">
+    <div class="md-grid">
+      <div class="tx-features__grid md-typeset">
+
+        <div class="tx-feature">
+          <div class="tx-feature__icon">📦</div>
+          <h2>Ansible Collections</h2>
+          <p>
+            Build, lint, and publish Ansible collections straight to
+            <strong>Galaxy</strong> — with ansible-lint, flake8, and black checks
+            included out of the box.
+          </p>
+        </div>
+
+        <div class="tx-feature">
+          <div class="tx-feature__icon">🐳</div>
+          <h2>Container Images</h2>
+          <p>
+            Full container lifecycle: build multi-platform images, scan them with
+            <strong>Trivy</strong>, sign with <strong>cosign</strong>, and push to
+            GitHub Packages — with SBOM attestations.
+          </p>
+        </div>
+
+        <div class="tx-feature">
+          <div class="tx-feature__icon">🐍</div>
+          <h2>Python (Poetry)</h2>
+          <p>
+            Test Python projects across multiple versions with <strong>pytest</strong>
+            and <strong>Poetry</strong>, then publish releases to PyPI and deploy
+            MkDocs documentation.
+          </p>
+        </div>
+
+        <div class="tx-feature">
+          <div class="tx-feature__icon">🔍</div>
+          <h2>Pre-Commit</h2>
+          <p>
+            Run <strong>pre-commit</strong> hooks on every pull request, with black,
+            isort, and flake8 pre-installed and extensible via a simple
+            <code>requirements</code> input.
+          </p>
+        </div>
+
+        <div class="tx-feature">
+          <div class="tx-feature__icon">📖</div>
+          <h2>MkDocs</h2>
+          <p>
+            Build and deploy <strong>MkDocs</strong> documentation sites to
+            GitHub Pages on every push to <code>main</code>.
+          </p>
+        </div>
+
+        <div class="tx-feature">
+          <div class="tx-feature__icon">🔒</div>
+          <h2>Least-Privilege by Default</h2>
+          <p>
+            Every workflow declares the minimum <code>permissions</code> it needs.
+            GitHub Actions enforces the intersection so your repos are hardened
+            without any extra effort.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+{% endblock %}
