@@ -79,16 +79,9 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      actions: none
-      checks: none
       contents: read
-      deployments: none
-      issues: none
       packages: write
-      pull-requests: none
-      repository-projects: none
       security-events: write
-      statuses: none
       id-token: write # needed for signing the images with GitHub OIDC using cosign
 
     steps:

@@ -15,17 +15,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      actions: none
-      checks: none
       contents: read
-      deployments: none
-      issues: none
-      packages: none
-      pull-requests: none
-      repository-projects: none
-      security-events: none
-      statuses: none
-      id-token: none
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-python@v6
