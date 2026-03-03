@@ -25,8 +25,8 @@ catalog-info.yaml    # Backstage component descriptor
 
 ### Workflow Files (`.github/workflows/`)
 
-- **Naming**: `<verb>-<subject>.yaml` – e.g. `release-container.yaml`, `test-python-poetry.yaml`.
-- **Trigger**: All workflows use `on: workflow_call` so they are reusable by caller workflows.
+- **Naming**: `<verb>-<subject>.yaml` – e.g. `release-container.yaml`, `test-python-poetry.yaml`. The file `semantic-release.yaml` is an explicit exception to mirror the upstream tool name.
+- **Trigger**: All reusable workflows include `on: workflow_call` so they can be called from other workflows.
 - **Permissions**: Declare `permissions:` on **every job**, not at the workflow level.
   Use the minimum set required. See `docs/permissions.md` for the reference table.
 - **Actions pinning**: Pin third-party actions to a released version tag (e.g. `@v3`),
