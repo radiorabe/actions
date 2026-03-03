@@ -1,4 +1,5 @@
 site_name: RaBe GitHub Actions
+site_url: https://radiorabe.github.io/actions/
 repo_url: https://github.com/radiorabe/actions
 repo_name: radiorabe/actions
 
@@ -20,9 +21,15 @@ theme:
   features:
     - content.code.copy
     - content.code.annotate
+    - navigation.indexes
+    - navigation.sections
+    - navigation.tabs
+    - navigation.top
     - toc.integrate
 
 markdown_extensions:
+- admonition
+- pymdownx.details
 - pymdownx.highlight:
     anchor_linenums: true
 - pymdownx.inlinehilite
@@ -34,14 +41,26 @@ extra_css:
 
 plugins:
 - search
-- gen-files:
-    scripts:
-    - docs/gen_ref_pages.py
-- literate-nav
 - section-index
 
 nav:
-  - README: index.md
-
-watch:
-  - README.md
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Workflows:
+    - workflows/index.md
+    - Ansible Collections:
+      - workflows/ansible/index.md
+      - Release: workflows/ansible/release.md
+      - Test: workflows/ansible/test.md
+    - Container Images:
+      - workflows/container/index.md
+      - Release: workflows/container/release.md
+      - Schedule: workflows/container/schedule.md
+    - Python:
+      - workflows/python/index.md
+      - Test: workflows/python/test.md
+      - Release: workflows/python/release.md
+    - Pre-Commit: workflows/pre-commit.md
+    - MkDocs: workflows/mkdocs.md
+    - Semantic Release: workflows/semantic-release.md
+  - Permissions: permissions.md
