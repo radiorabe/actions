@@ -4,25 +4,52 @@ repo_name: radiorabe/actions
 
 theme:
   name: "material"
+  custom_dir: docs/overrides
   palette:
     # Palette toggle for dark mode
     - scheme: slate
+      primary: '#00c9bf'
+      accent: '#00c9bf'
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
     # Palette toggle for light mode
     - scheme: default
+      primary: '#00c9bf'
+      accent: '#00c9bf'
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
+  font:
+    text: Roboto
+    code: Roboto Mono
   icon:
-    repo: fontawesome/brands/git-alt
+    repo: fontawesome/brands/github
+    logo: material/radio
   features:
-    - content.code.copy
     - content.code.annotate
-    - toc.integrate
+    - content.code.copy
+    - navigation.footer
+    - navigation.indexes
+    - navigation.sections
+    - navigation.tabs
+    - navigation.top
+    - navigation.tracking
+    - search.highlight
+    - search.share
+    - search.suggest
+    - toc.follow
 
 markdown_extensions:
+- admonition
+- attr_list
+- md_in_html
+- toc:
+    permalink: true
+- pymdownx.details
+- pymdownx.emoji:
+    emoji_index: !!python/name:material.extensions.emoji.twemoji
+    emoji_generator: !!python/name:material.extensions.emoji.to_svg
 - pymdownx.highlight:
     anchor_linenums: true
 - pymdownx.inlinehilite
@@ -32,16 +59,35 @@ markdown_extensions:
 extra_css:
 - css/style.css
 
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/radiorabe/actions
+      name: GitHub
+  generator: false
+
 plugins:
 - search
-- gen-files:
-    scripts:
-    - docs/gen_ref_pages.py
-- literate-nav
 - section-index
 
 nav:
-  - README: index.md
-
-watch:
-  - README.md
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Workflows:
+    - workflows/index.md
+    - Ansible Collections:
+      - workflows/ansible/index.md
+      - Release: workflows/ansible/release.md
+      - Test: workflows/ansible/test.md
+    - Container Images:
+      - workflows/container/index.md
+      - Release: workflows/container/release.md
+      - Schedule: workflows/container/schedule.md
+    - Python:
+      - workflows/python/index.md
+      - Test: workflows/python/test.md
+      - Release: workflows/python/release.md
+    - Pre-Commit: workflows/pre-commit.md
+    - MkDocs: workflows/mkdocs.md
+    - Semantic Release: workflows/semantic-release.md
+  - Permissions: permissions.md
