@@ -46,8 +46,9 @@ Every workflow documentation page must contain these sections in order:
 1. **Title** – `# <Category>: <Action>` and a one-sentence description
 2. **`## Usage`** – copy-pasteable caller workflow with `permissions: {}` at the workflow level,
    per-job permission grants, and `uses: radiorabe/actions/...@v0.0.0` (never `@main`/`@latest`)
-3. **`## Inputs`** – table with Input / Description / Required / Default columns (required even if
-   there are no inputs; mark required ones as `**Yes**`)
+3. **`## Inputs`** – table with Input / Description / Required / Default columns (add on new and
+   updated pages; older pages may omit it — include the section whenever touching the page;
+   mark required inputs as `**Yes**`)
 4. **`## Secrets`** – table in the same format (only when the workflow accepts secrets)
 
 ## Key Conventions
@@ -60,8 +61,8 @@ Every workflow documentation page must contain these sections in order:
   after the fenced code block.
 - **Version placeholder**: Examples reference `@v0.0.0`. This reminds readers to substitute the
   actual current release tag. Do not use `@main` or `@latest`.
-- **Inputs table**: Every workflow page must have an `## Inputs` section even if there are no
-  required inputs. Mark required inputs as `**Yes**` in the Required column.
+- **Inputs table**: Add an `## Inputs` section on new and updated pages (older pages may omit it).
+  Mark required inputs as `**Yes**` in the Required column.
 - **Secrets table**: Add a `## Secrets` section when the workflow accepts secrets.
 
 ## Navigation

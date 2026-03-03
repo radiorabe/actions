@@ -19,6 +19,8 @@ Allowed verbs:
 | `test-` | Runs linting, unit tests, or other quality checks |
 | `schedule-` | Intended to run on a time-based schedule |
 
+`semantic-release.yaml` is an explicit exception — it mirrors the upstream tool name.
+
 ## Workflow Skeleton
 
 ```yaml
@@ -71,7 +73,8 @@ jobs:
 ## Actions Pinning
 
 - Pin all third-party actions to a **released version tag** (`@v3`, `@v3.10.1`, etc.).
-- Do **not** pin to commit SHAs – RaBe Dependabot is configured to auto-update version tags.
+- Do **not** replace tags with commit SHAs — Dependabot is configured to auto-update all
+  version tags in this repository, so the tags are kept current automatically.
 - First-party actions (`actions/checkout`, `actions/setup-python`, etc.) follow the same rule.
 
 ## Security Practices

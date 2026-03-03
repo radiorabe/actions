@@ -29,15 +29,19 @@ catalog-info.yaml    # Backstage component descriptor
 - **Trigger**: All reusable workflows include `on: workflow_call` so they can be called from other workflows.
 - **Permissions**: Declare `permissions:` on **every job**, not at the workflow level.
   Use the minimum set required. See `docs/permissions.md` for the reference table.
-- **Actions pinning**: Pin third-party actions to a released version tag (e.g. `@v3`),
-  not to a commit SHA.
+- **Actions pinning**: Pin third-party actions to a released version tag (e.g. `@v3`).
+  Dependabot is configured to keep all version tags up-to-date automatically — do not
+  replace tags with commit SHAs.
 - **Security baseline**: Every caller example must set `permissions: {}` at the top level,
   then grant per-job permissions explicitly.
 
 ### Documentation (`docs/`)
 
 - Written in Markdown and built with [MkDocs Material](https://squidfunk.github.io/mkdocs-material/).
-- Each reusable workflow has a corresponding `docs/workflows/<category>/<name>.md` file.
+- Each reusable workflow has a corresponding documentation file under `docs/workflows/`. Grouped
+  workflows (ansible, container, python) live at `docs/workflows/<category>/<name>.md`; standalone
+  workflows live directly at `docs/workflows/<name>.md` (e.g. `mkdocs.md`, `pre-commit.md`,
+  `semantic-release.md`).
 - Use [MkDocs code annotations](https://squidfunk.github.io/mkdocs-material/reference/code-blocks/#adding-annotations)
   (`# (N)` inside code blocks with numbered explanations below) to explain individual YAML keys.
 - Usage examples must always include `permissions: {}` at the workflow level and explicit
@@ -75,7 +79,9 @@ All work happens on feature branches. Open a PR to `main`; do not manually creat
 ### Adding a new reusable workflow
 
 1. Create `.github/workflows/<verb>-<subject>.yaml` with `on: workflow_call`.
-2. Add corresponding documentation in `docs/workflows/<category>/<name>.md`.
+2. Add a corresponding documentation file: grouped workflows go in
+   `docs/workflows/<category>/<name>.md`; standalone workflows go directly in
+   `docs/workflows/<name>.md`.
 3. Register the new page in `mkdocs.yml` under `nav:`.
 4. Update `docs/permissions.md` with the new workflow's required permissions.
 
