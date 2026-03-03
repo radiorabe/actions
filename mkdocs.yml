@@ -83,6 +83,9 @@ nav:
       - workflows/container/index.md
       - Release: workflows/container/release.md
       - Schedule: workflows/container/schedule.md
+    - Java:
+      - workflows/java/index.md
+      - Release: workflows/java/release.md
     - Python:
       - workflows/python/index.md
       - Test: workflows/python/test.md
