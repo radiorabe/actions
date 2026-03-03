@@ -44,16 +44,17 @@ catalog-info.yaml    # Backstage component descriptor
   per-job permissions matching the reference table in `docs/permissions.md`.
 - Update `mkdocs.yml` `nav:` whenever a new documentation page is added.
 
-### Conventional Commits
+### Conventional Commits and Versioning
 
 Commit messages follow the [Conventional Commits](https://www.conventionalcommits.org/)
-specification used by go-semantic-release:
+specification. Releases are automated by go-semantic-release on every push to `main`:
 
-- `feat:` – new workflow or new input
-- `fix:` – bug fix in a workflow
-- `docs:` – documentation-only changes
-- `ci:` – changes to the CI pipeline of this repository itself
-- `chore:` – maintenance (dependency bumps, etc.)
+- `feat:` – new workflow or new input → **minor** version bump
+- `fix:` – bug fix in a workflow → **patch** bump
+- `docs:`, `ci:`, `chore:` – no release unless combined with the above
+- `BREAKING CHANGE:` footer on any type → **major** bump
+
+All work happens on feature branches. Open a PR to `main`; do not manually create version tags.
 
 ## Workflows Provided
 
@@ -83,29 +84,26 @@ specification used by go-semantic-release:
 1. Edit the workflow YAML.
 2. Keep the documentation in sync (inputs table, permissions table, usage example).
 
-### Documentation only
-
-Edit the relevant file under `docs/`. No workflow changes are needed.
-
 ## Linting and Testing
 
-There is no automated test suite for the workflows themselves. Documentation can be previewed
-locally with:
+No automated test suite. Preview docs locally:
 
 ```bash
 pip install mkdocs-material mkdocs-section-index mkdocs-llmstxt
 mkdocs serve
 ```
 
-Pre-commit hooks (if configured in a consuming repo) validate YAML syntax and formatting.
-
 ## llms.txt
 
-The documentation site for this repository generates an `llms.txt` index at:
+- [radiorabe.github.io/actions/llms.txt](https://radiorabe.github.io/actions/llms.txt) – this repo (auto-generated at build time)
+- [docs.github.com/llms.txt](https://docs.github.com/llms.txt) – GitHub Actions and the GitHub platform
+- [docs.docker.com/llms.txt](https://docs.docker.com/llms.txt) – Docker build and container image tooling
 
-- [radiorabe.github.io/actions/llms.txt](https://radiorabe.github.io/actions/llms.txt)
+Tool docs (no llms.txt available):
 
-External `llms.txt` references for tools used in these workflows:
-
-- [docs.github.com/llms.txt](https://docs.github.com/llms.txt) – GitHub Actions and the broader GitHub platform
-- [docs.docker.com/llms.txt](https://docs.docker.com/llms.txt) – Docker build, push, and container image tooling
+- [squidfunk.github.io/mkdocs-material](https://squidfunk.github.io/mkdocs-material/) – MkDocs Material theme
+- [trivy.dev](https://trivy.dev/) – Trivy security scanner
+- [docs.sigstore.dev](https://docs.sigstore.dev/) – cosign and Sigstore signing
+- [python-poetry.org/docs](https://python-poetry.org/docs/) – Poetry Python package manager
+- [pre-commit.com](https://pre-commit.com/) – pre-commit framework
+- [go-semantic-release.xyz](https://go-semantic-release.xyz/) – go-semantic-release

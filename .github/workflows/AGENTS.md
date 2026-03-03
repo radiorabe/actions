@@ -50,6 +50,17 @@ jobs:
       # ...
 ```
 
+## Branching and Versioning
+
+- All work happens on feature branches; merge to `main` via pull requests.
+- go-semantic-release automatically creates a new release on every push to `main`.
+- Conventional commit types determine the version bump:
+  - `feat:` → minor bump
+  - `fix:` → patch bump
+  - `BREAKING CHANGE:` footer → major bump
+  - `docs:`, `ci:`, `chore:` → no release by themselves
+- Do not manually create or push version tags.
+
 ## Permissions Rules
 
 - **Never** set `permissions:` at the workflow level; only on individual jobs.
@@ -75,11 +86,8 @@ jobs:
 
 ## Container Workflows Specifics
 
-- `release-container.yaml` follows the build → scan (Trivy) → push → sign (cosign) → attest
-  pipeline. Do not reorder these stages.
-- Trivy results are stored in `trivy.json` and converted to SARIF and CycloneDX before upload.
-  The intermediate files (`trivy.*`) should be listed in `.gitignore` and `.dockerignore` of
-  consuming repos.
+`release-container.yaml` follows the build → scan (Trivy) → push → sign (cosign) → attest
+pipeline. Do not reorder these stages.
 
 ## Adding a New Workflow
 
@@ -90,11 +98,15 @@ jobs:
 
 ## llms.txt
 
-The documentation site generates an `llms.txt` index at:
-
-- [radiorabe.github.io/actions/llms.txt](https://radiorabe.github.io/actions/llms.txt)
-
-External `llms.txt` references for tools used in the workflow steps:
-
+- [radiorabe.github.io/actions/llms.txt](https://radiorabe.github.io/actions/llms.txt) – this repo (auto-generated at build time)
 - [docs.github.com/llms.txt](https://docs.github.com/llms.txt) – GitHub Actions, OIDC tokens, and security hardening
 - [docs.docker.com/llms.txt](https://docs.docker.com/llms.txt) – Docker build, multi-platform builds, and image management
+
+Tool docs (no llms.txt available):
+
+- [trivy.dev](https://trivy.dev/) – Trivy security scanner and SARIF/CycloneDX output
+- [docs.sigstore.dev](https://docs.sigstore.dev/) – cosign image signing and attestation
+- [python-poetry.org/docs](https://python-poetry.org/docs/) – Poetry build and publish
+- [pre-commit.com](https://pre-commit.com/) – pre-commit hooks
+- [go-semantic-release.xyz](https://go-semantic-release.xyz/) – go-semantic-release
+- [docs.ansible.com](https://docs.ansible.com/) – Ansible collections
