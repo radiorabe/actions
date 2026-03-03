@@ -130,7 +130,7 @@ jobs:
             io.openshift.tags=${{ inputs.tags }}
       
       - name: Set up Docker
-        uses: docker/setup-docker-action@v4
+        uses: docker/setup-docker-action@v5
         if: inputs.docker-daemon-config
         with:
           daemon-config: ${{ inputs.docker-daemon-config }}
