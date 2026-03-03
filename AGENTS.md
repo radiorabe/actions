@@ -93,8 +93,19 @@ There is no automated test suite for the workflows themselves. Documentation can
 locally with:
 
 ```bash
-pip install mkdocs-material mkdocs-section-index
+pip install mkdocs-material mkdocs-section-index mkdocs-llmstxt
 mkdocs serve
 ```
 
 Pre-commit hooks (if configured in a consuming repo) validate YAML syntax and formatting.
+
+## llms.txt
+
+The documentation site for this repository generates an `llms.txt` index at:
+
+- [radiorabe.github.io/actions/llms.txt](https://radiorabe.github.io/actions/llms.txt)
+
+External `llms.txt` references for tools used in these workflows:
+
+- [docs.github.com/llms.txt](https://docs.github.com/llms.txt) – GitHub Actions and the broader GitHub platform
+- [docs.docker.com/llms.txt](https://docs.docker.com/llms.txt) – Docker build, push, and container image tooling

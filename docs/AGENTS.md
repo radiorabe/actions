@@ -101,8 +101,20 @@ indentation and grouping pattern. Regenerating the nav automatically is not supp
 ## Local Preview
 
 ```bash
-pip install mkdocs-material mkdocs-section-index
+pip install mkdocs-material mkdocs-section-index mkdocs-llmstxt
 mkdocs serve
 ```
 
 Open `http://127.0.0.1:8000` to preview changes before committing.
+
+## llms.txt
+
+The documentation site generates an `llms.txt` index at build time via the `llmstxt` MkDocs
+plugin configured in `mkdocs.yml`. The output is published at:
+
+- [radiorabe.github.io/actions/llms.txt](https://radiorabe.github.io/actions/llms.txt)
+
+External `llms.txt` references for documentation tooling used here:
+
+- [docs.github.com/llms.txt](https://docs.github.com/llms.txt) – GitHub Pages deployment and GitHub Actions
+- [docs.docker.com/llms.txt](https://docs.docker.com/llms.txt) – Docker and container image concepts

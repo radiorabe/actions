@@ -87,3 +87,14 @@ jobs:
 2. Add `docs/workflows/<category>/<name>.md` documenting it (see `docs/AGENTS.md`).
 3. Register the page in `mkdocs.yml` `nav:`.
 4. Add the workflow to the permissions reference table in `docs/permissions.md`.
+
+## llms.txt
+
+The documentation site generates an `llms.txt` index at:
+
+- [radiorabe.github.io/actions/llms.txt](https://radiorabe.github.io/actions/llms.txt)
+
+External `llms.txt` references for tools used in the workflow steps:
+
+- [docs.github.com/llms.txt](https://docs.github.com/llms.txt) – GitHub Actions, OIDC tokens, and security hardening
+- [docs.docker.com/llms.txt](https://docs.docker.com/llms.txt) – Docker build, multi-platform builds, and image management

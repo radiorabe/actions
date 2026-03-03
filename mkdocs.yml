@@ -1,4 +1,5 @@
 site_name: RaBe GitHub Actions
+site_url: https://radiorabe.github.io/actions/
 repo_url: https://github.com/radiorabe/actions
 repo_name: radiorabe/actions
 
@@ -69,6 +70,24 @@ extra:
 plugins:
 - search
 - section-index
+- llmstxt:
+    markdown_description: |
+      Reusable GitHub Actions workflows for Radio Bern RaBe CI/CD pipelines.
+      Covers container image releases, Python/Poetry testing and publishing,
+      Ansible collection releases, MkDocs documentation deployment, pre-commit
+      checks, Trivy security scanning, and semantic versioning.
+    sections:
+      Workflows:
+        - workflows/index.md
+        - workflows/ansible/*.md
+        - workflows/container/*.md
+        - workflows/python/*.md
+        - workflows/pre-commit.md
+        - workflows/mkdocs.md
+        - workflows/semantic-release.md
+      Reference:
+        - getting-started.md
+        - permissions.md
 
 nav:
   - Home: index.md
