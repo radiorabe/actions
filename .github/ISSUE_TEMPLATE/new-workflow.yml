@@ -1,0 +1,67 @@
+name: New Workflow
+description: Propose a new reusable workflow to be added to this library
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template to propose a new reusable workflow.
+        See the [Contributing guide](https://radiorabe.github.io/actions/contributing/) for the full workflow lifecycle.
+
+  - type: input
+    id: name
+    attributes:
+      label: Proposed Workflow Name
+      description: Follow the `<verb>-<subject>` naming convention (e.g. `test-go-modules`, `release-helm-chart`).
+      placeholder: verb-subject
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: Which category does the workflow belong to?
+      options:
+        - Ansible Collections
+        - Container Images
+        - Python
+        - Pre-Commit
+        - MkDocs
+        - Semantic Release
+        - New Category (describe below)
+    validations:
+      required: true
+
+  - type: textarea
+    id: purpose
+    attributes:
+      label: Purpose
+      description: What does this workflow do? What problem does it solve? Why should it live in this shared library?
+    validations:
+      required: true
+
+  - type: textarea
+    id: tools
+    attributes:
+      label: Tools and Actions Used
+      description: List the tools, GitHub Actions, and external services this workflow depends on.
+
+  - type: textarea
+    id: example
+    attributes:
+      label: Example Caller Workflow
+      description: |
+        Show how downstream repositories would use this workflow.
+        Remember to include `permissions: {}` at the top level and per-job permissions.
+      render: yaml
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Pre-Submission Checklist
+      options:
+        - label: I have checked that no existing workflow covers this use case
+          required: true
+        - label: This workflow would be useful to more than one project
+          required: true

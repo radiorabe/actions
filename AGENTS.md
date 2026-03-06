@@ -12,13 +12,15 @@ The full documentation is published at [radiorabe.github.io/actions](https://rad
 ## Repository Structure
 
 ```
-.github/workflows/   # Reusable workflow definitions (the actual product)
-docs/                # MkDocs source for the published documentation site
-  workflows/         # One .md file per reusable workflow
-  css/               # Custom MkDocs theme styles
-  overrides/         # MkDocs theme overrides
-mkdocs.yml           # MkDocs configuration
-catalog-info.yaml    # Backstage component descriptor
+.github/workflows/          # Reusable workflow definitions (the actual product)
+.github/ISSUE_TEMPLATE/     # Structured issue templates (bug, new-workflow, update, EOL)
+.github/PULL_REQUEST_TEMPLATE.md  # PR checklist for all change types
+docs/                       # MkDocs source for the published documentation site
+  workflows/                # One .md file per reusable workflow
+  css/                      # Custom MkDocs theme styles
+  overrides/                # MkDocs theme overrides
+mkdocs.yml                  # MkDocs configuration
+catalog-info.yaml           # Backstage component descriptor
 ```
 
 ## Conventions
@@ -76,6 +78,18 @@ All work happens on feature branches. Open a PR to `main`; do not manually creat
 
 ## Making Changes
 
+### Issue Templates
+
+Use the structured issue templates when opening requests. Choose the right template from
+`.github/ISSUE_TEMPLATE/`:
+
+| Template | When to use |
+|---|---|
+| `bug-report.yml` | A workflow behaves incorrectly or fails unexpectedly |
+| `new-workflow.yml` | Proposing a new reusable workflow |
+| `update-workflow.yml` | Requesting a new input, version bump, or behavior change |
+| `eol-workflow.yml` | Proposing deprecation or removal of a workflow |
+
 ### Adding a new reusable workflow
 
 1. Create `.github/workflows/<verb>-<subject>.yaml` with `on: workflow_call`.
@@ -89,6 +103,26 @@ All work happens on feature branches. Open a PR to `main`; do not manually creat
 
 1. Edit the workflow YAML.
 2. Keep the documentation in sync (inputs table, permissions table, usage example).
+
+### Deprecating or removing a workflow
+
+1. Open an `eol-workflow.yml` issue to announce intent and gather feedback.
+2. Add a deprecation notice to the workflow YAML (as a comment) and to the docs page.
+3. After the deprecation window (at least one minor release), remove the workflow file, its
+   documentation page, its entry in `mkdocs.yml` `nav:`, and its row in `docs/permissions.md`.
+
+### Pull Requests
+
+All changes go through a pull request. The `.github/PULL_REQUEST_TEMPLATE.md` includes a
+checklist to keep changes consistent across all workflow types. Key items:
+
+- Workflow YAML created/updated
+- Documentation created/updated
+- Permissions table updated (`docs/permissions.md`)
+- `mkdocs.yml` nav updated (for new docs pages)
+- `AGENTS.md` updated (if conventions changed)
+- All caller examples include `permissions: {}` at the workflow level
+- New third-party actions pinned to a released version tag
 
 ## Linting and Testing
 

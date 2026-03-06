@@ -1,0 +1,73 @@
+name: Update Workflow
+description: Request an update to an existing reusable workflow
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template to request a change to an existing workflow — new inputs, tool version bumps, behavior changes, or security improvements.
+        See the [Contributing guide](https://radiorabe.github.io/actions/contributing/) for the full workflow lifecycle.
+
+  - type: dropdown
+    id: workflow
+    attributes:
+      label: Workflow to Update
+      description: Which reusable workflow should be changed?
+      options:
+        - release-ansible-collection
+        - release-container
+        - release-mkdocs
+        - release-python-poetry
+        - schedule-trivy
+        - semantic-release
+        - test-ansible-collection
+        - test-pre-commit
+        - test-python-poetry
+    validations:
+      required: true
+
+  - type: dropdown
+    id: update-type
+    attributes:
+      label: Type of Update
+      options:
+        - New input / option
+        - Tool or action version bump
+        - Behavior change
+        - Security improvement
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: current
+    attributes:
+      label: Current Behavior
+      description: Describe the current behavior of the workflow.
+    validations:
+      required: true
+
+  - type: textarea
+    id: desired
+    attributes:
+      label: Desired Behavior
+      description: Describe the desired behavior after the update.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: breaking
+    attributes:
+      label: Breaking Change?
+      description: Would existing callers need to update their workflows?
+      options:
+        - "No"
+        - "Yes – existing callers need to update their workflows"
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation / Justification
+      description: Why is this change needed? Link to upstream changelogs, CVEs, or related issues.

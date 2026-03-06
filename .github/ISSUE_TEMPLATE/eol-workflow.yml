@@ -1,0 +1,64 @@
+name: EOL / Deprecate Workflow
+description: Propose deprecating or removing a workflow from the library
+labels: ["deprecation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template to propose marking a workflow as deprecated or removing it entirely.
+        See the [Contributing guide](https://radiorabe.github.io/actions/contributing/) for the full EOL lifecycle.
+
+  - type: dropdown
+    id: workflow
+    attributes:
+      label: Workflow to Deprecate / Remove
+      options:
+        - release-ansible-collection
+        - release-container
+        - release-mkdocs
+        - release-python-poetry
+        - schedule-trivy
+        - semantic-release
+        - test-ansible-collection
+        - test-pre-commit
+        - test-python-poetry
+    validations:
+      required: true
+
+  - type: dropdown
+    id: action
+    attributes:
+      label: Proposed Action
+      options:
+        - Deprecate (keep but warn, remove in a future major release)
+        - Remove immediately
+    validations:
+      required: true
+
+  - type: textarea
+    id: reason
+    attributes:
+      label: Reason
+      description: Why should this workflow be deprecated or removed? (e.g. unused, superseded by another workflow, upstream tool EOL, security concern)
+    validations:
+      required: true
+
+  - type: textarea
+    id: migration
+    attributes:
+      label: Migration Path
+      description: How should existing users migrate away from this workflow? Include links to alternatives if available.
+    validations:
+      required: true
+
+  - type: input
+    id: timeline
+    attributes:
+      label: Proposed Timeline
+      description: When should the deprecation notice appear / removal land? (e.g. "next minor release", "v1.0.0")
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Known Users / Impact Assessment
+      description: List known repositories or projects that use this workflow, if any.
