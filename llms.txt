@@ -26,4 +26,5 @@ checks, Trivy security scanning, and semantic versioning.
 
 - [Getting Started](https://radiorabe.github.io/actions/getting-started/index.md)
 - [Permissions](https://radiorabe.github.io/actions/permissions/index.md)
+- [Contributing](https://radiorabe.github.io/actions/contributing/index.md)
 
