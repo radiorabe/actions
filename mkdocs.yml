@@ -88,6 +88,7 @@ plugins:
       Reference:
         - getting-started.md
         - permissions.md
+        - contributing.md
 
 nav:
   - Home: index.md
@@ -110,3 +111,4 @@ nav:
     - MkDocs: workflows/mkdocs.md
     - Semantic Release: workflows/semantic-release.md
   - Permissions: permissions.md
+  - Contributing: contributing.md

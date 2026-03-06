@@ -7,6 +7,13 @@ metadata:
   annotations:
     backstage.io/techdocs-ref: dir:.
     github.com/project-slug: radiorabe/actions
+  links:
+    - url: https://radiorabe.github.io/actions/
+      title: Documentation
+      icon: docs
+    - url: https://radiorabe.github.io/actions/contributing/
+      title: Contributing Guide
+      icon: help
 spec:
   type: library
   lifecycle: experimental
