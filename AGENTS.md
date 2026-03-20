@@ -31,9 +31,9 @@ catalog-info.yaml           # Backstage component descriptor
 - **Trigger**: All reusable workflows include `on: workflow_call` so they can be called from other workflows.
 - **Permissions**: Declare `permissions:` on **every job**, not at the workflow level.
   Use the minimum set required. See `docs/permissions.md` for the reference table.
-- **Actions pinning**: Pin third-party actions to a released version tag (e.g. `@v3`).
-  Dependabot is configured to keep all version tags up-to-date automatically — do not
-  replace tags with commit SHAs.
+- **Actions pinning**: Pin third-party actions to a commit SHA with the version tag as a
+  comment (e.g. `@abc1234def5678 # v3`). Dependabot is configured to keep these pins
+  up-to-date automatically. Do not pin to a mutable version tag alone.
 - **Security baseline**: Every caller example must set `permissions: {}` at the top level,
   then grant per-job permissions explicitly.
 
@@ -122,7 +122,7 @@ checklist to keep changes consistent across all workflow types. Key items:
 - `mkdocs.yml` nav updated (for new docs pages)
 - `AGENTS.md` updated (if conventions changed)
 - All caller examples include `permissions: {}` at the workflow level
-- New third-party actions pinned to a released version tag
+- All third-party actions pinned to a commit SHA with version tag comment (e.g. `@abc1234 # v3`)
 
 ## Linting and Testing
 

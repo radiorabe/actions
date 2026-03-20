@@ -22,6 +22,6 @@ Closes #
 - [ ] `mkdocs.yml` nav is updated (required when a new docs page is added)
 - [ ] `AGENTS.md` is updated (required when repository structure or conventions change)
 - [ ] All caller examples include `permissions: {}` at the workflow level with explicit per-job permissions
-- [ ] Any new third-party actions are pinned to a released version tag (e.g. `@v3`)
+- [ ] All third-party actions are pinned to a commit SHA with version tag comment (e.g. `@abc1234 # v3`)
 - [ ] For breaking changes: migration guidance is included in the docs and commit message contains `BREAKING CHANGE:`
 - [ ] For EOL: deprecation notice is added to the workflow YAML and docs
