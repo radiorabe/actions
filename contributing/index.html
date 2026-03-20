@@ -1360,7 +1360,7 @@ prompts you through the required checklist:</p>
 <li><code>mkdocs.yml</code> nav updated (for new pages)</li>
 <li><code>AGENTS.md</code> updated (if conventions changed)</li>
 <li>All caller examples include <code>permissions: {}</code> at the workflow level</li>
-<li>New third-party actions pinned to a released version tag</li>
+<li>All third-party actions pinned to a commit SHA with version tag comment (e.g. <code>@abc1234 # v3</code>)</li>
 </ul>
 <p>Releases are automated by
 <a href="https://go-semantic-release.xyz/">go-semantic-release</a>
@@ -1400,7 +1400,7 @@ templates in their own repositories to standardise how they manage CI/CD configu
 <p>Copy and adapt the files from <code>.github/ISSUE_TEMPLATE/</code> and <code>.github/PULL_REQUEST_TEMPLATE.md</code>
 to your project, adjusting the workflow list to those you actually use.</p>
 <p>Similarly, add a <a href="https://docs.github.com/en/code-security/dependabot">Dependabot</a> configuration
-to keep workflow version pins up to date automatically:</p>
+to keep workflow SHA pins up to date automatically:</p>
 <div class="highlight"><span class="filename">.github/dependabot.yaml</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nt">updates</span><span class="p">:</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">package-ecosystem</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;github-actions&quot;</span>

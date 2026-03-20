@@ -50,7 +50,7 @@ All changes go through a pull request to `main`. The [PR template](https://githu
 - `mkdocs.yml` nav updated (for new pages)
 - `AGENTS.md` updated (if conventions changed)
 - All caller examples include `permissions: {}` at the workflow level
-- New third-party actions pinned to a released version tag
+- All third-party actions pinned to a commit SHA with version tag comment (e.g. `@abc1234 # v3`)
 
 Releases are automated by [go-semantic-release](https://go-semantic-release.xyz/) on every push to `main`. Use [Conventional Commits](https://www.conventionalcommits.org/) in your commit messages:
 
@@ -67,7 +67,7 @@ The issue templates and PR template in this repository are designed for managing
 
 Copy and adapt the files from `.github/ISSUE_TEMPLATE/` and `.github/PULL_REQUEST_TEMPLATE.md` to your project, adjusting the workflow list to those you actually use.
 
-Similarly, add a [Dependabot](https://docs.github.com/en/code-security/dependabot) configuration to keep workflow version pins up to date automatically:
+Similarly, add a [Dependabot](https://docs.github.com/en/code-security/dependabot) configuration to keep workflow SHA pins up to date automatically:
 
 .github/dependabot.yaml
 
