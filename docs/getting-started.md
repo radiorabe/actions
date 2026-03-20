@@ -18,6 +18,10 @@ updates:
       prefix: "ci: "
 ```
 
+Dependabot keeps SHA-pinned action references up to date automatically. When it opens a PR
+you will see the commit SHA change alongside the version tag comment, for example
+`@abc1234 # v3` → `@def5678 # v4`.
+
 If you need multiple actions in the same repository, combine them as needed. Please add an
 example to the docs if you use the same combination more than once.
 
@@ -35,6 +39,17 @@ To implement least access in your downstream repositories:
 
 2. **Set `permissions: {}`** at the top of every calling workflow to start from a baseline of
    no permissions, then grant only what each job needs at the job level.
+
+3. **Pin actions to commit SHAs** rather than mutable version tags. Every workflow in this
+   library pins its third-party actions to a specific commit SHA with the version tag as an
+   inline comment (e.g. `uses: actions/checkout@abc1234 # v4.2.0`). Dependabot keeps these
+   pins current. Use the same pattern in your own workflows.
+
+4. **Immutable releases** — releases in this repository are
+   [immutable](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository).
+   Once a GitHub Release is published it cannot be edited or deleted. When you pin to a
+   released tag or its underlying commit SHA you can be confident the content will never
+   silently change.
 
 See the [Permissions](permissions.md) page for a full reference of what each workflow requires.
 
