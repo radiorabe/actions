@@ -61,7 +61,7 @@ prompts you through the required checklist:
 - `mkdocs.yml` nav updated (for new pages)
 - `AGENTS.md` updated (if conventions changed)
 - All caller examples include `permissions: {}` at the workflow level
-- New third-party actions pinned to a released version tag
+- All third-party actions pinned to a commit SHA with version tag comment (e.g. `@abc1234 # v3`)
 
 Releases are automated by
 [go-semantic-release](https://go-semantic-release.xyz/)
@@ -86,7 +86,7 @@ Copy and adapt the files from `.github/ISSUE_TEMPLATE/` and `.github/PULL_REQUES
 to your project, adjusting the workflow list to those you actually use.
 
 Similarly, add a [Dependabot](https://docs.github.com/en/code-security/dependabot) configuration
-to keep workflow version pins up to date automatically:
+to keep workflow SHA pins up to date automatically:
 
 ```yaml title=".github/dependabot.yaml"
 version: 2
