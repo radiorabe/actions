@@ -6,6 +6,8 @@ on:
       RABE_PYPI_TOKEN:
         required: true
 
+permissions: {}
+
 jobs:
   publish:
     runs-on: ubuntu-latest
