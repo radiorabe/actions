@@ -13,6 +13,8 @@ on:
         default: '5m0s'
         type: string
 
+permissions: {}
+
 jobs:
   trivy:
     runs-on: ubuntu-latest
