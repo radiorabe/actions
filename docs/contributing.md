@@ -3,6 +3,36 @@
 This guide explains how to report issues, propose changes, and submit pull requests for the
 reusable workflows in this library.
 
+## Security Review
+
+All changes that introduce or update a third-party action, change permissions, or affect
+the security posture of the library must be reviewed against the controls documented in
+[docs/security/](security/index.md).
+
+### When the security docs apply
+
+| Change type | Required review |
+|---|---|
+| New third-party action | Full [action selection criteria](security/supply-chain.md#action-selection-criteria) evaluation; document in issue or PR |
+| Updated SHA pin | Confirm the new SHA is reachable from a signed release tag |
+| Permission change | Verify against [Permissions](security/permissions.md) reference; justify any increase |
+| Vulnerability fix | Follow the [mitigation steps](security/vulnerability-management.md#mitigation-steps) and [VEX process](security/vulnerability-management.md#vex-and-notification) |
+| Any other change | Check the PR checklist for the two new security items |
+
+### Quarterly ENISA alignment review
+
+Once per quarter, a maintainer should open an
+[Update Workflow](https://github.com/radiorabe/actions/issues/new?template=update-workflow.yml)
+issue with type **Security improvement** to:
+
+1. Check the [EUVD](https://euvd.enisa.europa.eu/) and [OSV.dev](https://osv.dev/) for new
+   advisories affecting actions used in this library.
+2. Verify all open Dependabot alerts have been reviewed and are within the response time
+   thresholds in [Vulnerability Management](security/vulnerability-management.md#prioritisation).
+3. Update the [compliance matrix](security/index.md#controls-compliance-matrix) if any
+   control status has changed.
+4. Review and triage any `security`-labelled open issues.
+
 ## Reporting Issues
 
 Use the structured issue templates to open requests. GitHub will show you the template chooser
@@ -27,7 +57,7 @@ when you click **New issue** in the repository.
     - Grouped workflows (ansible, container, python): `docs/workflows/<category>/<name>.md`
     - Standalone workflows: `docs/workflows/<name>.md`
 4. Register the new page in `mkdocs.yml` under `nav:`.
-5. Add the workflow to the permissions table in `docs/permissions.md`.
+5. Add the workflow to the permissions table in `docs/security/permissions.md`.
 6. Update `AGENTS.md` if the repository structure or conventions change.
 7. Submit a pull request — the [PR template](https://github.com/radiorabe/actions/compare)
    includes a full checklist.
@@ -47,7 +77,7 @@ when you click **New issue** in the repository.
    issue to announce intent and gather feedback from users.
 2. Add a deprecation notice to the workflow YAML (as a comment) and to the docs page.
 3. After the deprecation window (at least one minor release), remove the workflow file, its
-   documentation page, its entry in `mkdocs.yml`, and its row in `docs/permissions.md`.
+   documentation page, its entry in `mkdocs.yml`, and its row in `docs/security/permissions.md`.
 
 ## Pull Requests
 
@@ -57,11 +87,12 @@ prompts you through the required checklist:
 
 - Workflow YAML created or updated
 - Documentation created or updated
-- Permissions table updated
+- Permissions table in `docs/security/permissions.md` updated
 - `mkdocs.yml` nav updated (for new pages)
 - `AGENTS.md` updated (if conventions changed)
 - All caller examples include `permissions: {}` at the workflow level
 - All third-party actions pinned to a commit SHA with version tag comment (e.g. `@abc1234 # v3`)
+- New third-party actions reviewed against the [action selection criteria](security/supply-chain.md#action-selection-criteria)
 
 Releases are automated by
 [go-semantic-release](https://go-semantic-release.xyz/)

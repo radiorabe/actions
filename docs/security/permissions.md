@@ -1,4 +1,4 @@
-# Permissions
+# Security: Permissions
 
 These reusable workflows enforce
 [least-privilege](https://docs.github.com/en/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions)

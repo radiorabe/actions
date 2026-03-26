@@ -71,3 +71,38 @@ body:
     attributes:
       label: Motivation / Justification
       description: Why is this change needed? Link to upstream changelogs, CVEs, or related issues.
+
+  - type: dropdown
+    id: security-impact
+    attributes:
+      label: Security Impact
+      description: Does this update have a security dimension?
+      options:
+        - No security impact
+        - Adds or replaces a third-party action (supply chain impact)
+        - Changes required permissions
+        - Addresses a known vulnerability or CVE
+        - Security improvement (hardens posture)
+        - Other security impact (describe in motivation)
+    validations:
+      required: true
+
+  - type: input
+    id: enisa-control
+    attributes:
+      label: ENISA TA Control Affected (optional)
+      description: |
+        If this update addresses or affects a control from the
+        [ENISA Technical Advisory for Secure Use of Package Managers](https://radiorabe.github.io/actions/security/),
+        note the control ID (e.g. §4.2.3, §4.3.2).
+      placeholder: "e.g. §4.2.3 Integrity Enforcement"
+
+  - type: checkboxes
+    id: security-due-diligence
+    attributes:
+      label: Security Due Diligence
+      options:
+        - label: Caller repositories are mapped and reviewed for immutable references (no unpinned workflows/images)
+          required: true
+        - label: Reusable components and vendor supply-chain impact is assessed for caller exposure
+          required: false
