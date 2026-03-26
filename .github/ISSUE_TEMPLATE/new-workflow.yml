@@ -80,7 +80,7 @@ body:
           required: true
         - label: All proposed third-party actions will be pinned to a full commit SHA (`@<sha> # vN.N.N`)
           required: true
-        - label: The example caller workflow includes `permissions: {}` at the workflow level with explicit per-job permissions
+        - label: The example caller workflow includes empty `permissions:` at the workflow level with explicit per-job permissions
           required: true
         - label: The minimum required permissions have been declared and are no broader than necessary
           required: true
