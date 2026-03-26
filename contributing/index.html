@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://radiorabe.github.io/actions/contributing/">
       
       
-        <link rel="prev" href="../permissions/">
+        <link rel="prev" href="../security/vulnerability-management/">
       
       
       
@@ -285,13 +285,13 @@
   
   
     <li class="md-tabs__item">
-      <a href="../permissions/" class="md-tabs__link">
+      <a href="../security/" class="md-tabs__link">
         
   
   
     
   
-  Permissions
+  Security
 
       </a>
     </li>
@@ -975,8 +975,75 @@
   
   
   
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../security/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Security
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Security
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../permissions/" class="md-nav__link">
+      <a href="../security/permissions/" class="md-nav__link">
         
   
   
@@ -992,6 +1059,70 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../security/supply-chain/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Supply Chain
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../security/vulnerability-management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vulnerability Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -1061,6 +1192,45 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#security-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security Review
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Security Review">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#when-the-security-docs-apply" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When the security docs apply
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quarterly-enisa-alignment-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quarterly ENISA alignment review
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#reporting-issues" class="md-nav__link">
@@ -1180,6 +1350,45 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#security-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security Review
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Security Review">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#when-the-security-docs-apply" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When the security docs apply
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quarterly-enisa-alignment-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quarterly ENISA alignment review
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#reporting-issues" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1285,6 +1494,54 @@
 <h1 id="contributing">Contributing<a class="headerlink" href="#contributing" title="Permanent link">&para;</a></h1>
 <p>This guide explains how to report issues, propose changes, and submit pull requests for the
 reusable workflows in this library.</p>
+<h2 id="security-review">Security Review<a class="headerlink" href="#security-review" title="Permanent link">&para;</a></h2>
+<p>All changes that introduce or update a third-party action, change permissions, or affect
+the security posture of the library must be reviewed against the controls documented in
+<a href="../security/">docs/security/</a>.</p>
+<h3 id="when-the-security-docs-apply">When the security docs apply<a class="headerlink" href="#when-the-security-docs-apply" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Change type</th>
+<th>Required review</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>New third-party action</td>
+<td>Full <a href="../security/supply-chain/#action-selection-criteria">action selection criteria</a> evaluation; document in issue or PR</td>
+</tr>
+<tr>
+<td>Updated SHA pin</td>
+<td>Confirm the new SHA is reachable from a signed release tag</td>
+</tr>
+<tr>
+<td>Permission change</td>
+<td>Verify against <a href="../security/permissions/">Permissions</a> reference; justify any increase</td>
+</tr>
+<tr>
+<td>Vulnerability fix</td>
+<td>Follow the <a href="../security/vulnerability-management/#mitigation-steps">mitigation steps</a> and <a href="../security/vulnerability-management/#vex-and-notification">VEX process</a></td>
+</tr>
+<tr>
+<td>Any other change</td>
+<td>Check the PR checklist for the two new security items</td>
+</tr>
+</tbody>
+</table>
+<h3 id="quarterly-enisa-alignment-review">Quarterly ENISA alignment review<a class="headerlink" href="#quarterly-enisa-alignment-review" title="Permanent link">&para;</a></h3>
+<p>Once per quarter, a maintainer should open an
+<a href="https://github.com/radiorabe/actions/issues/new?template=update-workflow.yml">Update Workflow</a>
+issue with type <strong>Security improvement</strong> to:</p>
+<ol>
+<li>Check the <a href="https://euvd.enisa.europa.eu/">EUVD</a> and <a href="https://osv.dev/">OSV.dev</a> for new
+   advisories affecting actions used in this library.</li>
+<li>Verify all open Dependabot alerts have been reviewed and are within the response time
+   thresholds in <a href="../security/vulnerability-management/#prioritisation">Vulnerability Management</a>.</li>
+<li>Update the <a href="../security/#controls-compliance-matrix">compliance matrix</a> if any
+   control status has changed.</li>
+<li>Review and triage any <code>security</code>-labelled open issues.</li>
+</ol>
 <h2 id="reporting-issues">Reporting Issues<a class="headerlink" href="#reporting-issues" title="Permanent link">&para;</a></h2>
 <p>Use the structured issue templates to open requests. GitHub will show you the template chooser
 when you click <strong>New issue</strong> in the repository.</p>
@@ -1327,7 +1584,7 @@ when you click <strong>New issue</strong> in the repository.</p>
 </ul>
 </li>
 <li>Register the new page in <code>mkdocs.yml</code> under <code>nav:</code>.</li>
-<li>Add the workflow to the permissions table in <code>docs/permissions.md</code>.</li>
+<li>Add the workflow to the permissions table in <code>docs/security/permissions.md</code>.</li>
 <li>Update <code>AGENTS.md</code> if the repository structure or conventions change.</li>
 <li>Submit a pull request — the <a href="https://github.com/radiorabe/actions/compare">PR template</a>
    includes a full checklist.</li>
@@ -1347,7 +1604,7 @@ when you click <strong>New issue</strong> in the repository.</p>
    issue to announce intent and gather feedback from users.</li>
 <li>Add a deprecation notice to the workflow YAML (as a comment) and to the docs page.</li>
 <li>After the deprecation window (at least one minor release), remove the workflow file, its
-   documentation page, its entry in <code>mkdocs.yml</code>, and its row in <code>docs/permissions.md</code>.</li>
+   documentation page, its entry in <code>mkdocs.yml</code>, and its row in <code>docs/security/permissions.md</code>.</li>
 </ol>
 <h2 id="pull-requests">Pull Requests<a class="headerlink" href="#pull-requests" title="Permanent link">&para;</a></h2>
 <p>All changes go through a pull request to <code>main</code>. The
@@ -1356,11 +1613,12 @@ prompts you through the required checklist:</p>
 <ul>
 <li>Workflow YAML created or updated</li>
 <li>Documentation created or updated</li>
-<li>Permissions table updated</li>
+<li>Permissions table in <code>docs/security/permissions.md</code> updated</li>
 <li><code>mkdocs.yml</code> nav updated (for new pages)</li>
 <li><code>AGENTS.md</code> updated (if conventions changed)</li>
 <li>All caller examples include <code>permissions: {}</code> at the workflow level</li>
 <li>All third-party actions pinned to a commit SHA with version tag comment (e.g. <code>@abc1234 # v3</code>)</li>
+<li>New third-party actions reviewed against the <a href="../security/supply-chain/#action-selection-criteria">action selection criteria</a></li>
 </ul>
 <p>Releases are automated by
 <a href="https://go-semantic-release.xyz/">go-semantic-release</a>
@@ -1446,7 +1704,7 @@ to keep workflow SHA pins up to date automatically:</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../permissions/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Permissions">
+          <a href="../security/vulnerability-management/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Vulnerability Management">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1456,7 +1714,7 @@ to keep workflow SHA pins up to date automatically:</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Permissions
+                Vulnerability Management
               </div>
             </div>
           </a>

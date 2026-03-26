@@ -25,6 +25,12 @@ checks, Trivy security scanning, and semantic versioning.
 ## Reference
 
 - [Getting Started](https://radiorabe.github.io/actions/getting-started/index.md)
-- [Permissions](https://radiorabe.github.io/actions/permissions/index.md)
 - [Contributing](https://radiorabe.github.io/actions/contributing/index.md)
+
+## Security
+
+- [Security](https://radiorabe.github.io/actions/security/index.md)
+- [Permissions](https://radiorabe.github.io/actions/security/permissions/index.md)
+- [Supply Chain](https://radiorabe.github.io/actions/security/supply-chain/index.md)
+- [Vulnerability Management](https://radiorabe.github.io/actions/security/vulnerability-management/index.md)
 

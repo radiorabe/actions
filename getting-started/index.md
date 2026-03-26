@@ -34,7 +34,7 @@ To implement least access in your downstream repositories:
 1. **Pin actions to commit SHAs** rather than mutable version tags. Every workflow in this library pins its third-party actions to a specific commit SHA with the version tag as an inline comment (e.g. `uses: actions/checkout@abc1234 # v4.2.0`). Dependabot keeps these pins current. Use the same pattern in your own workflows.
 1. **Immutable releases** — releases in this repository are [immutable](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository). Once a GitHub Release is published it cannot be edited or deleted. When you pin to a released tag or its underlying commit SHA you can be confident the content will never silently change.
 
-See the [Permissions](https://radiorabe.github.io/actions/permissions/index.md) page for a full reference of what each workflow requires.
+See the [Permissions](https://radiorabe.github.io/actions/security/permissions/index.md) page for a full reference of what each workflow requires, and the [Security](https://radiorabe.github.io/actions/security/index.md) section for the full security controls documentation.
 
 ## Issue and Pull Request Templates
 

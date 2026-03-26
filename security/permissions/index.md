@@ -1,4 +1,4 @@
-# Permissions
+# Security: Permissions
 
 These reusable workflows enforce [least-privilege](https://docs.github.com/en/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions) by explicitly declaring the minimum `permissions` each workflow job requires. GitHub Actions enforces the intersection of caller and callee permissions, so the effective permissions for a called workflow are **no more** than what the calling job grants.
 
