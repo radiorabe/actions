@@ -51,7 +51,7 @@ To implement least access in your downstream repositories:
    released tag or its underlying commit SHA you can be confident the content will never
    silently change.
 
-See the [Permissions](permissions.md) page for a full reference of what each workflow requires.
+See the [Permissions](security/permissions.md) page for a full reference of what each workflow requires, and the [Security](security/index.md) section for the full security controls documentation.
 
 ## Issue and Pull Request Templates
 

@@ -65,3 +65,28 @@ body:
           required: true
         - label: This workflow would be useful to more than one project
           required: true
+
+  - type: checkboxes
+    id: security-checklist
+    attributes:
+      label: Security Review
+      description: |
+        Review the [action selection criteria](https://radiorabe.github.io/actions/security/supply-chain/#action-selection-criteria)
+        before adding any new third-party action.
+      options:
+        - label: All proposed third-party actions are published by a verified or well-known organisation
+          required: true
+        - label: All proposed third-party actions have been checked for known vulnerabilities (GitHub Advisory Database, OSV.dev)
+          required: true
+        - label: All proposed third-party actions will be pinned to a full commit SHA (`@<sha> # vN.N.N`)
+          required: true
+        - label: The example caller workflow includes `permissions: {}` at the workflow level with explicit per-job permissions
+          required: true
+        - label: The minimum required permissions have been declared and are no broader than necessary
+          required: true
+        - label: Callers (downstream repositories) are documented and verified to use immutable release references (no unpinned workflow refs or container images)
+          required: true
+        - label: Reusable components (actions used/provided by this repo) are validated for immutable versioning and source constraints
+          required: true
+        - label: Due diligence includes validating each caller project for lifecycle/retention policies and any transitive dependency risk
+          required: true

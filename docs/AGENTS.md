@@ -15,7 +15,12 @@ copy-pasteable YAML snippets, annotated input tables, and permission references.
 docs/
   index.md              # Home page (uses custom template, intentionally minimal)
   getting-started.md    # Quickstart and security baseline instructions
-  permissions.md        # Reference table: workflow → required permissions
+  contributing.md       # Workflow lifecycle and process guide
+  security/
+    index.md            # Security overview and ENISA TA compliance matrix
+    permissions.md      # Reference table: workflow → required permissions
+    supply-chain.md     # Action selection, SHA pinning, SBOM (ENISA §4.1, §4.2)
+    vulnerability-management.md  # Scanning, monitoring, assessment, mitigation (ENISA §4.3, §4.4)
   workflows/
     index.md            # Workflow category overview table
     ansible/
@@ -73,8 +78,9 @@ indentation and grouping pattern. Regenerating the nav automatically is not supp
 ## Local Preview
 
 ```bash
-pip install mkdocs-material mkdocs-section-index mkdocs-llmstxt
-mkdocs serve
+python3 -m venv .venv
+.venv/bin/pip install mkdocs-material mkdocs-section-index mkdocs-llmstxt
+.venv/bin/mkdocs serve
 ```
 
 Open `http://127.0.0.1:8000` to preview changes before committing.

@@ -72,3 +72,35 @@ body:
     attributes:
       label: Additional Context
       description: Any other context, links to failed runs, or screenshots.
+
+  - type: dropdown
+    id: security-impact
+    attributes:
+      label: Security Impact
+      description: Does this bug have a security dimension?
+      options:
+        - No security impact
+        - Possible vulnerability or exposure (describe below)
+        - Confirmed vulnerability — please also open a private Security Advisory
+    validations:
+      required: true
+
+  - type: textarea
+    id: security-detail
+    attributes:
+      label: Security Details (if applicable)
+      description: |
+        If this bug could be a security vulnerability, describe the potential impact.
+        For confirmed vulnerabilities, open a
+        [Security Advisory](https://github.com/radiorabe/actions/security/advisories/new)
+        instead of, or in addition to, this issue.
+
+  - type: checkboxes
+    id: downstream-due-diligence
+    attributes:
+      label: Caller Due Diligence
+      options:
+        - label: I have checked whether caller repositories could be affected by this issue and included remediation notes for them
+          required: true
+        - label: Any caller workflows or container images are verified to be pinned/immutable, or their risk is documented
+          required: true

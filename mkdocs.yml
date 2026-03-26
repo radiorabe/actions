@@ -87,8 +87,12 @@ plugins:
         - workflows/semantic-release.md
       Reference:
         - getting-started.md
-        - permissions.md
         - contributing.md
+      Security:
+        - security/index.md
+        - security/permissions.md
+        - security/supply-chain.md
+        - security/vulnerability-management.md
 
 nav:
   - Home: index.md
@@ -110,5 +114,9 @@ nav:
     - Pre-Commit: workflows/pre-commit.md
     - MkDocs: workflows/mkdocs.md
     - Semantic Release: workflows/semantic-release.md
-  - Permissions: permissions.md
+  - Security:
+    - security/index.md
+    - Permissions: security/permissions.md
+    - Supply Chain: security/supply-chain.md
+    - Vulnerability Management: security/vulnerability-management.md
   - Contributing: contributing.md

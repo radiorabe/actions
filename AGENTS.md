@@ -16,6 +16,7 @@ The full documentation is published at [radiorabe.github.io/actions](https://rad
 .github/ISSUE_TEMPLATE/     # Structured issue templates (bug, new-workflow, update, EOL)
 .github/PULL_REQUEST_TEMPLATE.md  # PR checklist for all change types
 docs/                       # MkDocs source for the published documentation site
+  security/                 # Security controls documentation (ENISA TA alignment)
   workflows/                # One .md file per reusable workflow
   css/                      # Custom MkDocs theme styles
   overrides/                # MkDocs theme overrides
@@ -30,12 +31,17 @@ catalog-info.yaml           # Backstage component descriptor
 - **Naming**: `<verb>-<subject>.yaml` – e.g. `release-container.yaml`, `test-python-poetry.yaml`. The file `semantic-release.yaml` is an explicit exception to mirror the upstream tool name.
 - **Trigger**: All reusable workflows include `on: workflow_call` so they can be called from other workflows.
 - **Permissions**: Declare `permissions:` on **every job**, not at the workflow level.
-  Use the minimum set required. See `docs/permissions.md` for the reference table.
+  Use the minimum set required. See `docs/security/permissions.md` for the reference table.
 - **Actions pinning**: Pin third-party actions to a commit SHA with the version tag as a
   comment (e.g. `@abc1234def5678 # v3`). Dependabot is configured to keep these pins
   up-to-date automatically. Do not pin to a mutable version tag alone.
+  SHA pinning implements ENISA TA §4.2.3 (Integrity Enforcement) and §4.2.6 (Pinning Versions).
 - **Security baseline**: Every caller example must set `permissions: {}` at the top level,
   then grant per-job permissions explicitly.
+  This implements ENISA TA §4.2.4 (Source/Access Control).
+- **New third-party actions**: Before adding any new action, evaluate it against the
+  [action selection criteria](https://radiorabe.github.io/actions/security/supply-chain/#action-selection-criteria)
+  (ENISA TA §4.1).
 
 ### Documentation (`docs/`)
 
@@ -47,8 +53,10 @@ catalog-info.yaml           # Backstage component descriptor
 - Use [MkDocs code annotations](https://squidfunk.github.io/mkdocs-material/reference/code-blocks/#adding-annotations)
   (`# (N)` inside code blocks with numbered explanations below) to explain individual YAML keys.
 - Usage examples must always include `permissions: {}` at the workflow level and explicit
-  per-job permissions matching the reference table in `docs/permissions.md`.
+  per-job permissions matching the reference table in `docs/security/permissions.md`.
 - Update `mkdocs.yml` `nav:` whenever a new documentation page is added.
+- Security documentation lives in `docs/security/`. Each sub-page maps to a group of ENISA TA
+  controls (see `docs/security/index.md` for the compliance matrix).
 
 ### Conventional Commits and Versioning
 
@@ -97,7 +105,10 @@ Use the structured issue templates when opening requests. Choose the right templ
    `docs/workflows/<category>/<name>.md`; standalone workflows go directly in
    `docs/workflows/<name>.md`.
 3. Register the new page in `mkdocs.yml` under `nav:`.
-4. Update `docs/permissions.md` with the new workflow's required permissions.
+4. Update `docs/security/permissions.md` with the new workflow's required permissions.
+5. Evaluate all third-party actions against the
+   [action selection criteria](https://radiorabe.github.io/actions/security/supply-chain/#action-selection-criteria)
+   and document the evaluation in the PR.
 
 ### Updating an existing workflow
 
@@ -109,7 +120,7 @@ Use the structured issue templates when opening requests. Choose the right templ
 1. Open an `eol-workflow.yml` issue to announce intent and gather feedback.
 2. Add a deprecation notice to the workflow YAML (as a comment) and to the docs page.
 3. After the deprecation window (at least one minor release), remove the workflow file, its
-   documentation page, its entry in `mkdocs.yml` `nav:`, and its row in `docs/permissions.md`.
+   documentation page, its entry in `mkdocs.yml` `nav:`, and its row in `docs/security/permissions.md`.
 
 ### Pull Requests
 
@@ -118,19 +129,38 @@ checklist to keep changes consistent across all workflow types. Key items:
 
 - Workflow YAML created/updated
 - Documentation created/updated
-- Permissions table updated (`docs/permissions.md`)
+- Permissions table updated (`docs/security/permissions.md`)
 - `mkdocs.yml` nav updated (for new docs pages)
 - `AGENTS.md` updated (if conventions changed)
 - All caller examples include `permissions: {}` at the workflow level
 - All third-party actions pinned to a commit SHA with version tag comment (e.g. `@abc1234 # v3`)
+- New third-party actions evaluated against the action selection criteria
+
+## Security
+
+Security controls for this repository are documented in `docs/security/` and derive from the
+[ENISA Technical Advisory for Secure Use of Package Managers](https://www.enisa.europa.eu/publications/enisa-technical-advisory-for-secure-use-of-package-managers)
+(v1.1, March 2026).
+
+Key security conventions:
+
+| Convention | ENISA TA Control |
+|---|---|
+| All `uses:` references pinned to full commit SHA | §4.2.3 Integrity Enforcement, §4.2.6 Pinning Versions |
+| `permissions: {}` at workflow level + explicit per-job grants | §4.2.4 Source/Access Control |
+| Dependabot for daily SHA-pin updates | §4.3.4 Monitor Outdated Versions |
+| Trivy scans on container builds and schedule | §4.3.2 Automated Scanning, §4.3.1 SBOM-driven Monitoring |
+| CycloneDX SBOM attached as cosign attestation | §4.2.1 SBOM Creation |
+| Action selection criteria evaluated before adoption | §4.1.1–§4.1.6 Package Selection |
 
 ## Linting and Testing
 
 No automated test suite. Preview docs locally:
 
 ```bash
-pip install mkdocs-material mkdocs-section-index mkdocs-llmstxt
-mkdocs serve
+python3 -m venv .venv
+.venv/bin/pip install mkdocs-material mkdocs-section-index mkdocs-llmstxt
+.venv/bin/mkdocs serve
 ```
 
 ## llms.txt
