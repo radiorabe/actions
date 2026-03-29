@@ -1,0 +1,52 @@
+name: Test GitHub Actions
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_call:
+    inputs:
+      persona:
+        description: "The auditing persona to use: 'regular' (default), 'pedantic', or 'auditor'."
+        required: false
+        type: string
+        default: "regular"
+      min-severity:
+        description: "The minimum severity to report findings for: 'unknown', 'informational', 'low', 'medium', or 'high'."
+        required: false
+        type: string
+        default: ""
+
+permissions: {}
+
+jobs:
+  zizmor:
+    name: Run zizmor
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      security-events: write # Required to create zizmor security alerts
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Select zizmor persona
+        id: select-persona
+        env:
+          INPUT_PERSONA: ${{ inputs.persona }}
+        run: |
+          persona="regular"
+          if [[ "${INPUT_PERSONA}" != "" ]]; then
+             persona="${INPUT_PERSONA}"
+          fi
+          echo "persona=${persona}" >> $GITHUB_OUTPUT
+
+      - name: Run zizmor
+        uses: zizmorcore/zizmor-action@71321a20a9ded102f6e9ce5718a2fcec2c4f70d8 # v0.5.2
+        with:
+          persona: ${{ steps.select-persona.outputs.persona }}
+          min-severity: ${{ inputs.min-severity }}

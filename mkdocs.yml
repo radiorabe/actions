@@ -81,6 +81,7 @@ plugins:
         - workflows/index.md
         - workflows/ansible/*.md
         - workflows/container/*.md
+        - workflows/github-actions/*.md
         - workflows/python/*.md
         - workflows/pre-commit.md
         - workflows/mkdocs.md
@@ -111,6 +112,9 @@ nav:
       - workflows/python/index.md
       - Test: workflows/python/test.md
       - Release: workflows/python/release.md
+    - GitHub Actions:
+      - workflows/github-actions/index.md
+      - Test: workflows/github-actions/test.md
     - Pre-Commit: workflows/pre-commit.md
     - MkDocs: workflows/mkdocs.md
     - Semantic Release: workflows/semantic-release.md

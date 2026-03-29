@@ -22,6 +22,7 @@ body:
         - test-ansible-collection
         - test-pre-commit
         - test-python-poetry
+        - test-github-actions
     validations:
       required: true
 
