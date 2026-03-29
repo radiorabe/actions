@@ -4,24 +4,25 @@ on:
   workflow_call:
     inputs:
       image-ref:
-        description: 'image-ref to scan'
+        description: "image-ref to scan"
         required: true
         type: string
       timeout:
-        description: 'Scan timeout duration'
+        description: "Scan timeout duration"
         required: false
-        default: '5m0s'
+        default: "5m0s"
         type: string
 
 permissions: {}
 
 jobs:
   trivy:
+    name: Run Trivy vulnerability scanner
     runs-on: ubuntu-latest
 
     permissions:
       packages: write # allow pushing attestation to registry
-      security-events: write
+      security-events: write # allow uploading sarif to security tab
       id-token: write # needed for signing the images with GitHub OIDC using cosign
 
     steps:
@@ -36,41 +37,41 @@ jobs:
         with:
           image-ref: ${{ inputs.image-ref }}
           timeout: ${{ inputs.timeout }}
-          format: 'json'
+          format: "json"
           ignore-unfixed: true
           list-all-pkgs: true
-          scanners: 'vuln'
-          output: 'trivy.json'
+          scanners: "vuln"
+          output: "trivy.json"
 
       - name: Convert trivy results to sarif
         uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1 # v0.35.0
         with:
           image-ref: trivy.json
-          scan-type: 'convert'
-          format: 'sarif'
+          scan-type: "convert"
+          format: "sarif"
           # we don't actually limit them, but this gates the convert action
           limit-severities-for-sarif: true
           # empty makes it skip the --vuln-type arg
-          vuln-type: ''
-          output: 'trivy.sarif'
+          vuln-type: ""
+          output: "trivy.sarif"
 
       - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@38697555549f1db7851b81482ff19f1fa5c4fedc # v4.34.1
         if: always()
+        uses: github/codeql-action/upload-sarif@38697555549f1db7851b81482ff19f1fa5c4fedc # v4.34.1
         with:
-          sarif_file: 'trivy.sarif'
+          sarif_file: "trivy.sarif"
 
       - name: Convert trivy results to cosign-vuln
         uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1 # v0.35.0
         with:
           image-ref: trivy.json
-          scan-type: 'convert'
-          format: 'cosign-vuln'
+          scan-type: "convert"
+          format: "cosign-vuln"
           # we don't actually limit them, but this gates the convert action
           limit-severities-for-sarif: true
           # empty makes it skip the --vuln-type arg
-          vuln-type: ''
-          output: 'trivy.cosign.json'
+          vuln-type: ""
+          output: "trivy.cosign.json"
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@b45d80f862d83dbcd57f89517bcf500b2ab88fb2 # v4.0.0
@@ -80,4 +81,6 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Attach a security attestation to the signed image
-        run: cosign attest --yes --type vuln --predicate trivy.cosign.json ${{ inputs.image-ref }}
+        run: cosign attest --yes --type vuln --predicate trivy.cosign.json -- "${INPUTS_IMAGE_REF}"
+        env:
+          INPUTS_IMAGE_REF: ${{ inputs.image-ref }}
