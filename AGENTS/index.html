@@ -1281,36 +1281,37 @@ source for the documentation site published at
 <p>The documentation explains how to use every reusable workflow in <code>.github/workflows/</code>, with
 copy-pasteable YAML snippets, annotated input tables, and permission references.</p>
 <h2 id="directory-layout">Directory Layout<a class="headerlink" href="#directory-layout" title="Permanent link">&para;</a></h2>
-<p><code>docs/
-  index.md              # Home page (uses custom template, intentionally minimal)
-  getting-started.md    # Quickstart and security baseline instructions
-  contributing.md       # Workflow lifecycle and process guide
-  security/
-    index.md            # Security overview and ENISA TA compliance matrix
-    permissions.md      # Reference table: workflow → required permissions
-    supply-chain.md     # Action selection, SHA pinning, SBOM (ENISA §4.1, §4.2)
-    vulnerability-management.md  # Scanning, monitoring, assessment, mitigation (ENISA §4.3, §4.4)
-  workflows/
-    index.md            # Workflow category overview table
-    ansible/
-      index.md          # Ansible category landing page
-      release.md        # release-ansible-collection.yaml docs
-      test.md           # test-ansible-collection.yaml docs
-    container/
-      index.md          # Container category landing page
-      release.md        # release-container.yaml docs
-      schedule.md       # schedule-trivy.yaml docs
-    python/
-      index.md          # Python category landing page
-      release.md        # release-python-poetry.yaml docs
-      test.md           # test-python-poetry.yaml docs
-    mkdocs.md           # release-mkdocs.yaml docs
-    pre-commit.md       # test-pre-commit.yaml docs
-    semantic-release.md # semantic-release.yaml docs
-  css/
-    style.css           # Custom theme overrides
-  overrides/
-    home.html           # Custom home page template</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>docs/
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  index.md              # Home page (uses custom template, intentionally minimal)
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  getting-started.md    # Quickstart and security baseline instructions
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  contributing.md       # Workflow lifecycle and process guide
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>  security/
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    index.md            # Security overview and ENISA TA compliance matrix
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    permissions.md      # Reference table: workflow → required permissions
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    supply-chain.md     # Action selection, SHA pinning, SBOM (ENISA §4.1, §4.2)
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    vulnerability-management.md  # Scanning, monitoring, assessment, mitigation (ENISA §4.3, §4.4)
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>  workflows/
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    index.md            # Workflow category overview table
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    ansible/
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>      index.md          # Ansible category landing page
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>      release.md        # release-ansible-collection.yaml docs
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>      test.md           # test-ansible-collection.yaml docs
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    container/
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>      index.md          # Container category landing page
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>      release.md        # release-container.yaml docs
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>      schedule.md       # schedule-trivy.yaml docs
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>    python/
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>      index.md          # Python category landing page
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>      release.md        # release-python-poetry.yaml docs
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>      test.md           # test-python-poetry.yaml docs
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>    mkdocs.md           # release-mkdocs.yaml docs
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>    pre-commit.md       # test-pre-commit.yaml docs
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>    semantic-release.md # semantic-release.yaml docs
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>  css/
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>    style.css           # Custom theme overrides
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>  overrides/
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>    home.html           # Custom home page template
+</code></pre></div>
 <h2 id="page-structure-for-each-workflow">Page Structure for Each Workflow<a class="headerlink" href="#page-structure-for-each-workflow" title="Permanent link">&para;</a></h2>
 <p>Every workflow documentation page must contain these sections in order:</p>
 <ol>
@@ -1340,10 +1341,10 @@ copy-pasteable YAML snippets, annotated input tables, and permission references.
 <p>After adding a new page, register it in <code>mkdocs.yml</code> under the <code>nav:</code> key. Follow the existing
 indentation and grouping pattern. Regenerating the nav automatically is not supported.</p>
 <h2 id="local-preview">Local Preview<a class="headerlink" href="#local-preview" title="Permanent link">&para;</a></h2>
-<p><code>bash
-python3 -m venv .venv
-.venv/bin/pip install mkdocs-material mkdocs-section-index mkdocs-llmstxt
-.venv/bin/mkdocs serve</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>.venv/bin/pip<span class="w"> </span>install<span class="w"> </span>mkdocs-material<span class="w"> </span>mkdocs-section-index<span class="w"> </span>mkdocs-llmstxt
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>.venv/bin/mkdocs<span class="w"> </span>serve
+</code></pre></div>
 <p>Open <code>http://127.0.0.1:8000</code> to preview changes before committing.</p>
 <h2 id="llmstxt">llms.txt<a class="headerlink" href="#llmstxt" title="Permanent link">&para;</a></h2>
 <ul>
