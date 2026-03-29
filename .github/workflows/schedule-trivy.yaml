@@ -81,6 +81,6 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Attach a security attestation to the signed image
-        run: cosign attest --yes --type vuln --predicate trivy.cosign.json ${INPUTS_IMAGE_REF}
+        run: cosign attest --yes --type vuln --predicate trivy.cosign.json -- "${INPUTS_IMAGE_REF}"
         env:
           INPUTS_IMAGE_REF: ${{ inputs.image-ref }}
