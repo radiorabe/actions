@@ -31,6 +31,7 @@ called workflow are **no more** than what the calling job grants.
 | `schedule-trivy.yaml` | `packages: write`, `security-events: write`, `id-token: write` |
 | `semantic-release.yaml` | `contents: read` |
 | `test-ansible-collection.yaml` | `contents: read` |
+| `test-github-actions.yaml` | `contents: read`, `security-events: write` |
 | `test-pre-commit.yaml` | `contents: read` |
 | `test-python-poetry.yaml` | `contents: read` |
 
