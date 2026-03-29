@@ -54,9 +54,7 @@ ______________________________________________________________________
 
 Every third-party action reference in this library is pinned to a **full commit SHA** with the version tag as an inline comment:
 
-```
-uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-```
+`yaml uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2`
 
 This provides two complementary controls in one line:
 
