@@ -22,7 +22,7 @@ the pull request or the associated [New Workflow](https://github.com/radiorabe/a
 
 - [ ] The action is published under a **verified organisation account** (GitHub verified badge
       or a well-known project such as `actions/`, `docker/`, `sigstore/`, `aquasecurity/`,
-      `github/`).
+      `github/`, `zizmorcore/`).
 - [ ] The action repository is the **canonical upstream** — not a fork, mirror, or re-publish.
 - [ ] The action's repository URL is the same one referenced in the workflow (`uses:` field).
 

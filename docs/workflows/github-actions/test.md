@@ -24,11 +24,14 @@ jobs:
       contents: read # (2)
       security-events: write # (3)
     uses: radiorabe/actions/.github/workflows/test-github-actions.yaml@v0.0.0
+    with:
+      persona: "regular" # (4)
 ```
 
 1. Deny all permissions at the workflow level as a secure baseline.
 2. Grant read access to check out the repository contents.
 3. Grant write access to upload SARIF results to the GitHub Advanced Security tab.
+4. Select a zizmor persona.
 
 ## Inputs
 
