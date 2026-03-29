@@ -15,6 +15,8 @@ checks, Trivy security scanning, and semantic versioning.
 - [Container Images](https://radiorabe.github.io/actions/workflows/container/index.md)
 - [Release](https://radiorabe.github.io/actions/workflows/container/release/index.md)
 - [Schedule](https://radiorabe.github.io/actions/workflows/container/schedule/index.md)
+- [GitHub Actions](https://radiorabe.github.io/actions/workflows/github-actions/index.md)
+- [Test](https://radiorabe.github.io/actions/workflows/github-actions/test/index.md)
 - [Python](https://radiorabe.github.io/actions/workflows/python/index.md)
 - [Release](https://radiorabe.github.io/actions/workflows/python/release/index.md)
 - [Test](https://radiorabe.github.io/actions/workflows/python/test/index.md)
