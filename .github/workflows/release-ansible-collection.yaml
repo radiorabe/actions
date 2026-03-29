@@ -3,7 +3,7 @@ on:
   workflow_call:
     inputs:
       publish:
-        description: 'Enable publishing collection'
+        description: "Enable publishing collection"
         default: true
         required: false
         type: boolean
@@ -12,30 +12,40 @@ on:
         required: true
 
 permissions: {}
-        
+
 jobs:
   build:
+    name: Build and optionally publish Ansible collection
     runs-on: ubuntu-latest
+
     permissions:
       contents: read
+
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
+
       - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
-          python-version: '3.x'
+          python-version: "3.x"
+
       - name: Install Ansible
         run: |
           python -m pip install ansible>=2
+
       - name: Update version
         run: |
           VERSION=${GITHUB_REF#refs/tags/v}
           sed -i -e "s/version: 0.0.0/version: ${VERSION}/" galaxy.yml
+
       - name: Build collection
         run: |
           ansible-galaxy collection build
+
       - name: Publish collection
         if: inputs.publish
         run: |
-          ansible-galaxy collection publish *.tar.gz --token=${{ secrets.GALAXY_API_KEY }}
+          ansible-galaxy collection publish *.tar.gz --token "${GALAXY_API_KEY}"
+        env:
+          GALAXY_API_KEY: ${{ secrets.GALAXY_API_KEY }}
