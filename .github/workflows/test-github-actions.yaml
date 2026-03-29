@@ -1,6 +1,9 @@
 name: Test GitHub Actions
 
 on:
+  pull_request:
+    branches:
+      - main
   workflow_call:
     inputs:
       persona:
@@ -31,8 +34,19 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Select zizmor persona
+        id: select-persona
+        env:
+          INPUT_PERSONA: ${{ inputs.persona }}
+        run: |
+          persona="regular"
+          if [[ "${INPUT_PERSONA}" != "" ]]; then
+             persona="${INPUT_PERSONA}"
+          fi
+          echo "persona=${persona}" >> $GITHUB_OUTPUT
+
       - name: Run zizmor
         uses: zizmorcore/zizmor-action@71321a20a9ded102f6e9ce5718a2fcec2c4f70d8 # v0.5.2
         with:
-          persona: ${{ inputs.persona }}
+          persona: ${{ steps.select-persona.outputs.persona }}
           min-severity: ${{ inputs.min-severity }}
