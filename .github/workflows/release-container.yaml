@@ -4,70 +4,70 @@ on:
   workflow_call:
     inputs:
       image:
-        description: 'image to build and push'
+        description: "image to build and push"
         required: true
         type: string
       name:
-        description: 'name for the name label'
+        description: "name for the name label"
         required: true
         type: string
       display-name:
-        description: 'display name for the io.k8s.display-name label'
+        description: "display name for the io.k8s.display-name label"
         required: true
         type: string
       tags:
-        description: 'tags for the io.openshift.tags label'
+        description: "tags for the io.openshift.tags label"
         required: true
         type: string
       cosign-verify:
-        description: 'enable cosign verification'
+        description: "enable cosign verification"
         required: false
         default: true
         type: boolean
       cosign-certificate-oidc-issuer:
-        description: 'issuer used for keyless signature verification'
+        description: "issuer used for keyless signature verification"
         required: false
-        default: 'https://token.actions.githubusercontent.com'
+        default: "https://token.actions.githubusercontent.com"
         type: string
       cosign-certificate-identity-regexp:
-        description: 'regex to verify the subject against'
+        description: "regex to verify the subject against"
         required: false
-        default: 'https://github.com/radiorabe/.*'
+        default: "https://github.com/radiorabe/.*"
         type: string
       cosign-base-image-only:
-        description: 'pass --base-image-only arg to cosign dockerfile verify'
+        description: "pass --base-image-only arg to cosign dockerfile verify"
         required: false
         default: false
         type: boolean
       dockerfile:
-        description: 'Path to the Dockerfile used in the build'
+        description: "Path to the Dockerfile used in the build"
         required: false
-        default: 'Dockerfile'
+        default: "Dockerfile"
         type: string
       context:
-        description: 'Context directory for build'
+        description: "Context directory for build"
         required: false
-        default: '.'
+        default: "."
         type: string
       build-args:
-        description: 'Pass ARGs to the build'
+        description: "Pass ARGs to the build"
         required: false
-        default: ''
+        default: ""
         type: string
       push-default-branch:
-        description: 'Push the default branch (typically `main`) to the rgistry.'
+        description: "Push the default branch (typically `main`) to the registry."
         required: false
         default: false
         type: boolean
       pre-script:
-        description: 'Run a script before interacting with the Dockerfile.'
+        description: "Run a script before interacting with the Dockerfile. Take care not to run untrusted input in this script."
         required: false
-        default: ''
+        default: ""
         type: string
       platforms:
-        description: 'what platforms to build for (comma separated for multi-platform builds, e.g. linux/amd64,linux/arm64)'
+        description: "what platforms to build for (comma separated for multi-platform builds, e.g. linux/amd64,linux/arm64)"
         required: false
-        default: 'linux/amd64'
+        default: "linux/amd64"
         type: string
       docker-daemon-config:
         description: "Config for setup-docker-action"
@@ -78,12 +78,13 @@ permissions: {}
 
 jobs:
   docker:
+    name: Build and Release Container Image
     runs-on: ubuntu-latest
 
     permissions:
       contents: read
-      packages: write
-      security-events: write
+      packages: write # needed for pushing to GitHub Container Registry
+      security-events: write # needed for uploading Trivy scan results to the Security tab
       id-token: write # needed for signing the images with GitHub OIDC using cosign
 
     steps:
@@ -100,7 +101,7 @@ jobs:
         id: additional_meta
         run: |
           echo created=$(date -u +'%Y-%m-%dT%H:%M:%SZ') >> $GITHUB_OUTPUT
-          
+
       - name: Prepare Image Metadata
         id: meta
         uses: docker/metadata-action@030e881283bb7a6894de51c315a6bfe6a94e05cf # v6.0.0
@@ -124,10 +125,10 @@ jobs:
             io.k8s.display-name=${{ inputs.display-name }}
             io.k8s.description=${{ github.event.repository.description }}
             io.openshift.tags=${{ inputs.tags }}
-      
+
       - name: Set up Docker
-        uses: docker/setup-docker-action@1a6edb0ba9ac496f6850236981f15d8f9a82254d # v5.0.0
         if: inputs.docker-daemon-config
+        uses: docker/setup-docker-action@1a6edb0ba9ac496f6850236981f15d8f9a82254d # v5.0.0
         with:
           daemon-config: ${{ inputs.docker-daemon-config }}
 
@@ -138,18 +139,34 @@ jobs:
         uses: docker/setup-buildx-action@4d04d5d9486b7bd6fa91e7baf45bbb4f8b9deedd # v4.0.0
 
       - name: Run pre script
-        run: ${{ inputs.pre-script }}
         if: inputs.pre-script != ''
+        run: ${{ inputs.pre-script }} # zizmor: ignore[template-injection] - this is intended to allow running arbitrary scripts, but make sure to only use it with trusted input!
 
       - name: Verify ${{ inputs.dockerfile }} using cosign
-        run: cosign dockerfile verify --certificate-oidc-issuer ${{ inputs.cosign-certificate-oidc-issuer }} --certificate-identity-regexp ${{ inputs.cosign-certificate-identity-regexp }} ${{ inputs.cosign-base-image-only && '--base-image-only' || '' }} ${{ inputs.dockerfile }} > /dev/null
         if: inputs.cosign-verify
+        env:
+          COSIGN_BASE_IMAGE_ONLY: ${{ inputs.cosign-base-image-only }}
+          COSIGN_CERTIFICATE_IDENTITY_REGEXP: ${{ inputs.cosign-certificate-identity-regexp }}
+          COSIGN_CERTIFICATE_OIDC_ISSUER: ${{ inputs.cosign-certificate-oidc-issuer }}
+          DOCKERFILE: ${{ inputs.dockerfile }}
+        run: |
+          set -euo pipefail
+          EXTRA=''
+          if [ "${COSIGN_BASE_IMAGE_ONLY}" = 'true' ]; then
+            EXTRA='--base-image-only'
+          fi
+          cosign dockerfile verify \
+            --certificate-oidc-issuer "${COSIGN_CERTIFICATE_OIDC_ISSUER}" \
+            --certificate-identity-regexp "${COSIGN_CERTIFICATE_IDENTITY_REGEXP}" \
+            ${EXTRA} -- "${DOCKERFILE}" > /dev/null
 
       - name: Build Container Image
         id: docker_build
         uses: docker/build-push-action@d08e5c354a6adb9ed34480a06d141179aa583294 # v7.0.0
+        env:
+          DOCKER_CONTENT_TRUST: 1
         with:
-          context: ${{ inputs.context }}
+          context: ${{ inputs.context }} # zizmor: ignore[template-injection] - this is intended to allow arbitrary build contexts, but make sure to only use it with trusted input!
           file: ${{ inputs.dockerfile }}
           platforms: ${{ inputs.platforms }}
           load: true
@@ -161,39 +178,37 @@ jobs:
           labels: |
             ${{ steps.meta.outputs.labels }}
             version=${{ steps.meta.outputs.version }}
-        env:
-          DOCKER_CONTENT_TRUST: 1
-            
+
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1 # v0.35.0
         env:
           TRIVY_DB_REPOSITORY: ghcr.io/aquasecurity/trivy-db,public.ecr.aws/aquasecurity/trivy-db
           TRIVY_JAVA_DB_REPOSITORY: ghcr.io/aquasecurity/trivy-java-db,public.ecr.aws/aquasecurity/trivy-java-db
         with:
-          image-ref: '${{ inputs.image }}:${{ steps.meta.outputs.version }}'
-          format: 'json'
+          image-ref: "${{ inputs.image }}:${{ steps.meta.outputs.version }}"
+          format: "json"
           ignore-unfixed: true
           list-all-pkgs: true
-          output: 'trivy.json'
+          output: "trivy.json"
 
       - name: Convert trivy results to sarif
         uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1 # v0.35.0
         with:
           image-ref: trivy.json
-          scan-type: 'convert'
-          format: 'sarif'
+          scan-type: "convert"
+          format: "sarif"
           # we don't actually limit them, but this gates the convert action
           limit-severities-for-sarif: true
           # empty makes it skip the --vuln-type arg
-          vuln-type: ''
-          output: 'trivy.sarif'
+          vuln-type: ""
+          output: "trivy.sarif"
 
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@38697555549f1db7851b81482ff19f1fa5c4fedc # v4.34.1
         if: always()
         with:
-          sarif_file: 'trivy.sarif'
-          
+          sarif_file: "trivy.sarif"
+
       - name: Login to GitHub Container Registry
         uses: docker/login-action@b45d80f862d83dbcd57f89517bcf500b2ab88fb2 # v4.0.0
         if: github.event_name != 'pull_request'
@@ -205,8 +220,11 @@ jobs:
       - name: Push Container Image
         id: docker_push
         uses: docker/build-push-action@d08e5c354a6adb9ed34480a06d141179aa583294 # v7.0.0
+        env:
+          CONTEXT: ${{ inputs.context }}
+          DOCKER_CONTENT_TRUST: 1
         with:
-          context: ${{ inputs.context }}
+          context: ${{ inputs.context }} # zizmor: ignore[template-injection] - this is intended to allow arbitrary build contexts, but make sure to only use it with trusted input!
           file: ${{ inputs.dockerfile }}
           platforms: ${{ inputs.platforms }}
           push: ${{ github.event_name != 'pull_request' && (startsWith(github.event.ref, 'refs/tags/v') || inputs.push-default-branch &&  github.event.ref_name == github.event.repository.default_branch) }}
@@ -216,43 +234,49 @@ jobs:
           labels: |
             ${{ steps.meta.outputs.labels }}
             version=${{ steps.meta.outputs.version }}
-        env:
-          DOCKER_CONTENT_TRUST: 1
 
       - name: Sign the images with GitHub OIDC Token using cosign
-        run: cosign sign --yes ${{ inputs.image }}@${{ steps.docker_push.outputs.digest }}
         if: github.event_name != 'pull_request' && startsWith(github.event.ref, 'refs/tags/v')
+        run: cosign sign --yes -- "${IMAGE}@${STEPS_DOCKER_PUSH_OUTPUTS_DIGEST}"
         env:
+          IMAGE: ${{ inputs.image }}
+          STEPS_DOCKER_PUSH_OUTPUTS_DIGEST: ${{ steps.docker_push.outputs.digest }}
           TAGS: ${{ steps.meta.outputs.tags }}
 
       - name: Convert trivy results to CycloneDX
         uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1 # v0.35.0
         with:
           image-ref: trivy.json
-          scan-type: 'convert'
-          format: 'cyclonedx'
+          scan-type: "convert"
+          format: "cyclonedx"
           # we don't actually limit them, but this gates the convert action
           limit-severities-for-sarif: true
           # empty makes it skip the --vuln-type arg
-          vuln-type: ''
-          output: 'trivy.cdx'
+          vuln-type: ""
+          output: "trivy.cdx"
 
       - name: Attach an SBOM attestation to the signed image
-        run: cosign attest --yes --type cyclonedx --predicate trivy.cdx ${{ inputs.image }}@${{ steps.docker_push.outputs.digest }}
         if: github.event_name != 'pull_request' && startsWith(github.event.ref, 'refs/tags/v')
+        run: cosign attest --yes --type cyclonedx --predicate trivy.cdx -- "${IMAGE}@${STEPS_DOCKER_PUSH_OUTPUTS_DIGEST}"
+        env:
+          IMAGE: ${{ inputs.image }}
+          STEPS_DOCKER_PUSH_OUTPUTS_DIGEST: ${{ steps.docker_push.outputs.digest }}
 
       - name: Convert trivy results to cosign-vuln
         uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1 # v0.35.0
         with:
           image-ref: trivy.json
-          scan-type: 'convert'
-          format: 'cosign-vuln'
+          scan-type: "convert"
+          format: "cosign-vuln"
           # we don't actually limit them, but this gates the convert action
           limit-severities-for-sarif: true
           # empty makes it skip the --vuln-type arg
-          vuln-type: ''
-          output: 'trivy.cosign.json'
+          vuln-type: ""
+          output: "trivy.cosign.json"
 
       - name: Attach a security attestation to the signed image
-        run: cosign attest --yes --type vuln --predicate trivy.cosign.json ${{ inputs.image }}@${{ steps.docker_push.outputs.digest }}
         if: github.event_name != 'pull_request' && startsWith(github.event.ref, 'refs/tags/v')
+        run: cosign attest --yes --type vuln --predicate trivy.cosign.json -- "${IMAGE}@${STEPS_DOCKER_PUSH_OUTPUTS_DIGEST}"
+        env:
+          IMAGE: ${{ inputs.image }}
+          STEPS_DOCKER_PUSH_OUTPUTS_DIGEST: ${{ steps.docker_push.outputs.digest }}
