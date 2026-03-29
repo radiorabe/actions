@@ -4,9 +4,9 @@ on:
   workflow_call:
     inputs:
       version:
-        description: 'version to test against (in addition to latest 3.x)'
+        description: "version to test against (in addition to latest 3.x)"
         required: false
-        default: '3.12'
+        default: "3.12"
         type: string
 
 permissions: {}
@@ -21,10 +21,10 @@ jobs:
 
     strategy:
       matrix:
-        python-version: [ '${{ inputs.version }}' ]
+        python-version: ["${{ inputs.version }}"]
         experimental: [false]
         include:
-          - python-version: '3.x'
+          - python-version: "3.x"
             experimental: true
 
     continue-on-error: ${{ matrix.experimental }}
@@ -41,7 +41,7 @@ jobs:
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version: ${{ matrix.python-version }}
-          cache: 'poetry'
+          cache: "poetry"
 
       - run: poetry install
 

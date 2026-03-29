@@ -14,6 +14,7 @@ permissions: {}
 
 jobs:
   semantic-release:
+    name: Semantic Release
     runs-on: ubuntu-latest
 
     permissions:
@@ -25,6 +26,7 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
+
       - name: Run go-semantic-release
         id: semrel
         uses: go-semantic-release/action@2e9dc4247a6004f8377781bef4cb9dad273a741f # v1.24.1
