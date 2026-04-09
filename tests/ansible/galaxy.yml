@@ -10,4 +10,4 @@ license:
 tags:
   - tools
 repository: https://github.com/radiorabe/actions
-requires_ansible: >=2.19.0
+requires_ansible: ">=2.19.0"
