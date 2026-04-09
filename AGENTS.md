@@ -155,7 +155,74 @@ Key security conventions:
 
 ## Linting and Testing
 
-No automated test suite. Preview docs locally:
+### CI smoke tests
+
+Every reusable workflow is smoke-tested on each PR to `main`. Smoke tests are split into two
+files to keep permission scopes explicit and auditable:
+
+- **`.github/workflows/smoke-test.yaml`** — test-only workflows; all jobs need at most
+  `contents: read` + `security-events: write`. Safe for all PR sources.
+- **`.github/workflows/smoke-test-release.yaml`** — release/publish workflows that internally
+  declare elevated permissions (`packages: write`, `id-token: write`). Comments on every
+  elevated permission explain the grant and note that the relevant steps are gated on
+  non-PR events inside the called workflow.
+
+Both files call the **local** (current-branch) version of each workflow using
+`uses: ./.github/workflows/...` so in-flight changes are validated before merge.
+
+| Smoke test job | File | Workflow under test | Test strategy |
+|---|---|---|---|
+| `smoke-pre-commit` | `smoke-test.yaml` | `test-pre-commit.yaml` | Run against `.pre-commit-config.yaml` with `requirements: ""` |
+| `smoke-test-github-actions` | `smoke-test.yaml` | `test-github-actions.yaml` | Run zizmor SAST on this repo's workflows |
+| `smoke-test-python-poetry` | `smoke-test.yaml` | `test-python-poetry.yaml` | Run `pytest` via `tests/python/pyproject.toml` |
+| `smoke-test-ansible-collection` | `smoke-test.yaml` | `test-ansible-collection.yaml` | Lint `tests/ansible/` (minimal collection fixture) |
+| `smoke-semantic-release` | `smoke-test.yaml` | `semantic-release.yaml` | `dry: true` — compute next version, create nothing |
+| `smoke-release-container` | `smoke-test-release.yaml` | `release-container.yaml` | Build `tests/container/Dockerfile` (`FROM ghcr.io/radiorabe/ubi10-minimal`); no push on PRs |
+| `smoke-release-python-poetry` | `smoke-test-release.yaml` | `release-python-poetry.yaml` | `poetry publish --build --dry-run` via `tests/python/pyproject.toml` |
+| `smoke-release-ansible-collection` | `smoke-test-release.yaml` | `release-ansible-collection.yaml` | Build `tests/ansible/` with `publish: false` |
+| `smoke-schedule-trivy` | `smoke-test-release.yaml` | `schedule-trivy.yaml` | Scan `ghcr.io/radiorabe/ubi10-minimal`; `upload-sarif: false`, `attest: false` |
+
+Workflows **not** smoke-tested and why:
+- `release-mkdocs.yaml` — self-tests via its own `on: pull_request` trigger in this repo
+- `test-ansible-collection.yaml` inputs (`flake8`, `black`) always run on the whole repo root; they are implicitly exercised by the `smoke-test-ansible-collection` job
+
+### Test fixtures
+
+```
+tests/
+  container/
+    Dockerfile        # FROM ghcr.io/radiorabe/ubi10-minimal — input for smoke-release-container
+  ansible/
+    galaxy.yml        # Minimal Ansible collection descriptor (namespace: radiorabe, name: smoke_test)
+    README.md         # Required by ansible-galaxy collection build
+    CHANGELOG.md      # Required by ansible-lint galaxy profile
+    meta/
+      runtime.yml     # Required by ansible-lint galaxy profile
+  python/
+    pyproject.toml    # Minimal Poetry project (packages = []) for Python smoke tests
+    poetry.lock       # Lock file required by actions/setup-python cache: poetry
+    tests/
+      test_smoke.py   # Trivial pytest used by smoke-test-python-poetry
+.pre-commit-config.yaml  # Minimal pre-commit hooks; also the real lint gate for this repo
+```
+
+### Making workflows smoke-testable
+
+When adding or updating a reusable workflow, ensure it can be smoke-tested:
+
+- **Required secrets**: use `required: false` for secrets that are only needed for
+  production operations (publish, sign, release). The smoke test won't have them.
+- **Upload / push side-effects**: add boolean inputs (`upload-sarif`, `attest`, `publish`,
+  `dry`, etc.) so smoke tests can disable irreversible side-effects.
+- **Working directory**: if the workflow operates on repository-specific files (e.g.,
+  `galaxy.yml`), add a `path` input (default: `.`) so the smoke test can point to a
+  fixture under `test/`.
+- **Permissions**: add the job to the right smoke-test file:
+  - `smoke-test.yaml` if the called workflow's jobs need only `contents: read` or `security-events: write`
+  - `smoke-test-release.yaml` if the called workflow's jobs declare `packages: write`, `id-token: write`, or other elevated grants — add an explanatory comment for each elevated permission
+- **zizmor**: run `zizmor --pedantic .` and fix or suppress all findings before merging.
+
+### Docs preview
 
 ```bash
 python3 -m venv .venv

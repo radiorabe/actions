@@ -33,8 +33,20 @@ jobs:
 3. The `RABE_ITREAKTION_GITHUB_TOKEN` is shared across our repos and can be enabled for your
    repo by a GitHub organisation admin.
 
+## Inputs
+
+| Input | Description | Required | Default |
+|---|---|---|---|
+| `dry` | Run in dry-run mode (determine next version without creating a release) | No | `false` |
+
 ## Secrets
 
 | Secret | Description | Required |
 |---|---|---|
-| `RABE_ITREAKTION_GITHUB_TOKEN` | GitHub token with write access for creating releases | Yes |
+| `RABE_ITREAKTION_GITHUB_TOKEN` | GitHub token with write access for creating releases | Only when `dry: false` |
+
+!!! note
+    When `RABE_ITREAKTION_GITHUB_TOKEN` is not supplied, the workflow falls back to the
+    built-in `GITHUB_TOKEN`. In dry-run mode this is sufficient. For actual releases, the
+    dedicated PAT is required because it has the write permissions needed to create tags and
+    GitHub Releases.

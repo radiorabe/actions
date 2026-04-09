@@ -1,0 +1,56 @@
+name: Smoke Test Release Workflows
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions: {}
+
+# Release/publish workflows require elevated permissions. Separated from smoke-test.yaml
+# to make the elevated grants explicit and auditable.
+# Note: on pull_request events from forks, packages: write and id-token: write are
+# automatically restricted by GitHub — the smoke steps that need them are also gated
+# on github.event_name != 'pull_request' inside the called workflows.
+
+jobs:
+  smoke-release-container:
+    permissions:
+      contents: read
+      packages: write # declared by release-container.yaml for pushing to GHCR (gated on non-PR events)
+      security-events: write # declared by release-container.yaml for uploading Trivy SARIF to the Security tab
+      id-token: write # declared by release-container.yaml for signing images with GitHub OIDC via cosign (gated on non-PR events)
+    uses: ./.github/workflows/release-container.yaml
+    with:
+      image: ghcr.io/radiorabe/actions # dummy value; push is gated on non-PR events inside the workflow
+      name: actions
+      display-name: RaBe Actions
+      tags: smoke-test # io.openshift.tags label, not a Docker image tag
+      cosign-verify: true
+      dockerfile: tests/container/Dockerfile
+
+  smoke-release-python-poetry:
+    permissions:
+      contents: write # declared by release-python-poetry.yaml for pushing the gh-pages branch (gated on release events)
+    uses: ./.github/workflows/release-python-poetry.yaml
+    with:
+      path: tests/python
+
+  smoke-release-ansible-collection:
+    permissions:
+      contents: read
+    uses: ./.github/workflows/release-ansible-collection.yaml
+    with:
+      path: tests/ansible
+      publish: false
+
+  smoke-schedule-trivy:
+    permissions:
+      packages: write # declared by schedule-trivy.yaml for attestation upload (disabled via attest: false)
+      security-events: write # declared by schedule-trivy.yaml for SARIF upload (disabled via upload-sarif: false)
+      id-token: write # declared by schedule-trivy.yaml for cosign OIDC signing (disabled via attest: false)
+    uses: ./.github/workflows/schedule-trivy.yaml
+    with:
+      image-ref: ghcr.io/radiorabe/ubi10-minimal
+      upload-sarif: false
+      attest: false

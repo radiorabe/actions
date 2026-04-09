@@ -40,9 +40,10 @@ The collections we publish with this can be found on [our Galaxy page](https://g
 | Input | Description | Required | Default |
 |---|---|---|---|
 | `publish` | Enable publishing collection to Galaxy | No | `true` |
+| `path` | Path to the collection root (directory containing `galaxy.yml`) | No | `.` |
 
 ## Secrets
 
 | Secret | Description | Required |
 |---|---|---|
-| `GALAXY_API_KEY` | Ansible Galaxy API key | Yes |
+| `GALAXY_API_KEY` | Ansible Galaxy API key | Only when `publish: true` |

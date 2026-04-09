@@ -1,0 +1,39 @@
+name: Smoke Test Workflows
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions: {}
+
+# Test-only workflows: all jobs need only contents: read (or security-events: write for SARIF).
+# Release/publish workflows with elevated permissions live in smoke-test-release.yaml.
+
+jobs:
+  smoke-pre-commit:
+    permissions:
+      contents: read
+    uses: ./.github/workflows/test-pre-commit.yaml
+    with:
+      requirements: ""
+
+  smoke-test-github-actions:
+    permissions:
+      contents: read
+      security-events: write # required to upload zizmor SARIF results to the Security tab
+    uses: ./.github/workflows/test-github-actions.yaml
+
+  smoke-test-python-poetry:
+    permissions:
+      contents: read
+    uses: ./.github/workflows/test-python-poetry.yaml
+    with:
+      path: tests/python
+
+  smoke-test-ansible-collection:
+    permissions:
+      contents: read
+    uses: ./.github/workflows/test-ansible-collection.yaml
+    with:
+      path: tests/ansible

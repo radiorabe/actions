@@ -12,6 +12,16 @@ on:
         required: false
         default: "5m0s"
         type: string
+      upload-sarif:
+        description: "Upload Trivy scan results to the GitHub Security tab"
+        required: false
+        default: true
+        type: boolean
+      attest:
+        description: "Attach a cosign vulnerability attestation to the scanned image"
+        required: false
+        default: true
+        type: boolean
 
 permissions: {}
 
@@ -56,7 +66,7 @@ jobs:
           output: "trivy.sarif"
 
       - name: Upload Trivy scan results to GitHub Security tab
-        if: always()
+        if: always() && inputs.upload-sarif
         uses: github/codeql-action/upload-sarif@c10b8064de6f491fea524254123dbe5e09572f13 # v4.35.1
         with:
           sarif_file: "trivy.sarif"
@@ -74,6 +84,7 @@ jobs:
           output: "trivy.cosign.json"
 
       - name: Login to GitHub Container Registry
+        if: inputs.attest
         uses: docker/login-action@b45d80f862d83dbcd57f89517bcf500b2ab88fb2 # v4.0.0
         with:
           registry: ghcr.io
@@ -81,6 +92,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Attach a security attestation to the signed image
+        if: inputs.attest
         run: cosign attest --yes --type vuln --predicate trivy.cosign.json -- "${INPUTS_IMAGE_REF}"
         env:
           INPUTS_IMAGE_REF: ${{ inputs.image-ref }}

@@ -8,6 +8,11 @@ on:
         required: false
         default: "3.12"
         type: string
+      path:
+        description: "path to the directory containing pyproject.toml"
+        required: false
+        default: "."
+        type: string
 
 permissions: {}
 
@@ -44,7 +49,10 @@ jobs:
           cache: "poetry"
 
       - run: poetry install
+        working-directory: ${{ inputs.path }}
 
       - run: poetry run pip install pytest-github-actions-annotate-failures
+        working-directory: ${{ inputs.path }}
 
       - run: poetry run pytest
+        working-directory: ${{ inputs.path }}
