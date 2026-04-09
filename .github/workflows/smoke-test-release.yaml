@@ -26,7 +26,7 @@ jobs:
       name: actions
       display-name: RaBe Actions
       tags: smoke-test # io.openshift.tags label, not a Docker image tag
-      cosign-verify: false
+      cosign-verify: true
       dockerfile: test/Dockerfile
 
   smoke-release-python-poetry:

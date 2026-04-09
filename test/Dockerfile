@@ -1,1 +1,1 @@
-FROM scratch
+FROM ghcr.io/radiorabe/ubi10-minimal@sha256:3bdd0e8722d9fd27c56a56a1dbc025c787382cabb2ab236339349fa78b97e40c

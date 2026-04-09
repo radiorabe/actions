@@ -7,3 +7,6 @@ authors:
   - Radio Bern RaBe <github@rabe.ch>
 license:
   - AGPL-3.0-only
+tags:
+  - tools
+repository: https://github.com/radiorabe/actions
