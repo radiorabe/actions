@@ -2,6 +2,12 @@ name: Release
 
 on:
   workflow_call:
+    inputs:
+      path:
+        description: "path to the directory containing pyproject.toml"
+        required: false
+        default: "."
+        type: string
     secrets:
       RABE_PYPI_TOKEN:
         required: false
@@ -34,12 +40,14 @@ jobs:
 
       - name: Install dependencies
         run: poetry install
+        working-directory: ${{ inputs.path }}
 
       - name: Configure poetry
         if: ${{ github.event_name == 'release' }}
         env:
           RABE_PYPI_TOKEN: ${{ secrets.RABE_PYPI_TOKEN }} # zizmor: ignore[secrets-outside-env]
         run: poetry config pypi-token.pypi "${RABE_PYPI_TOKEN}"
+        working-directory: ${{ inputs.path }}
 
       - name: Set dry-run flag
         id: dry-run
@@ -54,12 +62,15 @@ jobs:
 
       - name: Set version in pyproject.toml for release
         run: poetry version $(git describe --tags --abbrev=0 --exact-match || (git describe --tags --abbrev=0 --dirty=+dev|tr -d '\n'; echo "+dev"))
+        working-directory: ${{ inputs.path }}
 
       - name: Publish to PyPI
         env:
           POETRY_DRY_RUN: ${{ steps.dry-run.outputs.flag }}
         run: poetry publish --build --no-interaction "${POETRY_DRY_RUN}" # zizmor: ignore[use-trusted-publishing]
+        working-directory: ${{ inputs.path }}
 
       - name: Deploy documentation
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         run: poetry run mkdocs gh-deploy
+        working-directory: ${{ inputs.path }}

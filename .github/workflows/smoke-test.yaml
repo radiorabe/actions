@@ -28,13 +28,15 @@ jobs:
     permissions:
       contents: read
     uses: ./.github/workflows/test-python-poetry.yaml
+    with:
+      path: tests/python
 
   smoke-test-ansible-collection:
     permissions:
       contents: read
     uses: ./.github/workflows/test-ansible-collection.yaml
     with:
-      path: test/ansible
+      path: tests/ansible
 
   smoke-semantic-release:
     permissions:

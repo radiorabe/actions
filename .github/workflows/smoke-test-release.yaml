@@ -27,19 +27,21 @@ jobs:
       display-name: RaBe Actions
       tags: smoke-test # io.openshift.tags label, not a Docker image tag
       cosign-verify: true
-      dockerfile: test/Dockerfile
+      dockerfile: tests/container/Dockerfile
 
   smoke-release-python-poetry:
     permissions:
       contents: write # declared by release-python-poetry.yaml for pushing the gh-pages branch (gated on release events)
     uses: ./.github/workflows/release-python-poetry.yaml
+    with:
+      path: tests/python
 
   smoke-release-ansible-collection:
     permissions:
       contents: read
     uses: ./.github/workflows/release-ansible-collection.yaml
     with:
-      path: test/ansible
+      path: tests/ansible
       publish: false
 
   smoke-schedule-trivy:

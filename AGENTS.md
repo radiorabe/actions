@@ -174,12 +174,12 @@ Both files call the **local** (current-branch) version of each workflow using
 |---|---|---|---|
 | `smoke-pre-commit` | `smoke-test.yaml` | `test-pre-commit.yaml` | Run against `.pre-commit-config.yaml` with `requirements: ""` |
 | `smoke-test-github-actions` | `smoke-test.yaml` | `test-github-actions.yaml` | Run zizmor SAST on this repo's workflows |
-| `smoke-test-python-poetry` | `smoke-test.yaml` | `test-python-poetry.yaml` | Run `pytest` via the root `pyproject.toml` |
-| `smoke-test-ansible-collection` | `smoke-test.yaml` | `test-ansible-collection.yaml` | Lint `test/ansible/` (minimal collection fixture) |
+| `smoke-test-python-poetry` | `smoke-test.yaml` | `test-python-poetry.yaml` | Run `pytest` via `tests/python/pyproject.toml` |
+| `smoke-test-ansible-collection` | `smoke-test.yaml` | `test-ansible-collection.yaml` | Lint `tests/ansible/` (minimal collection fixture) |
 | `smoke-semantic-release` | `smoke-test.yaml` | `semantic-release.yaml` | `dry: true` — compute next version, create nothing |
-| `smoke-release-container` | `smoke-test-release.yaml` | `release-container.yaml` | Build `test/Dockerfile` (`FROM scratch`); no push on PRs |
-| `smoke-release-python-poetry` | `smoke-test-release.yaml` | `release-python-poetry.yaml` | `poetry publish --build --dry-run` via root `pyproject.toml` |
-| `smoke-release-ansible-collection` | `smoke-test-release.yaml` | `release-ansible-collection.yaml` | Build `test/ansible/` with `publish: false` |
+| `smoke-release-container` | `smoke-test-release.yaml` | `release-container.yaml` | Build `tests/container/Dockerfile` (`FROM ghcr.io/radiorabe/ubi10-minimal`); no push on PRs |
+| `smoke-release-python-poetry` | `smoke-test-release.yaml` | `release-python-poetry.yaml` | `poetry publish --build --dry-run` via `tests/python/pyproject.toml` |
+| `smoke-release-ansible-collection` | `smoke-test-release.yaml` | `release-ansible-collection.yaml` | Build `tests/ansible/` with `publish: false` |
 | `smoke-schedule-trivy` | `smoke-test-release.yaml` | `schedule-trivy.yaml` | Scan `ghcr.io/radiorabe/ubi10-minimal`; `upload-sarif: false`, `attest: false` |
 
 Workflows **not** smoke-tested and why:
@@ -189,14 +189,20 @@ Workflows **not** smoke-tested and why:
 ### Test fixtures
 
 ```
-test/
-  Dockerfile          # FROM scratch — input for smoke-release-container
+tests/
+  container/
+    Dockerfile        # FROM ghcr.io/radiorabe/ubi10-minimal — input for smoke-release-container
   ansible/
     galaxy.yml        # Minimal Ansible collection descriptor (namespace: radiorabe, name: smoke_test)
     README.md         # Required by ansible-galaxy collection build
-pyproject.toml        # Minimal Poetry project (packages = []) for Python smoke tests
-tests/
-  test_smoke.py       # Trivial pytest used by smoke-test-python-poetry
+    CHANGELOG.md      # Required by ansible-lint galaxy profile
+    meta/
+      runtime.yml     # Required by ansible-lint galaxy profile
+  python/
+    pyproject.toml    # Minimal Poetry project (packages = []) for Python smoke tests
+    poetry.lock       # Lock file required by actions/setup-python cache: poetry
+    tests/
+      test_smoke.py   # Trivial pytest used by smoke-test-python-poetry
 .pre-commit-config.yaml  # Minimal pre-commit hooks; also the real lint gate for this repo
 ```
 
