@@ -157,22 +157,30 @@ Key security conventions:
 
 ### CI smoke tests
 
-Every reusable workflow is smoke-tested on each PR to `main` via
-`.github/workflows/smoke-test.yaml`. The smoke test calls the **local** (current-branch)
-version of each workflow using `uses: ./.github/workflows/...` so in-flight changes are
-validated before merge.
+Every reusable workflow is smoke-tested on each PR to `main`. Smoke tests are split into two
+files to keep permission scopes explicit and auditable:
 
-| Smoke test job | Workflow under test | Test strategy |
-|---|---|---|
-| `smoke-release-container` | `release-container.yaml` | Build `test/Dockerfile` (`FROM scratch`); no push on PRs |
-| `smoke-pre-commit` | `test-pre-commit.yaml` | Run against `.pre-commit-config.yaml` with `requirements: ""` |
-| `smoke-test-github-actions` | `test-github-actions.yaml` | Run zizmor SAST on this repo's workflows |
-| `smoke-test-python-poetry` | `test-python-poetry.yaml` | Run `pytest` via the root `pyproject.toml` |
-| `smoke-release-python-poetry` | `release-python-poetry.yaml` | `poetry publish --build --dry-run` via root `pyproject.toml` |
-| `smoke-test-ansible-collection` | `test-ansible-collection.yaml` | Lint `test/ansible/` (minimal collection fixture) |
-| `smoke-release-ansible-collection` | `release-ansible-collection.yaml` | Build `test/ansible/` with `publish: false` |
-| `smoke-schedule-trivy` | `schedule-trivy.yaml` | Scan `ghcr.io/radiorabe/ubi10-minimal`; `upload-sarif: false`, `attest: false` |
-| `smoke-semantic-release` | `semantic-release.yaml` | `dry: true` — compute next version, create nothing |
+- **`.github/workflows/smoke-test.yaml`** — test-only workflows; all jobs need at most
+  `contents: read` + `security-events: write`. Safe for all PR sources.
+- **`.github/workflows/smoke-test-release.yaml`** — release/publish workflows that internally
+  declare elevated permissions (`packages: write`, `id-token: write`). Comments on every
+  elevated permission explain the grant and note that the relevant steps are gated on
+  non-PR events inside the called workflow.
+
+Both files call the **local** (current-branch) version of each workflow using
+`uses: ./.github/workflows/...` so in-flight changes are validated before merge.
+
+| Smoke test job | File | Workflow under test | Test strategy |
+|---|---|---|---|
+| `smoke-pre-commit` | `smoke-test.yaml` | `test-pre-commit.yaml` | Run against `.pre-commit-config.yaml` with `requirements: ""` |
+| `smoke-test-github-actions` | `smoke-test.yaml` | `test-github-actions.yaml` | Run zizmor SAST on this repo's workflows |
+| `smoke-test-python-poetry` | `smoke-test.yaml` | `test-python-poetry.yaml` | Run `pytest` via the root `pyproject.toml` |
+| `smoke-test-ansible-collection` | `smoke-test.yaml` | `test-ansible-collection.yaml` | Lint `test/ansible/` (minimal collection fixture) |
+| `smoke-semantic-release` | `smoke-test.yaml` | `semantic-release.yaml` | `dry: true` — compute next version, create nothing |
+| `smoke-release-container` | `smoke-test-release.yaml` | `release-container.yaml` | Build `test/Dockerfile` (`FROM scratch`); no push on PRs |
+| `smoke-release-python-poetry` | `smoke-test-release.yaml` | `release-python-poetry.yaml` | `poetry publish --build --dry-run` via root `pyproject.toml` |
+| `smoke-release-ansible-collection` | `smoke-test-release.yaml` | `release-ansible-collection.yaml` | Build `test/ansible/` with `publish: false` |
+| `smoke-schedule-trivy` | `smoke-test-release.yaml` | `schedule-trivy.yaml` | Scan `ghcr.io/radiorabe/ubi10-minimal`; `upload-sarif: false`, `attest: false` |
 
 Workflows **not** smoke-tested and why:
 - `release-mkdocs.yaml` — self-tests via its own `on: pull_request` trigger in this repo
@@ -203,7 +211,10 @@ When adding or updating a reusable workflow, ensure it can be smoke-tested:
 - **Working directory**: if the workflow operates on repository-specific files (e.g.,
   `galaxy.yml`), add a `path` input (default: `.`) so the smoke test can point to a
   fixture under `test/`.
-- **Add the job** to `smoke-test.yaml` calling the local `./.github/workflows/` reference.
+- **Permissions**: add the job to the right smoke-test file:
+  - `smoke-test.yaml` if the called workflow's jobs need only `contents: read` or `security-events: write`
+  - `smoke-test-release.yaml` if the called workflow's jobs declare `packages: write`, `id-token: write`, or other elevated grants — add an explanatory comment for each elevated permission
+- **zizmor**: run `zizmor --pedantic .` and fix or suppress all findings before merging.
 
 ### Docs preview
 

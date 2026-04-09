@@ -7,20 +7,10 @@ on:
 
 permissions: {}
 
-jobs:
-  smoke-release-container:
-    permissions:
-      contents: read
-      security-events: write
-    uses: ./.github/workflows/release-container.yaml
-    with:
-      image: ghcr.io/radiorabe/actions # dummy value; never pushed (push is gated on non-PR events)
-      name: actions
-      display-name: RaBe Actions
-      tags: smoke-test # io.openshift.tags label, not a Docker image tag; push never runs on PRs
-      cosign-verify: false
-      dockerfile: test/Dockerfile
+# Test-only workflows: all jobs need only contents: read (or security-events: write for SARIF).
+# Release/publish workflows with elevated permissions live in smoke-test-release.yaml.
 
+jobs:
   smoke-pre-commit:
     permissions:
       contents: read
@@ -31,7 +21,7 @@ jobs:
   smoke-test-github-actions:
     permissions:
       contents: read
-      security-events: write
+      security-events: write # required to upload zizmor SARIF results to the Security tab
     uses: ./.github/workflows/test-github-actions.yaml
 
   smoke-test-python-poetry:
@@ -39,34 +29,12 @@ jobs:
       contents: read
     uses: ./.github/workflows/test-python-poetry.yaml
 
-  smoke-release-python-poetry:
-    permissions:
-      contents: write
-    uses: ./.github/workflows/release-python-poetry.yaml
-
   smoke-test-ansible-collection:
     permissions:
       contents: read
     uses: ./.github/workflows/test-ansible-collection.yaml
     with:
       path: test/ansible
-
-  smoke-release-ansible-collection:
-    permissions:
-      contents: read
-    uses: ./.github/workflows/release-ansible-collection.yaml
-    with:
-      path: test/ansible
-      publish: false
-
-  smoke-schedule-trivy:
-    permissions:
-      contents: read
-    uses: ./.github/workflows/schedule-trivy.yaml
-    with:
-      image-ref: ghcr.io/radiorabe/ubi10-minimal
-      upload-sarif: false
-      attest: false
 
   smoke-semantic-release:
     permissions:

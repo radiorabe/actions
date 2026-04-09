@@ -18,6 +18,10 @@ on:
 
 permissions: {}
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   semantic-release:
     name: Semantic Release
@@ -37,6 +41,6 @@ jobs:
         id: semrel
         uses: go-semantic-release/action@2e9dc4247a6004f8377781bef4cb9dad273a741f # v1.24.1
         with:
-          github-token: ${{ secrets.RABE_ITREAKTION_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.RABE_ITREAKTION_GITHUB_TOKEN || secrets.GITHUB_TOKEN }} # zizmor: ignore[secrets-outside-env]
           allow-initial-development-versions: true
           dry: ${{ inputs.dry || false }}

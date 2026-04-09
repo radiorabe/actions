@@ -5,5 +5,5 @@ repos:
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: check-yaml
-        exclude: mkdocs\.yml
+        args: ['--unsafe'] # mkdocs.yml uses !!python/name: tags that require the full YAML loader
       - id: check-merge-conflict
