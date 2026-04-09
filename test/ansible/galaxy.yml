@@ -1,0 +1,9 @@
+namespace: radiorabe
+name: smoke_test
+version: 0.0.0
+readme: README.md
+description: Minimal Ansible collection used as a CI smoke test fixture for radiorabe/actions.
+authors:
+  - Radio Bern RaBe <github@rabe.ch>
+license:
+  - AGPL-3.0-only

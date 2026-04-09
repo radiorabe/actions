@@ -7,9 +7,14 @@ on:
         default: true
         required: false
         type: boolean
+      path:
+        description: "Path to the collection root (directory containing galaxy.yml)"
+        required: false
+        default: "."
+        type: string
     secrets:
       GALAXY_API_KEY:
-        required: true
+        required: false
 
 permissions: {}
 
@@ -35,13 +40,18 @@ jobs:
           python -m pip install ansible>=2
 
       - name: Update version
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          INPUTS_PATH: ${{ inputs.path }}
         run: |
           VERSION=${GITHUB_REF#refs/tags/v}
-          sed -i -e "s/version: 0.0.0/version: ${VERSION}/" galaxy.yml
+          sed -i -e "s/version: 0.0.0/version: ${VERSION}/" "${INPUTS_PATH}/galaxy.yml"
 
       - name: Build collection
+        env:
+          INPUTS_PATH: ${{ inputs.path }}
         run: |
-          ansible-galaxy collection build
+          ansible-galaxy collection build "${INPUTS_PATH}"
 
       - name: Publish collection
         if: inputs.publish

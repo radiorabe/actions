@@ -155,7 +155,57 @@ Key security conventions:
 
 ## Linting and Testing
 
-No automated test suite. Preview docs locally:
+### CI smoke tests
+
+Every reusable workflow is smoke-tested on each PR to `main` via
+`.github/workflows/smoke-test.yaml`. The smoke test calls the **local** (current-branch)
+version of each workflow using `uses: ./.github/workflows/...` so in-flight changes are
+validated before merge.
+
+| Smoke test job | Workflow under test | Test strategy |
+|---|---|---|
+| `smoke-release-container` | `release-container.yaml` | Build `test/Dockerfile` (`FROM scratch`); no push on PRs |
+| `smoke-pre-commit` | `test-pre-commit.yaml` | Run against `.pre-commit-config.yaml` with `requirements: ""` |
+| `smoke-test-github-actions` | `test-github-actions.yaml` | Run zizmor SAST on this repo's workflows |
+| `smoke-test-python-poetry` | `test-python-poetry.yaml` | Run `pytest` via the root `pyproject.toml` |
+| `smoke-release-python-poetry` | `release-python-poetry.yaml` | `poetry publish --build --dry-run` via root `pyproject.toml` |
+| `smoke-test-ansible-collection` | `test-ansible-collection.yaml` | Lint `test/ansible/` (minimal collection fixture) |
+| `smoke-release-ansible-collection` | `release-ansible-collection.yaml` | Build `test/ansible/` with `publish: false` |
+| `smoke-schedule-trivy` | `schedule-trivy.yaml` | Scan `ghcr.io/radiorabe/ubi10-minimal`; `upload-sarif: false`, `attest: false` |
+| `smoke-semantic-release` | `semantic-release.yaml` | `dry: true` — compute next version, create nothing |
+
+Workflows **not** smoke-tested and why:
+- `release-mkdocs.yaml` — self-tests via its own `on: pull_request` trigger in this repo
+- `test-ansible-collection.yaml` inputs (`flake8`, `black`) always run on the whole repo root; they are implicitly exercised by the `smoke-test-ansible-collection` job
+
+### Test fixtures
+
+```
+test/
+  Dockerfile          # FROM scratch — input for smoke-release-container
+  ansible/
+    galaxy.yml        # Minimal Ansible collection descriptor (namespace: radiorabe, name: smoke_test)
+    README.md         # Required by ansible-galaxy collection build
+pyproject.toml        # Minimal Poetry project (packages = []) for Python smoke tests
+tests/
+  test_smoke.py       # Trivial pytest used by smoke-test-python-poetry
+.pre-commit-config.yaml  # Minimal pre-commit hooks; also the real lint gate for this repo
+```
+
+### Making workflows smoke-testable
+
+When adding or updating a reusable workflow, ensure it can be smoke-tested:
+
+- **Required secrets**: use `required: false` for secrets that are only needed for
+  production operations (publish, sign, release). The smoke test won't have them.
+- **Upload / push side-effects**: add boolean inputs (`upload-sarif`, `attest`, `publish`,
+  `dry`, etc.) so smoke tests can disable irreversible side-effects.
+- **Working directory**: if the workflow operates on repository-specific files (e.g.,
+  `galaxy.yml`), add a `path` input (default: `.`) so the smoke test can point to a
+  fixture under `test/`.
+- **Add the job** to `smoke-test.yaml` calling the local `./.github/workflows/` reference.
+
+### Docs preview
 
 ```bash
 python3 -m venv .venv

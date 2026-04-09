@@ -41,4 +41,4 @@ documentation and you are good to go.
 
 | Secret | Description | Required |
 |---|---|---|
-| `RABE_PYPI_TOKEN` | PyPI API token for publishing | Yes |
+| `RABE_PYPI_TOKEN` | PyPI API token for publishing | Only on `release` events |

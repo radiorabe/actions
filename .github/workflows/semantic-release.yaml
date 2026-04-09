@@ -6,9 +6,15 @@ on:
     branches:
       - main
   workflow_call:
+    inputs:
+      dry:
+        description: "Run in dry-run mode (determine next version without creating a release)"
+        required: false
+        default: false
+        type: boolean
     secrets:
       RABE_ITREAKTION_GITHUB_TOKEN:
-        required: true
+        required: false
 
 permissions: {}
 
@@ -31,5 +37,6 @@ jobs:
         id: semrel
         uses: go-semantic-release/action@2e9dc4247a6004f8377781bef4cb9dad273a741f # v1.24.1
         with:
-          github-token: ${{ secrets.RABE_ITREAKTION_GITHUB_TOKEN }}
+          github-token: ${{ secrets.RABE_ITREAKTION_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
           allow-initial-development-versions: true
+          dry: ${{ inputs.dry || false }}

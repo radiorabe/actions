@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "radiorabe-actions"
+version = "0.0.0"
+description = "Reusable GitHub Actions workflows for Radio Bern RaBe"
+authors = ["Radio Bern RaBe <github@rabe.ch>"]
+license = "AGPL-3.0-only"
+packages = []
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
