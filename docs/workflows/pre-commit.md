@@ -44,8 +44,21 @@ jobs:
 1. Grant only the minimum permissions this workflow requires.
 2. Space-separated list of additional Python packages to install before running pre-commit.
 
+To skip the pip install step entirely (for example when no Python tools are referenced in your
+`.pre-commit-config.yaml`), pass an empty string:
+
+```yaml title=".github/workflows/test.yaml"
+jobs:
+  pre-commit:
+    permissions:
+      contents: read
+    uses: radiorabe/actions/.github/workflows/test-pre-commit.yaml@v0.0.0
+    with:
+      requirements: ""
+```
+
 ## Inputs
 
 | Input | Description | Required | Default |
 |---|---|---|---|
-| `requirements` | Space-separated list of Python packages to install with pip | No | `black isort flake8` |
+| `requirements` | Space-separated list of Python packages to install with pip; pass `""` to skip pip install | No | `black isort flake8` |
