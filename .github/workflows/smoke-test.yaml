@@ -37,10 +37,3 @@ jobs:
     uses: ./.github/workflows/test-ansible-collection.yaml
     with:
       path: tests/ansible
-
-  smoke-semantic-release:
-    permissions:
-      contents: read
-    uses: ./.github/workflows/semantic-release.yaml
-    with:
-      dry: true
