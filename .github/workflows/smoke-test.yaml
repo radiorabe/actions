@@ -14,10 +14,10 @@ jobs:
       security-events: write
     uses: ./.github/workflows/release-container.yaml
     with:
-      image: ghcr.io/radiorabe/actions
+      image: ghcr.io/radiorabe/actions # dummy value; never pushed (push is gated on non-PR events)
       name: actions
       display-name: RaBe Actions
-      tags: smoke-test
+      tags: smoke-test # io.openshift.tags label, not a Docker image tag; push never runs on PRs
       cosign-verify: false
       dockerfile: test/Dockerfile
 
