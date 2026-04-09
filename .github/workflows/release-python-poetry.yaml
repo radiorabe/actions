@@ -45,7 +45,7 @@ jobs:
       - name: Configure poetry
         if: ${{ github.event_name == 'release' }}
         env:
-          RABE_PYPI_TOKEN: ${{ secrets.RABE_PYPI_TOKEN }} # zizmor: ignore[secrets-outside-env]
+          RABE_PYPI_TOKEN: ${{ secrets.RABE_PYPI_TOKEN }}
         run: poetry config pypi-token.pypi "${RABE_PYPI_TOKEN}"
         working-directory: ${{ inputs.path }}
 
@@ -67,7 +67,7 @@ jobs:
       - name: Publish to PyPI
         env:
           POETRY_DRY_RUN: ${{ steps.dry-run.outputs.flag }}
-        run: poetry publish --build --no-interaction "${POETRY_DRY_RUN}" # zizmor: ignore[use-trusted-publishing]
+        run: poetry publish --build --no-interaction "${POETRY_DRY_RUN}"
         working-directory: ${{ inputs.path }}
 
       - name: Deploy documentation

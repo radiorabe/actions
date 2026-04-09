@@ -58,4 +58,4 @@ jobs:
         run: |
           ansible-galaxy collection publish *.tar.gz --token "${GALAXY_API_KEY}"
         env:
-          GALAXY_API_KEY: ${{ secrets.GALAXY_API_KEY }} # zizmor: ignore[secrets-outside-env]
+          GALAXY_API_KEY: ${{ secrets.GALAXY_API_KEY }}
