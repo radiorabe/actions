@@ -45,7 +45,7 @@ jobs:
 2. Space-separated list of additional Python packages to install before running pre-commit.
 
 To skip the pip install step entirely (for example when no Python tools are referenced in your
-`.pre-commit-config.yaml`), pass an empty string:
+`.pre-commit-config.yaml`), pass an explicit empty string to override the default:
 
 ```yaml title=".github/workflows/test.yaml"
 jobs:
@@ -61,4 +61,4 @@ jobs:
 
 | Input | Description | Required | Default |
 |---|---|---|---|
-| `requirements` | Space-separated list of Python packages to install with pip; pass `""` to skip pip install | No | `black isort flake8` |
+| `requirements` | Space-separated list of Python packages to install with pip; pass `""` to skip pip install and override the default | No | `black isort flake8` |
