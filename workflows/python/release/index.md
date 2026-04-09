@@ -37,6 +37,6 @@ Configure your `pyproject.toml` for releasing and your `mkdocs.yml` to generate 
 
 ## Secrets
 
-| Secret            | Description                   | Required |
-| ----------------- | ----------------------------- | -------- |
-| `RABE_PYPI_TOKEN` | PyPI API token for publishing | Yes      |
+| Secret            | Description                   | Required                 |
+| ----------------- | ----------------------------- | ------------------------ |
+| `RABE_PYPI_TOKEN` | PyPI API token for publishing | Only on `release` events |

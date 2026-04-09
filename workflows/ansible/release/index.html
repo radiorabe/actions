@@ -1483,6 +1483,12 @@
 <td>No</td>
 <td><code>true</code></td>
 </tr>
+<tr>
+<td><code>path</code></td>
+<td>Path to the collection root (directory containing <code>galaxy.yml</code>)</td>
+<td>No</td>
+<td><code>.</code></td>
+</tr>
 </tbody>
 </table>
 <h2 id="secrets">Secrets<a class="headerlink" href="#secrets" title="Permanent link">&para;</a></h2>
@@ -1498,7 +1504,7 @@
 <tr>
 <td><code>GALAXY_API_KEY</code></td>
 <td>Ansible Galaxy API key</td>
-<td>Yes</td>
+<td>Only when <code>publish: true</code></td>
 </tr>
 </tbody>
 </table>

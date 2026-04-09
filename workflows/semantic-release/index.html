@@ -1132,6 +1132,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inputs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#secrets" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1381,6 +1392,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inputs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#secrets" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1441,6 +1463,25 @@ push to <code>main</code> and creates new tags and GitHub releases based on conv
 <li>The <code>RABE_ITREAKTION_GITHUB_TOKEN</code> is shared across our repos and can be enabled for your
    repo by a GitHub organisation admin.</li>
 </ol>
+<h2 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Input</th>
+<th>Description</th>
+<th>Required</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dry</code></td>
+<td>Run in dry-run mode (determine next version without creating a release)</td>
+<td>No</td>
+<td><code>false</code></td>
+</tr>
+</tbody>
+</table>
 <h2 id="secrets">Secrets<a class="headerlink" href="#secrets" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -1454,10 +1495,17 @@ push to <code>main</code> and creates new tags and GitHub releases based on conv
 <tr>
 <td><code>RABE_ITREAKTION_GITHUB_TOKEN</code></td>
 <td>GitHub token with write access for creating releases</td>
-<td>Yes</td>
+<td>Only when <code>dry: false</code></td>
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When <code>RABE_ITREAKTION_GITHUB_TOKEN</code> is not supplied, the workflow falls back to the
+built-in <code>GITHUB_TOKEN</code>. In dry-run mode this is sufficient. For actual releases, the
+dedicated PAT is required because it has the write permissions needed to create tags and
+GitHub Releases.</p>
+</div>
 
 
 

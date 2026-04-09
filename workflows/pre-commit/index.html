@@ -1471,6 +1471,16 @@ flake8 before running pre-commit.</p>
 <li>Grant only the minimum permissions this workflow requires.</li>
 <li>Space-separated list of additional Python packages to install before running pre-commit.</li>
 </ol>
+<p>To skip the pip install step entirely (for example when no Python tools are referenced in your
+<code>.pre-commit-config.yaml</code>), pass an explicit empty string to override the default:</p>
+<div class="highlight"><span class="filename">.github/workflows/test.yaml</span><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">jobs</span><span class="p">:</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">pre-commit</span><span class="p">:</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">permissions</span><span class="p">:</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">      </span><span class="nt">contents</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">read</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">radiorabe/actions/.github/workflows/test-pre-commit.yaml@v0.0.0</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="nt">with</span><span class="p">:</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">      </span><span class="nt">requirements</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+</code></pre></div>
 <h2 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -1484,7 +1494,7 @@ flake8 before running pre-commit.</p>
 <tbody>
 <tr>
 <td><code>requirements</code></td>
-<td>Space-separated list of Python packages to install with pip</td>
+<td>Space-separated list of Python packages to install with pip; pass <code>""</code> to skip pip install and override the default</td>
 <td>No</td>
 <td><code>black isort flake8</code></td>
 </tr>
