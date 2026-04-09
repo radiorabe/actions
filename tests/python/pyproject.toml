@@ -4,7 +4,7 @@ version = "0.0.0"
 description = "Reusable GitHub Actions workflows for Radio Bern RaBe"
 authors = ["Radio Bern RaBe <github@rabe.ch>"]
 license = "AGPL-3.0-only"
-packages = []
+packages = [{ include = "tests" }]
 
 [tool.poetry.dependencies]
 python = "^3.12"
