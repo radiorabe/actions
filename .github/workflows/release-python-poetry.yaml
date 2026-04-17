@@ -27,7 +27,8 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
-          persist-credentials: false
+          # credentials are reused by the mkdocs gh-deploy step for now
+          persist-credentials: true
 
       - name: Install Poetry
         run: pipx install poetry
