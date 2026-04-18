@@ -8,10 +8,6 @@ on:
 
 permissions: {}
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
-
 jobs:
   publish:
     name: Publish Mkdocs documentation to GitHub Pages
