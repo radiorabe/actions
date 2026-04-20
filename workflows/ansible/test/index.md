@@ -1,6 +1,6 @@
 # Ansible Collection: Test
 
-Lints an Ansible collection with ansible-lint, flake8, and black.
+Lints an Ansible collection with ansible-lint and ruff.
 
 ## Usage
 
