@@ -186,7 +186,7 @@ Both files call the **local** (current-branch) version of each workflow using
 
 Workflows **not** smoke-tested and why:
 - `release-mkdocs.yaml` — self-tests via its own `on: pull_request` trigger in this repo (deprecated; use `release-zensical.yaml`)
-- `release-zensical.yaml` — smoke-tested via `smoke-release-zensical`; also self-tests via its own `on: pull_request` trigger in this repo
+- `test-ansible-collection.yaml` inputs (`flake8`, `black`) always run on the whole repo root; they are implicitly exercised by the `smoke-test-ansible-collection` job
 
 ### Test fixtures
 
