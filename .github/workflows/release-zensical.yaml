@@ -18,24 +18,19 @@ on:
 permissions: {}
 
 jobs:
-  publish:
-    name: Publish Zensical documentation to GitHub Pages
+  build:
+    name: Build Zensical documentation
     runs-on: ubuntu-latest
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
 
     permissions:
       contents: read # to checkout the repository
-      pages: write # to deploy to GitHub Pages
-      id-token: write # to authenticate with GitHub Pages via OIDC
 
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Setup Python
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
@@ -56,7 +51,21 @@ jobs:
         with:
           path: site
 
+  deploy:
+    name: Deploy Zensical documentation to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: build
+    if: ${{ inputs.deploy && github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    permissions:
+      pages: write # to deploy to GitHub Pages
+      id-token: write # to authenticate with GitHub Pages via OIDC
+
+    steps:
       - name: Deploy to GitHub Pages
-        if: ${{ inputs.deploy && github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         id: deployment
         uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
