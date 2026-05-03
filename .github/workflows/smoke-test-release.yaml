@@ -54,3 +54,12 @@ jobs:
       image-ref: ghcr.io/radiorabe/ubi10-minimal
       upload-sarif: false
       attest: false
+
+  smoke-release-zensical:
+    permissions:
+      contents: read
+      pages: write # declared by release-zensical.yaml for GitHub Pages deployment (gated on deploy input and push to main)
+      id-token: write # declared by release-zensical.yaml for GitHub Pages OIDC authentication (gated on deploy input and push to main)
+    uses: ./.github/workflows/release-zensical.yaml
+    with:
+      deploy: false

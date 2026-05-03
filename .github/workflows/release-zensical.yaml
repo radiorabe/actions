@@ -1,0 +1,62 @@
+name: Release Zensical
+
+on:
+  workflow_call:
+    inputs:
+      deploy:
+        description: Deploy to GitHub Pages
+        type: boolean
+        default: true
+      requirements:
+        description: Extra Python packages to install alongside Zensical (space-separated)
+        type: string
+        default: ""
+  pull_request:
+  push:
+    branches: [main]
+
+permissions: {}
+
+jobs:
+  publish:
+    name: Publish Zensical documentation to GitHub Pages
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    permissions:
+      contents: read # to checkout the repository
+      pages: write # to deploy to GitHub Pages
+      id-token: write # to authenticate with GitHub Pages via OIDC
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: "3.x"
+
+      - name: Install Zensical
+        run: pip install zensical ${INPUTS_REQUIREMENTS}
+        env:
+          INPUTS_REQUIREMENTS: ${{ inputs.requirements }}
+
+      - name: Build Zensical documentation
+        run: zensical build
+
+      - name: Upload GitHub Pages artifact
+        if: ${{ (inputs.deploy != false) && github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: site
+
+      - name: Deploy to GitHub Pages
+        if: ${{ (inputs.deploy != false) && github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        id: deployment
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0

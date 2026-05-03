@@ -1,3 +1,6 @@
+# Deprecated: use release-zensical.yaml instead.
+# This workflow remains available for downstreams that have not yet migrated.
+# See docs/workflows/mkdocs.md for migration guidance.
 name: Release Mkdocs
 
 on:
