@@ -942,6 +942,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inputs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#secrets" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1413,6 +1424,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inputs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#secrets" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1445,7 +1467,7 @@
 
 <h1 id="python-release-poetry">Python: Release (Poetry)<a class="headerlink" href="#python-release-poetry" title="Permanent link">&para;</a></h1>
 <p>Publishes a Python package to <a href="https://pypi.org/">PyPI</a> using
-<a href="https://python-poetry.org/">Poetry</a> and deploys <a href="https://www.mkdocs.org/">MkDocs</a>
+<a href="https://python-poetry.org/">Poetry</a> and (optionally) deploys <a href="https://www.mkdocs.org/">MkDocs</a>
 documentation to GitHub Pages.</p>
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
 <p>Create a <code>.github/workflows/release.yaml</code> file:</p>
@@ -1476,6 +1498,25 @@ documentation to GitHub Pages.</p>
 </ol>
 <p>Configure your <code>pyproject.toml</code> for releasing and your <code>mkdocs.yml</code> to generate proper
 documentation and you are good to go.</p>
+<h2 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Input</th>
+<th>Description</th>
+<th>Required</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>deploy-mkdocs</code></td>
+<td>Run <code>mkdocs gh-pages</code></td>
+<td>No</td>
+<td><code>true</code></td>
+</tr>
+</tbody>
+</table>
 <h2 id="secrets">Secrets<a class="headerlink" href="#secrets" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
