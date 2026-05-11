@@ -76,8 +76,9 @@ All work happens on feature branches. Open a PR to `main`; do not manually creat
 |---|---|
 | `release-ansible-collection.yaml` | Build and publish Ansible collections to Galaxy |
 | `release-container.yaml` | Build, scan (Trivy), sign (cosign), push container images |
-| `release-mkdocs.yaml` | Build and deploy MkDocs docs to GitHub Pages |
+| `release-mkdocs.yaml` | Build and deploy MkDocs docs to GitHub Pages (deprecated, see `release-zensical.yaml`) |
 | `release-python-poetry.yaml` | Build and publish Python packages with Poetry |
+| `release-zensical.yaml` | Build and deploy Zensical docs to GitHub Pages |
 | `schedule-trivy.yaml` | Scheduled Trivy vulnerability scan for published images |
 | `semantic-release.yaml` | Automate releases with go-semantic-release |
 | `test-ansible-collection.yaml` | Test Ansible collections |
@@ -181,9 +182,10 @@ Both files call the **local** (current-branch) version of each workflow using
 | `smoke-release-python-poetry` | `smoke-test-release.yaml` | `release-python-poetry.yaml` | `poetry publish --build --dry-run` via `tests/python/pyproject.toml` |
 | `smoke-release-ansible-collection` | `smoke-test-release.yaml` | `release-ansible-collection.yaml` | Build `tests/ansible/` with `publish: false` |
 | `smoke-schedule-trivy` | `smoke-test-release.yaml` | `schedule-trivy.yaml` | Scan `ghcr.io/radiorabe/ubi10-minimal`; `upload-sarif: false`, `attest: false` |
+| `smoke-release-zensical` | `smoke-test-release.yaml` | `release-zensical.yaml` | Build this repo's docs with Zensical; `deploy: false` |
 
 Workflows **not** smoke-tested and why:
-- `release-mkdocs.yaml` — self-tests via its own `on: pull_request` trigger in this repo
+- `release-mkdocs.yaml` — self-tests via its own `on: pull_request` trigger in this repo (deprecated; use `release-zensical.yaml`)
 - `test-ansible-collection.yaml` inputs (`flake8`, `black`) always run on the whole repo root; they are implicitly exercised by the `smoke-test-ansible-collection` job
 
 ### Test fixtures

@@ -1,5 +1,12 @@
 # MkDocs: Release
 
+!!! warning "Deprecated"
+    This workflow is deprecated. Downstreams are encouraged to explore switching to the
+    [Zensical release workflow](zensical.md), which is the modern replacement built by
+    the creators of Material for MkDocs. Zensical is compatible with existing `mkdocs.yml`
+    configuration and the switch requires minimal changes. See the [Zensical docs](zensical.md)
+    for migration guidance.
+
 Builds and deploys [MkDocs](https://www.mkdocs.org/) documentation to GitHub Pages. Use this
 for repos that contain documentation built with MkDocs but do not use the
 [Python Poetry release workflow](python/release.md).
