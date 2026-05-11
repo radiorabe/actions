@@ -1,5 +1,9 @@
 # MkDocs: Release
 
+Deprecated
+
+This workflow is deprecated. Downstreams are encouraged to explore switching to the [Zensical release workflow](https://radiorabe.github.io/actions/workflows/zensical/index.md), which is the modern replacement built by the creators of Material for MkDocs. Zensical is compatible with existing `mkdocs.yml` configuration and the switch requires minimal changes. See the [Zensical docs](https://radiorabe.github.io/actions/workflows/zensical/index.md) for migration guidance.
+
 Builds and deploys [MkDocs](https://www.mkdocs.org/) documentation to GitHub Pages. Use this for repos that contain documentation built with MkDocs but do not use the [Python Poetry release workflow](https://radiorabe.github.io/actions/workflows/python/release/index.md).
 
 ## Usage

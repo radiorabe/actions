@@ -21,6 +21,7 @@ checks, Trivy security scanning, and semantic versioning.
 - [Release](https://radiorabe.github.io/actions/workflows/python/release/index.md)
 - [Test](https://radiorabe.github.io/actions/workflows/python/test/index.md)
 - [Pre-Commit](https://radiorabe.github.io/actions/workflows/pre-commit/index.md)
+- [Zensical](https://radiorabe.github.io/actions/workflows/zensical/index.md)
 - [MkDocs](https://radiorabe.github.io/actions/workflows/mkdocs/index.md)
 - [Semantic Release](https://radiorabe.github.io/actions/workflows/semantic-release/index.md)
 

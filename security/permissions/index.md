@@ -14,8 +14,9 @@ These reusable workflows enforce [least-privilege](https://docs.github.com/en/ac
 | --------------------------------- | -------------------------------------------------------------------------------- |
 | `release-ansible-collection.yaml` | `contents: read`                                                                 |
 | `release-container.yaml`          | `contents: read`, `packages: write`, `security-events: write`, `id-token: write` |
-| `release-mkdocs.yaml`             | `contents: write`                                                                |
+| `release-mkdocs.yaml`             | `contents: write` (deprecated, see `release-zensical.yaml`)                      |
 | `release-python-poetry.yaml`      | `contents: write`                                                                |
+| `release-zensical.yaml`           | `contents: read`, `pages: write`, `id-token: write`                              |
 | `schedule-trivy.yaml`             | `packages: write`, `security-events: write`, `id-token: write`                   |
 | `semantic-release.yaml`           | `contents: read`                                                                 |
 | `test-ansible-collection.yaml`    | `contents: read`                                                                 |

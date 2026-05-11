@@ -443,6 +443,8 @@
       
         
       
+        
+      
     
     
     
@@ -1016,6 +1018,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../workflows/zensical/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zensical
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../workflows/mkdocs/" class="md-nav__link">
         
   
@@ -1442,11 +1472,15 @@ called workflow are <strong>no more</strong> than what the calling job grants.</
 </tr>
 <tr>
 <td><code>release-mkdocs.yaml</code></td>
-<td><code>contents: write</code></td>
+<td><code>contents: write</code> (deprecated, see <code>release-zensical.yaml</code>)</td>
 </tr>
 <tr>
 <td><code>release-python-poetry.yaml</code></td>
 <td><code>contents: write</code></td>
+</tr>
+<tr>
+<td><code>release-zensical.yaml</code></td>
+<td><code>contents: read</code>, <code>pages: write</code>, <code>id-token: write</code></td>
 </tr>
 <tr>
 <td><code>schedule-trivy.yaml</code></td>
