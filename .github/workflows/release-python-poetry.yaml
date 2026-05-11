@@ -8,6 +8,10 @@ on:
         required: false
         default: "."
         type: string
+      deploy-mkdocs:
+        description: Deploy MkDocs site to GitHub Pages
+        type: boolean
+        default: true
     secrets:
       RABE_PYPI_TOKEN:
         required: false
@@ -72,6 +76,6 @@ jobs:
         working-directory: ${{ inputs.path }}
 
       - name: Deploy documentation
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        if: ${{ inputs.deploy-mkdocs && github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         run: poetry run mkdocs gh-deploy
         working-directory: ${{ inputs.path }}

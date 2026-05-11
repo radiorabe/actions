@@ -1,7 +1,7 @@
 # Python: Release (Poetry)
 
 Publishes a Python package to [PyPI](https://pypi.org/) using
-[Poetry](https://python-poetry.org/) and deploys [MkDocs](https://www.mkdocs.org/)
+[Poetry](https://python-poetry.org/) and (optionally) deploys [MkDocs](https://www.mkdocs.org/)
 documentation to GitHub Pages.
 
 ## Usage
@@ -36,6 +36,12 @@ jobs:
 
 Configure your `pyproject.toml` for releasing and your `mkdocs.yml` to generate proper
 documentation and you are good to go.
+
+## Inputs
+
+| Input | Description | Required | Default |
+|---|---|---|---|
+| `deploy-mkdocs` | Run `mkdocs gh-pages` | No | `true` |
 
 ## Secrets
 
