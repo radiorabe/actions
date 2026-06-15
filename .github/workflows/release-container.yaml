@@ -34,8 +34,13 @@ on:
         required: false
         default: "https://github.com/radiorabe/.*"
         type: string
+      cosign-image-skip-regexp:
+        description: "Regex to exclude some images from cosign image scan"
+        required: false
+        default: "#"
+        type: string
       cosign-base-image-only:
-        description: "pass --base-image-only arg to cosign dockerfile verify"
+        description: "DEPRECATED: not supported by cosign verify"
         required: false
         default: false
         type: boolean
@@ -145,20 +150,16 @@ jobs:
       - name: Verify ${{ inputs.dockerfile }} using cosign
         if: inputs.cosign-verify
         env:
-          COSIGN_BASE_IMAGE_ONLY: ${{ inputs.cosign-base-image-only }}
+          COSIGN_IMAGE_SKIP_REGEXP: ${{ inputs.cosign-image-skip-regexp }}
           COSIGN_CERTIFICATE_IDENTITY_REGEXP: ${{ inputs.cosign-certificate-identity-regexp }}
           COSIGN_CERTIFICATE_OIDC_ISSUER: ${{ inputs.cosign-certificate-oidc-issuer }}
           DOCKERFILE: ${{ inputs.dockerfile }}
         run: |
           set -euo pipefail
-          EXTRA=''
-          if [ "${COSIGN_BASE_IMAGE_ONLY}" = 'true' ]; then
-            EXTRA='--base-image-only'
-          fi
-          cosign dockerfile verify \
+          cosign verify \
             --certificate-oidc-issuer "${COSIGN_CERTIFICATE_OIDC_ISSUER}" \
             --certificate-identity-regexp "${COSIGN_CERTIFICATE_IDENTITY_REGEXP}" \
-            ${EXTRA} -- "${DOCKERFILE}" > /dev/null
+          -- $(gawk 'BEGIN {IGNORECASE=1} match($0, /^\s*FROM\s+(--platform=\S+\s+)?(\S+)(\s+AS\s+(\S+))?/, a) {if (a[2] != "scratch") print a[2]; if (a[4] != "") s[a[4]] = 1; next} match($0, /^\s*COPY\s+.*--from=(\S+)/, a) {if (a[1] !~ /^[0-9]+$/ && a[1] != "scratch" && !(a[1] in s)) print a[1]}' ${DOCKERFILE} | grep -E -v -i ${COSIGN_IMAGE_SKIP_REGEXP}) > /dev/null
 
       - name: Build Container Image
         id: docker_build
