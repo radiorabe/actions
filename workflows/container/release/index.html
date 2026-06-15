@@ -1563,8 +1563,14 @@
 <td><code>https://github.com/radiorabe/.*</code></td>
 </tr>
 <tr>
+<td><code>cosign-image-skip-regexp</code></td>
+<td>Extended regular expression (egrep style) to filter images that skip cosign verification, pipe-separated</td>
+<td>No</td>
+<td><code>#</code></td>
+</tr>
+<tr>
 <td><code>cosign-base-image-only</code></td>
-<td>Pass <code>--base-image-only</code> to cosign dockerfile verify</td>
+<td>DEPRECATED: not supported by <code>cosign verify</code>, use <code>cosign-image-skip-regexp</code> instead</td>
 <td>No</td>
 <td><code>false</code></td>
 </tr>

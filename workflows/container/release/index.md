@@ -50,23 +50,24 @@ As a last step, it is recommended to add `trivy.*` to both your `.gitignore` and
 
 ## Inputs
 
-| Input                                | Description                                                        | Required | Default                                       |
-| ------------------------------------ | ------------------------------------------------------------------ | -------- | --------------------------------------------- |
-| `image`                              | Image to build and push (e.g. `ghcr.io/radiorabe/myimage`)         | **Yes**  | —                                             |
-| `name`                               | Value for the `name` label                                         | **Yes**  | —                                             |
-| `display-name`                       | Value for the `io.k8s.display-name` label                          | **Yes**  | —                                             |
-| `tags`                               | Value for the `io.openshift.tags` label                            | **Yes**  | —                                             |
-| `cosign-verify`                      | Enable cosign verification of the base image                       | No       | `true`                                        |
-| `cosign-certificate-oidc-issuer`     | Issuer used for keyless signature verification                     | No       | `https://token.actions.githubusercontent.com` |
-| `cosign-certificate-identity-regexp` | Regex to verify the subject against                                | No       | `https://github.com/radiorabe/.*`             |
-| `cosign-base-image-only`             | Pass `--base-image-only` to cosign dockerfile verify               | No       | `false`                                       |
-| `dockerfile`                         | Path to the Dockerfile                                             | No       | `Dockerfile`                                  |
-| `context`                            | Context directory for Docker build                                 | No       | `.`                                           |
-| `build-args`                         | Build ARGs (`KEY=value` separated by newlines)                     | No       | `""`                                          |
-| `platforms`                          | Comma-separated list of platforms (e.g. `linux/amd64,linux/arm64`) | No       | `linux/amd64`                                 |
-| `docker-daemon-config`               | Docker daemon config JSON (required for multi-platform builds)     | No       | —                                             |
-| `push-default-branch`                | Push the image when the default branch is pushed                   | No       | `false`                                       |
-| `pre-script`                         | Script to run before interacting with the Dockerfile               | No       | `""`                                          |
+| Input                                | Description                                                                                              | Required | Default                                       |
+| ------------------------------------ | -------------------------------------------------------------------------------------------------------- | -------- | --------------------------------------------- |
+| `image`                              | Image to build and push (e.g. `ghcr.io/radiorabe/myimage`)                                               | **Yes**  | —                                             |
+| `name`                               | Value for the `name` label                                                                               | **Yes**  | —                                             |
+| `display-name`                       | Value for the `io.k8s.display-name` label                                                                | **Yes**  | —                                             |
+| `tags`                               | Value for the `io.openshift.tags` label                                                                  | **Yes**  | —                                             |
+| `cosign-verify`                      | Enable cosign verification of the base image                                                             | No       | `true`                                        |
+| `cosign-certificate-oidc-issuer`     | Issuer used for keyless signature verification                                                           | No       | `https://token.actions.githubusercontent.com` |
+| `cosign-certificate-identity-regexp` | Regex to verify the subject against                                                                      | No       | `https://github.com/radiorabe/.*`             |
+| `cosign-image-skip-regexp`           | Extended regular expression (egrep style) to filter images that skip cosign verification, pipe-separated | No       | `#`                                           |
+| `cosign-base-image-only`             | DEPRECATED: not supported by `cosign verify`, use `cosign-image-skip-regexp` instead                     | No       | `false`                                       |
+| `dockerfile`                         | Path to the Dockerfile                                                                                   | No       | `Dockerfile`                                  |
+| `context`                            | Context directory for Docker build                                                                       | No       | `.`                                           |
+| `build-args`                         | Build ARGs (`KEY=value` separated by newlines)                                                           | No       | `""`                                          |
+| `platforms`                          | Comma-separated list of platforms (e.g. `linux/amd64,linux/arm64`)                                       | No       | `linux/amd64`                                 |
+| `docker-daemon-config`               | Docker daemon config JSON (required for multi-platform builds)                                           | No       | —                                             |
+| `push-default-branch`                | Push the image when the default branch is pushed                                                         | No       | `false`                                       |
+| `pre-script`                         | Script to run before interacting with the Dockerfile                                                     | No       | `""`                                          |
 
 ## Multi-Platform Builds
 
