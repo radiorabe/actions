@@ -20,13 +20,14 @@ All controls from ENISA TA §4 are mapped below. Status: ✅ Implemented · ⚠�
 
 ### §4.1 Package Selection
 
-| Control                        | Description                                                | Status | Reference                                                                                                                                                     |
-| ------------------------------ | ---------------------------------------------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 4.1.1 Trusted Source           | Use official registries; prefer provenance metadata        | ✅     | SHA pins enforce exact commit; Dependabot keeps them current                                                                                                  |
-| 4.1.2 Known Vulnerabilities    | Check vulnerability databases before adopting a dependency | ⚠️     | Dependabot alerts exist; pre-adoption scanning not yet automated — see [#194](https://github.com/radiorabe/actions/issues/194)                                |
-| 4.1.3 Signing & Integrity      | Use cryptographic signing to verify integrity              | ✅     | SHA pinning is cryptographic integrity for actions; cosign + SLSA for containers                                                                              |
-| 4.1.4 Maintainer Reputation    | Select packages from reputable, verified maintainers       | ⚠️     | Criteria documented in [Supply Chain](https://radiorabe.github.io/actions/security/supply-chain/#action-selection-criteria); process gap for automated checks |
-| 4.1.5 Popularity & Maintenance | Community adoption, recent activity, commit history        | ⚠️     | Criteria documented in [Supply Chain](https://radiorabe.github.io/actions/security/supply-chain/#action-selection-criteria)                                   |
+| Control                        | Description                                                | Status | Reference                                                                                                                                                                            |
+| ------------------------------ | ---------------------------------------------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 4.1.1 Trusted Source           | Use official registries; prefer provenance metadata        | ✅     | SHA pins enforce exact commit; Dependabot keeps them current                                                                                                                         |
+| 4.1.2 Known Vulnerabilities    | Check vulnerability databases before adopting a dependency | ⚠️     | Dependabot alerts exist; pre-adoption scanning not yet automated — see [#194](https://github.com/radiorabe/actions/issues/194)                                                       |
+| 4.1.3 Signing & Integrity      | Use cryptographic signing to verify integrity              | ✅     | SHA pinning is cryptographic integrity for actions; cosign + SLSA for containers                                                                                                     |
+| 4.1.4 Maintainer Reputation    | Select packages from reputable, verified maintainers       | ⚠️     | Criteria documented in [Supply Chain](https://radiorabe.github.io/actions/security/supply-chain/#action-selection-criteria); process gap for automated checks                        |
+| 4.1.5 Popularity & Maintenance | Community adoption, recent activity, commit history        | ⚠️     | Criteria documented in [Supply Chain](https://radiorabe.github.io/actions/security/supply-chain/#action-selection-criteria)                                                          |
+| 4.1.6 Secure Practices         | Evaluate the action's own security posture                 | ⚠️     | Criteria documented in [Supply Chain](https://radiorabe.github.io/actions/security/supply-chain/#action-selection-criteria); this library's own workflows are zizmor-pedantic linted |
 
 ### §4.2 Package Integration
 
