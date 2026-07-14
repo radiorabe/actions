@@ -35,6 +35,7 @@ Status: ✅ Implemented · ⚠️ Partial · ❌ Gap · N/A Not applicable
 | 4.1.3 Signing & Integrity | Use cryptographic signing to verify integrity | ✅ | SHA pinning is cryptographic integrity for actions; cosign + SLSA for containers |
 | 4.1.4 Maintainer Reputation | Select packages from reputable, verified maintainers | ⚠️ | Criteria documented in [Supply Chain](supply-chain.md#action-selection-criteria); process gap for automated checks |
 | 4.1.5 Popularity & Maintenance | Community adoption, recent activity, commit history | ⚠️ | Criteria documented in [Supply Chain](supply-chain.md#action-selection-criteria) || 4.1.6 Secure Practices | Evaluate the action's own security posture | ⚠️ | SHA enforcement covers SHA integrity; formal posture checklist in [Supply Chain](supply-chain.md#action-selection-criteria) |
+| 4.1.6 Secure Practices | Evaluate the action's own security posture | ⚠️ | Criteria documented in [Supply Chain](supply-chain.md#action-selection-criteria); this library's own workflows are zizmor-pedantic linted |
 
 ### §4.2 Package Integration
 
