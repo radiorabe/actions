@@ -23,6 +23,8 @@ jobs:
       contents: read
       security-events: write # required to upload zizmor SARIF results to the Security tab
     uses: ./.github/workflows/test-github-actions.yaml
+    with:
+      persona: pedantic
 
   smoke-test-python-poetry:
     permissions:
