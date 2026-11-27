@@ -43,7 +43,7 @@ jobs:
           INPUTS_PATH: ${{ inputs.path }}
 
       - name: Lint with ansible-lint
-        uses: ansible/ansible-lint@b74fb6f73d234bf92672372cb1c10768e4018d16 # v26.11.0
+        uses: ansible/ansible-lint@b5609548ec49df35aabb89b6cb71de8f398cd195 # v26.11.1
         with:
           setup_python: false
           working_directory: ${{ inputs.path }}
